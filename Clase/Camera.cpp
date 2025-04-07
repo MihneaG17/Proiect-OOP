@@ -22,7 +22,7 @@ void Camera::setDisponibilitate(bool status) { this->status=status; };
 void Camera::setTip(std::string tip_camera) { this->tip_camera=tip_camera; };
 
 //Metode suplimentare
-bool Camera::verificaDisponibilitate(bool status) { return status; };
+bool Camera::verificaDisponibilitate() { return status; };
 void Camera::afisareDetaliiCamera() 
 {
     std::cout<<"Numar camera: "<<numar<<"\n";
@@ -30,3 +30,6 @@ void Camera::afisareDetaliiCamera()
     std::cout<<"Pret: "<<pret_noapte<<"\n";
     std::cout<<"Tip: "<<tip_camera<<"\n";
 };
+
+//Operator overload
+//Overload pe operatorul de citire --- urmeaza --- pentru Administrator (adaugare camera)

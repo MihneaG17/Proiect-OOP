@@ -3,6 +3,7 @@
 
 #include "Camera.h"
 #include "Client.h"
+#include "utils.h"
 #include <iostream>
 
 class Rezervare

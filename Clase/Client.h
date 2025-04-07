@@ -22,6 +22,9 @@ public:
 
     void setIdC(int id_client);
 
+    //Supraincarcarea operatorului =+ (adauga rezervare la istoric)
+    Client& operator+=(int rezervare);
+
     //Metode suplimentare
     void adaugaRezervare(int rezervare);
     void afisareIstoricRezervari();

@@ -17,6 +17,14 @@ std::vector<int> Client::getIstoric() { return istoricRezervari; };
 
 void Client::setIdC(int id_client) { this->id_client=id_client; };
 
+
+//Supraincarcarea operatorului += (adauga rezervare la istoric)
+Client& Client::operator+=(int rezervare)
+{
+    istoricRezervari.push_back(rezervare);
+    return *this;
+};
+
 //Metode suplimentare
 void Client::adaugaRezervare(int rezervare)
 {
