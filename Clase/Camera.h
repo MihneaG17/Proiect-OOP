@@ -17,9 +17,9 @@ public:
     ~Camera(); //Destructor
 
     //Getteri si setteri
-    int getNumar();
-    int getPret();
-    std::string getTip();
+    int getNumar() const;
+    int getPret() const;
+    std::string getTip() const;
     static int getTotalCamere();
 
     void setNumar(int numar);

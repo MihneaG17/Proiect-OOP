@@ -5,21 +5,21 @@
 #include "Client.h"
 
 class Review {
-    Client client;
+    //Client client;
     double nota;
     std::string comentariu;
 public:
     Review(); //Constructor implicit
-    Review(const Client& client, double nota, std::string comentariu); //Constructor parametrizat
+    Review(double nota, std::string comentariu); //Constructor parametrizat
     Review(const Review& rw); //Copy Constructor
     ~Review(); //Destructor
 
     //Getteri si setteri
-    const Client& getClient() const;
+    //const Client& getClient() const;
     double getNota();
     std::string getComentariu();
 
-    void setClient(const Client& client);
+    //void setClient(const Client& client);
     void setNota(double nota);
     void setComentariu(std::string comentariu);
 

@@ -15,7 +15,7 @@ class Hotel
 {
     std::vector <Client> clienti;
     std::vector <Camera> camere;
-    std::vector<Rezervare> rezervari;
+    std::vector <Rezervare> rezervari;
 public:
     Hotel();
     ~Hotel();
@@ -29,6 +29,9 @@ public:
     void efectueazaRezervare();
     void veziCamereDisponibile();
     void adaugaRezervare(Camera& camera, std::string& data_check_in, std::string& data_check_out);
+    void vizualizareRezervari();
+    void anuleazaRezervare();
+    void oferaReview();
 
 };
 

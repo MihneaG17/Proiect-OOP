@@ -1,6 +1,7 @@
 #include "Rezervare.h"
 #include "Client.h"
 #include "Camera.h"
+#include "Review.h"
 #include "utils.h"
 #include <iostream>
 #include <string>
@@ -31,6 +32,7 @@ std::string Rezervare::getMetodaPlata() { return metoda_plata; };
 std::string Rezervare::getObservatii() { return observatii; };
 const Client& Rezervare::getClient() const { return client; };
 const Camera& Rezervare::getCamera() const { return camera; };
+const Review& Rezervare::getReview() const { return review; };
 
 void Rezervare::setId(int id) { this->id_rezervare=id_rezervare; };
 void Rezervare::setDataCheckIn(std::string getDataCheckIn) { this->data_check_in=data_check_in; };
@@ -39,6 +41,7 @@ void Rezervare::setNumarNopti(int numar_nopti) { this->numar_nopti=numar_nopti; 
 void Rezervare::setDiscount(double discount) { this->discount=discount;  };
 void Rezervare::setMetodaPlata(std::string metoda_plata) { this->metoda_plata=metoda_plata; };
 void Rezervare::setObservatii(std::string observatii) { this->observatii=observatii; };
+void Rezervare::setReview(const Review& review) { this->review=review; };
 
 //Metode suplimentare
 void Rezervare::calcularePretDupaDiscount()
@@ -63,8 +66,10 @@ void Rezervare::afisareDetalii()
     std::cout<<"Discount aplicat: "<<discount<< "%\n";
     std::cout<<"Metoda de plata: "<<metoda_plata<< "\n";
     std::cout<<"Observatii: "<<observatii<< "\n";
+    std::cout<<"\n";
     std::cout<<"Detaliile clientului: \n";
     client.afisareDetaliiClient();
+    std::cout<<"\n";
     std::cout<<"Detaliile camerei: \n";
     camera.afisareDetaliiCamera();
 };
@@ -80,3 +85,8 @@ void Rezervare::afisareDetalii()
         else
             std::cout<<"Datele introduse nu sunt valide.\n";
     };
+
+bool Rezervare::areReview()
+{
+    return review.getNota()>0 || !review.getComentariu().empty();
+}

@@ -11,9 +11,9 @@ Camera::Camera(int numar, bool status, int pret_noapte, std::string tip_camera):
 Camera::~Camera() {};
 
 //Getteri si setteri
-int Camera::getNumar() { return numar; };
-int Camera::getPret() { return pret_noapte; };
-std::string Camera::getTip() { return tip_camera; };
+int Camera::getNumar() const { return numar; };
+int Camera::getPret() const { return pret_noapte; };
+std::string Camera::getTip() const { return tip_camera; };
 int Camera::getTotalCamere() { return totalCamere; }
 
 void Camera::setNumar(int numar) { this->numar=numar; };
@@ -29,6 +29,7 @@ void Camera::afisareDetaliiCamera()
     std::cout<<"Status: "<<status<<"\n";
     std::cout<<"Pret: "<<pret_noapte<<"\n";
     std::cout<<"Tip: "<<tip_camera<<"\n";
+    std::cout<<"\n";
 };
 
 //Operator overload

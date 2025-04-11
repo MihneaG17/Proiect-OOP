@@ -3,6 +3,7 @@
 
 #include "Camera.h"
 #include "Client.h"
+#include "Review.h"
 #include "utils.h"
 #include <iostream>
 
@@ -18,6 +19,7 @@ class Rezervare
     std::string observatii;
     Client client;
     Camera camera;
+    Review review;
 public:
     Rezervare(); //Constructor implicit
     Rezervare(int id_rezervare, std::string data_check_in, std::string data_check_out, double pret_total, 
@@ -36,6 +38,7 @@ public:
     std::string getObservatii();
     const Client& getClient() const;
     const Camera& getCamera() const;
+    const Review& getReview() const;
 
     void setId(int id);
     void setDataCheckIn(std::string data_check_in);
@@ -44,6 +47,7 @@ public:
     void setDiscount(double discount);
     void setMetodaPlata(std::string metoda_plata);
     void setObservatii(std::string observatii);
+    void setReview(const Review& review);
     
 
     //Metode suplimentare
@@ -51,5 +55,6 @@ public:
     void calcularePretDupaDiscount(); //Pret calculat dupa aplicarea discountului
     void afisareDetalii();
     void calcularePretTotal();
+    bool areReview();
 };
 #endif //REZERVARE_H
