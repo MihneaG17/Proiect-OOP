@@ -21,9 +21,9 @@ public:
     Persoana& operator=(const Persoana& p);
 
     //Getteri pentru atribute
-    std::string getNume();
-    std::string getEmail();
-    int getVarsta();
+    std::string getNume() const;
+    std::string getEmail() const;
+    int getVarsta() const;
 
     //Setteri pentru atribute
     void setNume(std::string nume);

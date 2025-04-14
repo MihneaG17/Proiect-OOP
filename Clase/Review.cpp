@@ -10,8 +10,8 @@ Review::~Review() {}; //Destructor
 
 //Getteri si setteri
 //const Client& Review::getClient() const { return client; } - Am "dezactivat" temporar aceste metode si atributul client deoarece momentan nu sunt folosite dar vor fi implementate in viitor
-double Review::getNota() { return nota; }
-std::string Review::getComentariu() { return comentariu; }
+double Review::getNota() const { return nota; }
+std::string Review::getComentariu() const { return comentariu; }
 
 //void Review::setClient(const Client& client) { this->client=client; }
 void Review::setNota(double nota) { this->nota=nota; }

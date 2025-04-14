@@ -14,9 +14,9 @@ Angajat::Angajat(const Angajat& a):Persoana(a), id_angajat(a.id_angajat), salari
 Angajat::~Angajat() {} //Destructor
 
 //Getteri si setteri specifici pentru clasa Angajat (cei din clasa de baza Persoana fiind mosteniti)
-int Angajat::getId() { return id_angajat; };
-int Angajat::getSalariu() { return salariu; };
-std::string Angajat::getFunctie() { return functie; };
+int Angajat::getId() const { return id_angajat; };
+int Angajat::getSalariu() const { return salariu; };
+std::string Angajat::getFunctie() const { return functie; };
 
 void Angajat::setId(int id_angajat) { this->id_angajat=id_angajat; };
 void Angajat::setSalariu(int salariu)
@@ -39,9 +39,11 @@ void Angajat::MinorareSalariala(int procent)
     salariu=salariu-(procent*salariu)/100;
 };
 
-void Angajat::afisareDetaliiAngajat() const
+void Angajat::afisareDetalii() const
 {
-    afisareDetalii();
+    std::cout<<"Nume: "<<getNume()<<std::endl;
+    std::cout<<"Email: "<<getEmail()<<std::endl;
+    std::cout<<"Varsta: "<<getVarsta()<<std::endl;
     std::cout<<"ID Angajat: "<<id_angajat<<"\n";
     std::cout<<"Salariu: "<<salariu<<"\n";
     std::cout<<"Functie: "<<functie<<"\n";

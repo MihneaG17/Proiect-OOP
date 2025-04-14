@@ -24,9 +24,9 @@ Persoana& Persoana::operator=(const Persoana& p) //Suprascrierea operatorului de
     }
 
 //Getteri pentru atribute
-std::string Persoana::getNume() { return nume; }
-std::string Persoana::getEmail() { return email; }
-int Persoana::getVarsta() { return varsta; }
+std::string Persoana::getNume() const { return nume; }
+std::string Persoana::getEmail() const { return email; }
+int Persoana::getVarsta() const { return varsta; }
 
 //Setteri pentru atribute
 void Persoana::setNume(std::string nume) { this->nume=nume; }

@@ -28,14 +28,14 @@ public:
     ~Rezervare(); //Destructor
 
     //Getteri si setteri
-    int getId();
-    std::string getDataCheckIn();
-    std::string getDataCheckOut();
-    int getNumarNopti();
-    double getPretTotal();
-    double getDiscount();
-    std::string getMetodaPlata();
-    std::string getObservatii();
+    int getId() const;
+    std::string getDataCheckIn() const;
+    std::string getDataCheckOut() const;
+    int getNumarNopti() const;
+    double getPretTotal() const;
+    double getDiscount() const;
+    std::string getMetodaPlata() const;
+    std::string getObservatii() const;
     const Client& getClient() const;
     const Camera& getCamera() const;
     const Review& getReview() const;

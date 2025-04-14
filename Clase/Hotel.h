@@ -14,6 +14,7 @@
 class Hotel
 {
     std::vector <Client> clienti;
+    std::vector <Angajat> angajati;
     std::vector <Camera> camere;
     std::vector <Rezervare> rezervari;
 public:
@@ -32,6 +33,13 @@ public:
     void vizualizareRezervari();
     void anuleazaRezervare();
     void oferaReview();
+
+    //Actiuni administrator
+    void logareAdmin(bool &ok);
+    void adaugaCamere();
+    void gestionareAngajati();
+    void vizualizareClienti();
+    void vizualizareToateRezervarile();
 
 };
 

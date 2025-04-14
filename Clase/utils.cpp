@@ -5,7 +5,7 @@ int numarZileInLuna(int luna, int an)
     switch(luna)
     {
         case 4: case 6: case 9: case 11: return 30;
-        case 2: return (an % 4 == 0 && (an % 100 != 0 || an % 400 == 0)) ? 29 : 28;
+        case 2: return (an % 4 == 0 && (an % 100 != 0 || an % 400 == 0)) ? 29 : 28; //an bisect
         default: return 31;
     }
 }

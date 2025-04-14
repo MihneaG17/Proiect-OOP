@@ -17,8 +17,8 @@ public:
     ~Client(); //Destructor
 
     //Getteri si setteri
-    int getIdC();
-    std::vector<int> getIstoric();
+    int getIdC() const;
+    std::vector<int> getIstoric() const;
 
     void setIdC(int id_client);
 
@@ -28,7 +28,7 @@ public:
     //Metode suplimentare
     void adaugaRezervare(int rezervare);
     void afisareIstoricRezervari();
-    virtual void afisareDetaliiClient() const;
+    void afisareDetalii() const override;
 };
 
 #endif //CLIENT_H

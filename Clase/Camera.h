@@ -31,8 +31,6 @@ public:
     bool verificaDisponibilitate();
     void afisareDetaliiCamera();
 
-    //Operator overload 
-    //Overload pe operatorul de citire --- urmeaza --- pentru Administrator (adaugare camera)
 };
 
 #endif //CAMERA_H

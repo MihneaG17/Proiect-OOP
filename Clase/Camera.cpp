@@ -32,5 +32,3 @@ void Camera::afisareDetaliiCamera()
     std::cout<<"\n";
 };
 
-//Operator overload
-//Overload pe operatorul de citire --- urmeaza --- pentru Administrator (adaugare camera)

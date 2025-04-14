@@ -22,14 +22,14 @@ client(r.client), camera(r.camera), discount(r.discount), numar_nopti(r.numar_no
 Rezervare::~Rezervare() {};
 
 //Getteri si setteri
-int Rezervare::getId() { return id_rezervare; };
-std::string Rezervare::getDataCheckIn() { return data_check_in; };
-std::string Rezervare::getDataCheckOut() { return data_check_out; };
-int Rezervare::getNumarNopti() { return numar_nopti; };
-double Rezervare::getPretTotal() { return pret_total; };
-double Rezervare::getDiscount() { return discount; };
-std::string Rezervare::getMetodaPlata() { return metoda_plata; };
-std::string Rezervare::getObservatii() { return observatii; };
+int Rezervare::getId() const { return id_rezervare; };
+std::string Rezervare::getDataCheckIn() const { return data_check_in; };
+std::string Rezervare::getDataCheckOut() const { return data_check_out; };
+int Rezervare::getNumarNopti() const { return numar_nopti; };
+double Rezervare::getPretTotal() const { return pret_total; };
+double Rezervare::getDiscount() const { return discount; };
+std::string Rezervare::getMetodaPlata() const { return metoda_plata; };
+std::string Rezervare::getObservatii() const { return observatii; };
 const Client& Rezervare::getClient() const { return client; };
 const Camera& Rezervare::getCamera() const { return camera; };
 const Review& Rezervare::getReview() const { return review; };
@@ -47,7 +47,6 @@ void Rezervare::setReview(const Review& review) { this->review=review; };
 void Rezervare::calcularePretDupaDiscount()
 {
     pret_total-=(pret_total*discount/100);
-    std::cout<<"Pretul total de dupa aplicarea discountului este:"<<pret_total<<"\n";
 };
 
 void Rezervare::prelungireRezervare(int nopti)
@@ -68,25 +67,24 @@ void Rezervare::afisareDetalii()
     std::cout<<"Observatii: "<<observatii<< "\n";
     std::cout<<"\n";
     std::cout<<"Detaliile clientului: \n";
-    client.afisareDetaliiClient();
-    std::cout<<"\n";
+    client.afisareDetalii();
     std::cout<<"Detaliile camerei: \n";
     camera.afisareDetaliiCamera();
 };
 
-    void Rezervare::calcularePretTotal() {
-        int zile=calculeazaDiferentaZile(data_check_in,data_check_out);
+void Rezervare::calcularePretTotal() {
+    int zile=calculeazaDiferentaZile(data_check_in,data_check_out);
 
-        if(zile>0)
-        {
-            pret_total=zile*camera.getPret();
-            numar_nopti=zile;
-        }
-        else
-            std::cout<<"Datele introduse nu sunt valide.\n";
+    if(zile>0)
+    {
+        pret_total=zile*camera.getPret();
+        numar_nopti=zile;
+    }
+    else
+        std::cout<<"Datele introduse nu sunt valide.\n";
     };
 
 bool Rezervare::areReview()
 {
-    return review.getNota()>0 || !review.getComentariu().empty();
+    return review.getNota()>0 || review.getComentariu()!="N/A";
 }

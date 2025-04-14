@@ -18,9 +18,9 @@ public:
     ~Angajat(); //Destructor
 
     //Getteri si setteri specifici pentru clasa Angajat (cei din clasa de baza Persoana fiind mosteniti)
-    int getId();
-    int getSalariu();
-    std::string getFunctie();
+    int getId() const;
+    int getSalariu() const;
+    std::string getFunctie() const;
 
     void setId(int id_angajat);
     void setSalariu(int salariu);
@@ -29,7 +29,7 @@ public:
     //Metode suplimentare
     void MarireSalariala(int procent);
     void MinorareSalariala(int procent);
-    virtual void afisareDetaliiAngajat() const;
+    void afisareDetalii() const override;
 };
 
 #endif //ANGAJAT_H

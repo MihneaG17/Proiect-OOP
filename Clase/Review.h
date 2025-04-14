@@ -16,8 +16,8 @@ public:
 
     //Getteri si setteri
     //const Client& getClient() const;
-    double getNota();
-    std::string getComentariu();
+    double getNota() const;
+    std::string getComentariu() const;
 
     //void setClient(const Client& client);
     void setNota(double nota);

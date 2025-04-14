@@ -12,8 +12,8 @@ Client::Client(const Client& c): Persoana(c), id_client(c.id_client), istoricRez
 Client::~Client() {}; //Destructor
 
 //Getteri si setteri
-int Client::getIdC() { return id_client; };
-std::vector<int> Client::getIstoric() { return istoricRezervari; };
+int Client::getIdC() const { return id_client; };
+std::vector<int> Client::getIstoric() const { return istoricRezervari; };
 
 void Client::setIdC(int id_client) { this->id_client=id_client; };
 
@@ -37,12 +37,14 @@ void Client::afisareIstoricRezervari()
         std::cout<<i<<" ";
 };
 
-void Client::afisareDetaliiClient() const
+void Client::afisareDetalii() const
 {
-    afisareDetalii();
+    std::cout<<"Nume: "<<getNume()<<std::endl;
+    std::cout<<"Email: "<<getEmail()<<std::endl;
+    std::cout<<"Varsta: "<<getVarsta()<<std::endl;
     std::cout<<"ID Client: "<<id_client<<"\n";
-    std::cout<<"Istoric de rezervari: ";
-    for(auto i:istoricRezervari)
-        std::cout<<i<<" ";
+    //std::cout<<"Istoric de rezervari: ";
+    //for(auto i:istoricRezervari)
+    //    std::cout<<i<<" ";
     std::cout<<"\n"; 
 }
