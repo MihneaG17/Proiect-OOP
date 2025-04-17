@@ -12,16 +12,16 @@ Persoana::Persoana(const Persoana& p): nume(p.nume), email(p.email), varsta(p.va
 
 Persoana::~Persoana() {}  //Destructor
 
-Persoana& Persoana::operator=(const Persoana& p) //Suprascrierea operatorului de atribuire
-    {
-    if(this != &p)
-    {
-        nume=p.nume;
-        email=p.email;
-        varsta=p.varsta;
-    }
-    return *this;
-    }
+// Persoana& Persoana::operator=(const Persoana& p) //Suprascrierea operatorului de atribuire
+//     {
+//     if(this != &p)
+//     {
+//         nume=p.nume;
+//         email=p.email;
+//         varsta=p.varsta;
+//     }
+//     return *this;
+//     }
 
 //Getteri pentru atribute
 std::string Persoana::getNume() const { return nume; }

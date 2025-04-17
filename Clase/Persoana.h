@@ -18,7 +18,7 @@ public:
     //de exemplu daca aloc dinamic un obiect (Persoana* p = new Angajat()), iar apoi eliberez memoria (delete p), fara destructor virtual nu s-ar elibera corect memoria
 
     //Suprascrierea operatorului de atribuire
-    Persoana& operator=(const Persoana& p);
+    //Persoana& operator=(const Persoana& p);
 
     //Getteri pentru atribute
     std::string getNume() const;

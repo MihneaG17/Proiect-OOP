@@ -10,11 +10,15 @@
 #include "Camera.h"
 #include "Rezervare.h"
 #include "Review.h"
+#include "Ingrijitor.h"
+#include "Receptioner.h"
+#include "Bucatar.h"
+#include "Manager.h"
 
 class Hotel
 {
     std::vector <Client> clienti;
-    std::vector <Angajat> angajati;
+    std::vector <Angajat*> angajati;
     std::vector <Camera> camere;
     std::vector <Rezervare> rezervari;
 public:
@@ -40,6 +44,13 @@ public:
     void gestionareAngajati();
     void vizualizareClienti();
     void vizualizareToateRezervarile();
+
+    //Din gestionareAngajati()
+    void vizualizareAngajati();
+    void maresteSalariuAdmin(); //mareste salariul angajatului prin actiunea din consola a adminului
+    void micsoreazaSalariuAdmin(); //micsoreaza salariul angajatului prin actiunea din consola a adminului
+    void concediereAngajat();
+    void angajare();
 
 };
 

@@ -41,9 +41,9 @@ void Angajat::MinorareSalariala(int procent)
 
 void Angajat::afisareDetalii() const
 {
-    std::cout<<"Nume: "<<getNume()<<std::endl;
-    std::cout<<"Email: "<<getEmail()<<std::endl;
-    std::cout<<"Varsta: "<<getVarsta()<<std::endl;
+    std::cout<<"Nume: "<<getNume()<<"\n";
+    std::cout<<"Email: "<<getEmail()<<"\n";
+    std::cout<<"Varsta: "<<getVarsta()<<"\n";
     std::cout<<"ID Angajat: "<<id_angajat<<"\n";
     std::cout<<"Salariu: "<<salariu<<"\n";
     std::cout<<"Functie: "<<functie<<"\n";

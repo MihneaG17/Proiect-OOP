@@ -16,9 +16,15 @@ Hotel::Hotel() {
     camere[2].setNumar(3); camere[2].setTip("Triple"); camere[2].setPret(300); camere[2].setDisponibilitate(true);
     camere[3].setNumar(4); camere[3].setTip("Quadruple"); camere[3].setPret(400); camere[3].setDisponibilitate(true);
     camere[4].setNumar(5); camere[4].setTip("Premium"); camere[4].setPret(500); camere[4].setDisponibilitate(true);
+
+    //Vector angajati
+    angajati.push_back(new Ingrijitor("Popescu Ion","ionpop@gmail.com",33,1,2500,"Ingrijitor",2));
+    angajati.push_back(new Receptioner("Popovici Matei","mateipopovici@yahoo.com",40,2,3750,"Receptioner","zi",{"romana","engleza"}));
+    angajati.push_back(new Bucatar("Chef Luca","luca@hotel.ro",51,3,6500,"Bucatar", "Patiserie", {"meniuri vegane"}));
+    angajati.push_back(new Manager("Ioana Dobrin", "ioanadobrin@gmail.com",30,4,7000,"Manager",{"Receptie","Curatenie"},10));
 };
 
-Hotel::~Hotel() {};
+Hotel::~Hotel() {}; //Destructor
 
 void Hotel::ruleaza()
 {
@@ -483,49 +489,46 @@ void Hotel::adaugaCamere()
     }while(true);
 
 }
+
 void Hotel::gestionareAngajati()
 {
     int choice;
+    std::cout<<"Alegeti: \n";
     do
     {   std::cout<<"1. Vizualizare angajati\n";
-        std::cout<<"2. Schimbare functie angajat\n";
-        std::cout<<"3. Marire salariala\n";
-        std::cout<<"4. Minorare salariala\n";
-        std::cout<<"5. Concediere\n";
-        std::cout<<"6. Angajare\n";
-        std::cout<<"7. Inapoi\n";
+        std::cout<<"2. Marire salariala\n";
+        std::cout<<"3. Minorare salariala\n";
+        std::cout<<"4. Concediere\n";
+        std::cout<<"5. Angajare\n";
+        std::cout<<"6. Inapoi\n";
         std::cout<<"Alegeti optiunea: ";
         std::cin>>choice;
 
         switch (choice)
         {
         case 1:
-            std::cout<<"Coming soon!\n";
+            vizualizareAngajati();
             break;
         case 2:
-            std::cout<<"Coming soon!\n";
+            maresteSalariuAdmin();
             break;
         case 3:
-            std::cout<<"Coming soon!\n";
+            micsoreazaSalariuAdmin();
             break;
         case 4:
-            std::cout<<"Coming soon!\n";
+            concediereAngajat();
             break;
         case 5:
-            std::cout<<"Coming soon!\n";
+            angajare();
             break;
         case 6:
-            std::cout<<"Coming soon!\n";
-            break;
-        case 7:
-            std::cout<<"Coming soon!\n";
+            std::cout<<"Inapoi\n";
             break;
         default:
             break;
         }
         
-    } while (choice!=7);
-    
+    } while (choice!=6);
 }
 void Hotel::vizualizareClienti()
 {
@@ -534,4 +537,207 @@ void Hotel::vizualizareClienti()
 void Hotel::vizualizareToateRezervarile()
 {
 
+}
+
+//Metodele (optiunile) din gestionareAngajati()
+void Hotel::vizualizareAngajati()
+{
+    for(auto& angajat : angajati)
+    {
+        angajat->afisareDetalii();
+        std::cout<<"\n";
+    }
+}
+
+void Hotel::maresteSalariuAdmin()
+{
+    int id, pozitie=0;
+    bool ok=0;
+    std::cout<<"Introduceti ID-ul angajatului caruia doriti sa-i mariti salariul:\n";
+    std::cin>>id;
+    for(auto& angajat : angajati)
+    {
+        if(angajat->getId()==id)
+        {
+            ok=1;
+            break;
+        }
+        pozitie++;
+    }
+    if(ok==1)
+    {
+        int procent;
+        std::cout<<"Introduceti procentul cu care doriti sa mariti salariul angajatului: \n";
+        std::cin>>procent;
+
+        angajati[pozitie]->MarireSalariala(procent);
+
+        std::cout<<"Salariul a fost modificat\n";
+    }
+    else
+    {
+        std::cout<<"Angajatul nu a fost gasit.\n\n";
+    }
+}
+
+void Hotel::micsoreazaSalariuAdmin()
+{
+    int id, pozitie=0;
+    bool ok=0;
+    std::cout<<"Introduceti ID-ul angajatului caruia doriti sa-i micsorati salariul:\n";
+    std::cin>>id;
+    for(auto& angajat : angajati)
+    {
+        if(angajat->getId()==id)
+        {
+            ok=1;
+            break;
+        }
+        pozitie++;
+    }
+    if(ok==1)
+    {
+        int procent;
+        std::cout<<"Introduceti procentul cu care doriti sa micsorati salariul angajatului: \n";
+        std::cin>>procent;
+
+        angajati[pozitie]->MinorareSalariala(procent);
+
+        std::cout<<"Salariul a fost modificat\n";
+    }
+    else
+    {
+        std::cout<<"Angajatul nu a fost gasit.\n\n";
+    }
+}
+
+void Hotel::concediereAngajat()
+{
+    int id, pozitie=0;
+    bool ok=0;
+    std::cout<<"Introduceti ID-ul angajatului pe care doriti sa-l concediati: \n";
+    std::cin>>id;
+
+    for(auto& angajat : angajati)
+    {
+        if(angajat->getId()==id)
+        {
+            ok=1;
+            break;
+        }
+        pozitie++;
+    }
+    if(ok==1)
+    {
+        angajati.erase(angajati.begin()+pozitie);
+        std::cout<<"Angajatul cu ID-ul "<<id<<" a fost concediat\n\n";
+    }
+    else
+    {
+        std::cout<<"Angajatul nu a fost gasit.\n\n";
+    }
+}
+
+void Hotel::angajare()
+{
+    std::string nume,email,functie;
+    int varsta,id,salariu;
+    std::cout<<"Introduceti datele angajatului:\n";
+
+    std::cout<<"Nume complet: ";
+    std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+    std::getline(std::cin,nume);
+
+    std::cout<<"Email: ";
+    std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+    std::getline(std::cin,email); //BUG DE FIXAT
+
+    std::cout<<"Varsta: ";
+    std::cin>>varsta;
+
+    std::cout<<"Salariu: ";
+    std::cin>>salariu;
+
+    std::cout<<"Functie: ";
+    std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+    std::getline(std::cin,functie);
+
+    id=angajati.size()+1;
+
+    if(functie=="Ingrijitor")
+    {
+        int etaj_curatenie;
+        std::cout<<"Asociati angajatului etajul la care sa faca curatenie: ";
+        std::cin>>etaj_curatenie;
+
+        angajati.push_back(new Ingrijitor(nume,email,varsta,id,salariu,functie,etaj_curatenie));
+        std::cout<<"Angajatul a fost adaugat cu succes!";
+    }
+    else if(functie=="Receptioner")
+    {
+        int nrLimbi;
+        std::string schimb, limba;
+        std::vector<std::string> limbi_vorbite;
+
+        std::cout<<"Introduceti schimbul angajatului (zi/noapte): ";
+        std::cin>>schimb;
+
+        std::cout<<"Introduceti numarul de limbi ce urmeaza sa fie adaugat: ";
+        std::cin>>nrLimbi;
+
+        std::cout<<"Introduceti limbile vorbite: \n";
+        for(int i=0;i<nrLimbi;i++)
+        {
+            std::cin>>limba;
+            limbi_vorbite.push_back(limba);
+        }
+
+        angajati.push_back(new Receptioner(nume,email,varsta,id,salariu,functie,schimb,limbi_vorbite));
+    }
+    else if(functie=="Bucatar")
+    {
+        std::string specializare,certificare;
+        std::vector<std::string> certificari;
+        int nrCertificari;
+
+        std::cout<<"Introduceti specializare: ";
+        std::cin>>specializare;
+
+        std::cout<<"Introduceti numarul de certificari: ";
+        std::cin>>nrCertificari;
+
+        std::cout<<"Introduceti certificarile detinute: ";
+        for(int i=0;i<nrCertificari;i++)
+        {
+            std::cin>>certificare;
+            certificari.push_back(certificare);
+        }
+
+        angajati.push_back(new Bucatar(nume,email,varsta,id,salariu,functie,specializare,certificari));
+    }
+    else if(functie=="Manager")
+    {
+        int aniExp,nrDept;
+        std::vector<std::string> departamente;
+        std::string dept;
+
+        std::cout<<"Introduceti anii de experienta: ";
+        std::cin>>aniExp;
+
+        std::cout<<"Introduceti numarul de departamente: ";
+        std::cin>>nrDept;
+
+        std::cout<<"Introduceti departamentele: ";
+        for(int i=0;i<nrDept;i++)
+        {
+            std::cin>>dept;
+            departamente.push_back(dept);
+        }
+
+        angajati.push_back(new Manager(nume,email,varsta,id,salariu,functie,departamente,aniExp));
+    }
+    else
+    {
+        std::cout<<"Functia introdusa nu exista\n";
+    }
 }
