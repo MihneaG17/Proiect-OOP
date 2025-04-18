@@ -52,6 +52,12 @@ public:
     void concediereAngajat();
     void angajare();
 
+    //Functiile din optiunea(metoda) angajare()
+    void adaugaIngrijitor(std::string nume, std::string email,int varsta,int id,int salariu,std::string functie);
+    void adaugaReceptioner(std::string nume, std::string email,int varsta,int id,int salariu,std::string functie);
+    void adaugaBucatar(std::string nume, std::string email,int varsta,int id,int salariu,std::string functie);
+    void adaugaManager(std::string nume, std::string email,int varsta,int id,int salariu,std::string functie);
+
 };
 
 #endif //HOTEL_H

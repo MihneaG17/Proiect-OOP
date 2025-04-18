@@ -384,6 +384,10 @@ void Hotel::oferaReview()
 
             std::cout<<"Introduceti rating-ul pe care doriti sa il acordati rezervarii (un numar de la 1 la 5, poate avea si zecimale):\n";
             std::cin>>rating;
+            if (rating < 1 || rating > 5) {
+                std::cout << "Rating-ul trebuie să fie între 1 și 5.\n";
+                return;
+            }            
             review.setNota(rating);
             std::cout<<"Lasati un comentariu in care descrieti experienta dvs: \n";
             std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
@@ -644,13 +648,13 @@ void Hotel::angajare()
     int varsta,id,salariu;
     std::cout<<"Introduceti datele angajatului:\n";
 
+    std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n'); //curata buffer-ul inainte de citirea string-urilor
+
     std::cout<<"Nume complet: ";
-    std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
     std::getline(std::cin,nume);
 
     std::cout<<"Email: ";
-    std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-    std::getline(std::cin,email); //BUG DE FIXAT
+    std::getline(std::cin,email);
 
     std::cout<<"Varsta: ";
     std::cin>>varsta;
@@ -658,86 +662,116 @@ void Hotel::angajare()
     std::cout<<"Salariu: ";
     std::cin>>salariu;
 
-    std::cout<<"Functie: ";
     std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+
+    std::cout<<"Functie (Ingrijitor / Receptioner / Bucatar / Manager): ";
     std::getline(std::cin,functie);
 
     id=angajati.size()+1;
 
-    if(functie=="Ingrijitor")
+    for(auto& c : functie)
     {
-        int etaj_curatenie;
-        std::cout<<"Asociati angajatului etajul la care sa faca curatenie: ";
-        std::cin>>etaj_curatenie;
-
-        angajati.push_back(new Ingrijitor(nume,email,varsta,id,salariu,functie,etaj_curatenie));
-        std::cout<<"Angajatul a fost adaugat cu succes!";
+        c=tolower(c); //transform string-ul in lowercase pentru a nu fi case-sensitive raspunsul
     }
-    else if(functie=="Receptioner")
+    if(functie=="ingrijitor")
     {
-        int nrLimbi;
-        std::string schimb, limba;
-        std::vector<std::string> limbi_vorbite;
-
-        std::cout<<"Introduceti schimbul angajatului (zi/noapte): ";
-        std::cin>>schimb;
-
-        std::cout<<"Introduceti numarul de limbi ce urmeaza sa fie adaugat: ";
-        std::cin>>nrLimbi;
-
-        std::cout<<"Introduceti limbile vorbite: \n";
-        for(int i=0;i<nrLimbi;i++)
-        {
-            std::cin>>limba;
-            limbi_vorbite.push_back(limba);
-        }
-
-        angajati.push_back(new Receptioner(nume,email,varsta,id,salariu,functie,schimb,limbi_vorbite));
+        adaugaIngrijitor(nume,email,varsta,id,salariu,functie);
     }
-    else if(functie=="Bucatar")
+    else if(functie=="receptioner")
     {
-        std::string specializare,certificare;
-        std::vector<std::string> certificari;
-        int nrCertificari;
-
-        std::cout<<"Introduceti specializare: ";
-        std::cin>>specializare;
-
-        std::cout<<"Introduceti numarul de certificari: ";
-        std::cin>>nrCertificari;
-
-        std::cout<<"Introduceti certificarile detinute: ";
-        for(int i=0;i<nrCertificari;i++)
-        {
-            std::cin>>certificare;
-            certificari.push_back(certificare);
-        }
-
-        angajati.push_back(new Bucatar(nume,email,varsta,id,salariu,functie,specializare,certificari));
+        adaugaReceptioner(nume,email,varsta,id,salariu,functie);
     }
-    else if(functie=="Manager")
+    else if(functie=="bucatar")
     {
-        int aniExp,nrDept;
-        std::vector<std::string> departamente;
-        std::string dept;
-
-        std::cout<<"Introduceti anii de experienta: ";
-        std::cin>>aniExp;
-
-        std::cout<<"Introduceti numarul de departamente: ";
-        std::cin>>nrDept;
-
-        std::cout<<"Introduceti departamentele: ";
-        for(int i=0;i<nrDept;i++)
-        {
-            std::cin>>dept;
-            departamente.push_back(dept);
-        }
-
-        angajati.push_back(new Manager(nume,email,varsta,id,salariu,functie,departamente,aniExp));
+        adaugaBucatar(nume,email,varsta,id,salariu,functie);
+    }
+    else if(functie=="manager")
+    {
+        adaugaManager(nume,email,varsta,id,salariu,functie);
     }
     else
     {
         std::cout<<"Functia introdusa nu exista\n";
     }
+}
+
+//Functiile din optiunea(metoda) angajare()
+
+void Hotel::adaugaIngrijitor(std::string nume, std::string email, int varsta, int id, int salariu, std::string functie)
+{
+    int etaj_curatenie;
+    std::cout<<"Asociati angajatului etajul la care sa faca curatenie: ";
+    std::cin>>etaj_curatenie;
+
+    angajati.push_back(new Ingrijitor(nume,email,varsta,id,salariu,functie,etaj_curatenie));
+    std::cout<<"Angajatul a fost adaugat cu succes!\n";
+}
+
+void Hotel::adaugaReceptioner(std::string nume, std::string email, int varsta, int id, int salariu, std::string functie)
+{
+    int nrLimbi;
+    std::string schimb, limba;
+    std::vector<std::string> limbi_vorbite;
+
+    std::cout<<"Introduceti schimbul angajatului (zi/noapte): ";
+    std::cin>>schimb;
+
+    std::cout<<"Introduceti numarul de limbi ce urmeaza sa fie adaugat: ";
+    std::cin>>nrLimbi;
+
+    std::cout<<"Introduceti limbile vorbite: \n";
+    for(int i=0;i<nrLimbi;i++)
+    {
+        std::cin>>limba;
+        limbi_vorbite.push_back(limba);
+    }
+
+    angajati.push_back(new Receptioner(nume,email,varsta,id,salariu,functie,schimb,limbi_vorbite));
+    std::cout<<"Angajatul a fost adaugat cu succes!\n";
+}
+
+void Hotel::adaugaBucatar(std::string nume, std::string email, int varsta, int id, int salariu, std::string functie)
+{
+    std::string specializare,certificare;
+    std::vector<std::string> certificari;
+    int nrCertificari;
+
+    std::cout<<"Introduceti specializare: ";
+    std::cin>>specializare;
+
+    std::cout<<"Introduceti numarul de certificari: ";
+    std::cin>>nrCertificari;
+
+    std::cout<<"Introduceti certificarile detinute: ";
+    for(int i=0;i<nrCertificari;i++)
+    {
+        std::cin>>certificare;
+        certificari.push_back(certificare);
+    }
+
+    angajati.push_back(new Bucatar(nume,email,varsta,id,salariu,functie,specializare,certificari));
+    std::cout<<"Angajatul a fost adaugat cu succes!\n";
+}
+
+void Hotel::adaugaManager(std::string nume, std::string email, int varsta, int id, int salariu, std::string functie)
+{
+    int aniExp,nrDept;
+    std::vector<std::string> departamente;
+    std::string dept;
+
+    std::cout<<"Introduceti anii de experienta: ";
+    std::cin>>aniExp;
+
+    std::cout<<"Introduceti numarul de departamente: ";
+    std::cin>>nrDept;
+
+    std::cout<<"Introduceti departamentele: ";
+    for(int i=0;i<nrDept;i++)
+    {
+        std::cin>>dept;
+        departamente.push_back(dept);
+    }
+
+    angajati.push_back(new Manager(nume,email,varsta,id,salariu,functie,departamente,aniExp));
+    std::cout<<"Angajatul a fost adaugat cu succes!\n";
 }
