@@ -38,6 +38,19 @@ public:
     void anuleazaRezervare();
     void oferaReview();
 
+    //Metode pentru lucru cu fisiere (salvare date/citire date)
+    void salvareRezervareFisier(const Rezervare& r);
+    void scrieCameraInFisier(const Camera& camera);
+    void incarcaCamereDinFisier();
+    void incarcaAngajatiDinFisier();
+    void salveazaAngajatiInFisier(); //folosita la mariri/micsorari salariale sau la concediere
+    void adaugaAngajatInFisier(Angajat* angajat); //folosita cu modul append doar pentru a adauga la finalul fisierului un angajat
+
+    void incarcaIngrijitor(std::string nume, std::string email, int varsta, int id, int salariu, std::string functie, std::string atribut1);
+    void incarcaReceptioner(std::string nume, std::string email, int varsta, int id, int salariu, std::string functie, std::string atribut1, std::string atribut2);
+    void incarcaBucatar(std::string nume, std::string email, int varsta, int id, int salariu, std::string functie, std::string atribut1, std::string atribut2);
+    void incarcaManager(std::string nume, std::string email, int varsta, int id, int salariu, std::string functie, std::string atribut1, std::string atribut2);
+
     //Actiuni administrator
     void logareAdmin(bool &ok);
     void adaugaCamere();

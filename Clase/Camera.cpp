@@ -14,6 +14,7 @@ Camera::~Camera() {};
 int Camera::getNumar() const { return numar; };
 int Camera::getPret() const { return pret_noapte; };
 std::string Camera::getTip() const { return tip_camera; };
+bool Camera::getStatus() const { return status; };
 int Camera::getTotalCamere() { return totalCamere; }
 
 void Camera::setNumar(int numar) { this->numar=numar; };

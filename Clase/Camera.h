@@ -20,6 +20,7 @@ public:
     int getNumar() const;
     int getPret() const;
     std::string getTip() const;
+    bool getStatus() const;
     static int getTotalCamere();
 
     void setNumar(int numar);
