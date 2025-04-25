@@ -32,6 +32,9 @@ public:
     bool verificaDisponibilitate();
     void afisareDetaliiCamera();
 
+    //Overloading operator <<
+    friend std::ostream& operator<<(std::ostream& out, Camera& cam); //functie friend deoarece accesez atributele private ale clasei (fara a folosi getteri)
+
 };
 
 #endif //CAMERA_H

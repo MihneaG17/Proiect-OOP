@@ -71,3 +71,10 @@ void Bucatar::eliminaCertificare(std::string certificare)
         std::cout<<"Certificarea nu a fost gasita in lista\n";
     }
 }
+
+//Operator overloading +
+Angajat* Bucatar::operator+(int suma) const {
+    Bucatar* copie = new Bucatar(*this); //Copy constructor
+    copie->setSalariu(this->getSalariu() + suma);
+    return copie;
+}

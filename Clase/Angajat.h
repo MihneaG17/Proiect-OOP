@@ -4,6 +4,19 @@
 #include "Persoana.h"
 #include <iostream>
 
+struct StatisticiAngajat {
+    //Variabile declarate statice - apartin struct-ului, nu instantelor (obiectelor)
+    static int totalAngajati;
+    static int salariuTotal;
+    static int salariuMinim;
+    static int salariuMaxim;
+
+    //Metode
+    static void adaugaSalariu(int salariu);
+    static void eliminaSalariu(int salariu);
+    static double salariuMediu();
+};
+
 class Angajat: public Persoana
 {
     int id_angajat;
@@ -27,9 +40,14 @@ public:
     void setFunctie(std::string functie);
 
     //Metode suplimentare
-    void MarireSalariala(int procent);
+    //void MarireSalariala(int procent);
+    //Am comentat metoda MarireSalariala deoarece maresc salariul folosind operatorul supraincarcat +
     void MinorareSalariala(int procent);
     void afisareDetalii() const override;
+
+    //Operator overloading + (marire salariala)
+    virtual Angajat* operator+(int suma) const; //pentru marire - virtual deoarece va fi rescris pentru fiecare tip de angajat
+    
 };
 
 #endif //ANGAJAT_H

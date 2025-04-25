@@ -23,7 +23,8 @@ public:
     //Metode suplimentare
     void afisareDetalii() const override;
 
-    //Metoda viitoare curataEtaj()
+    //Operator overloading +
+    Angajat* operator+(int suma) const override;
 };
 
 #endif //INGRIJITOR_H

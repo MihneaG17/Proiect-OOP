@@ -27,7 +27,8 @@ public:
     void adaugaLimba(std::string limba);
     void eliminaLimba(std::string limba);
 
-    //metoda viitoare preiaClient
+    //Operator overloading +
+    Angajat* operator+(int suma) const override;
 };
 
 

@@ -82,3 +82,9 @@ void Manager::eliminaDepartament(std::string dept)
         std::cout<<"Departamentul nu a fost gasit in lista\n";
     }
 }
+
+Angajat* Manager::operator+(int suma) const {
+    Manager* copie = new Manager(*this); //Copy constructor
+    copie->setSalariu(this->getSalariu() + suma);
+    return copie;
+}

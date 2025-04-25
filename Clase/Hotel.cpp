@@ -129,7 +129,8 @@ void Hotel::veziCamereDisponibile()
     {
         if(camera.verificaDisponibilitate()==true)
         {
-            std::cout<<"Camera "<<camera.getNumar()<<" - "<<camera.getTip()<<" - "<<camera.getPret()<<" RON/noapte"<<"\n";
+            std::cout<<camera<<"\n";
+            //std::cout<<"Camera "<<camera.getNumar()<<" - "<<camera.getTip()<<" - "<<camera.getPret()<<" RON/noapte"<<"\n";
         }
     }
     std::cout<<"\n";
@@ -605,13 +606,17 @@ void Hotel::logareAdmin(bool &ok)
     std::cin>>parola;
     std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
 
-    if(email!="mihnea298@gmail.com" || parola!="mihnea123")
+    Administrator admin("mihnea298@gmail.com", "mihnea123"); 
+
+    if(admin.autentificare(email,parola))
+    {
+        std::cout<<"V-ati autentificat cu succes!\n";
+        ok=true;
+    }
+    else
     {
         std::cout<<"Mail-ul sau parola introduse sunt incorecte!\n";
-        return;
     }
-    std::cout<<"V-ati autentificat cu succes!\n";
-    ok=true;
 }
 
 void Hotel::scrieCameraInFisier(const Camera& camera)
@@ -709,7 +714,8 @@ void Hotel::gestionareAngajati()
         std::cout<<"3. Minorare salariala\n";
         std::cout<<"4. Concediere\n";
         std::cout<<"5. Angajare\n";
-        std::cout<<"6. Inapoi\n";
+        std::cout<<"6. Afiseaza statistici despre angajati\n";
+        std::cout<<"7. Inapoi\n";
         std::cout<<"Alegeti optiunea: ";
         std::cin>>choice;
 
@@ -731,17 +737,20 @@ void Hotel::gestionareAngajati()
             angajare();
             break;
         case 6:
+            afiseazaStatisticiAngajati();
+            break;
+        case 7:
             std::cout<<"Inapoi\n";
             break;
         default:
             break;
         }
         
-    } while (choice!=6);
+    } while (choice!=7);
 }
 void Hotel::vizualizareClienti()
 {
-
+    //in viitor
 }
 void Hotel::vizualizareToateRezervarile()
 {
@@ -787,13 +796,22 @@ void Hotel::maresteSalariuAdmin()
         }
         pozitie++;
     }
-    if(ok==1)
+    if(ok)
     {
-        int procent;
-        std::cout<<"Introduceti procentul cu care doriti sa mariti salariul angajatului: \n";
-        std::cin>>procent;
+        int suma;
+        std::cout<<"Introduceti suma cu care doriti sa mariti salariul angajatului: \n";
+        std::cin>>suma;
 
-        angajati[pozitie]->MarireSalariala(procent);
+        //Folosesc operatorul overloaded +
+        Angajat* angajatNou = *(angajati[pozitie])+suma;
+
+        //Actualizez struct-ul cu statistici pentru angajati
+        StatisticiAngajat::eliminaSalariu(angajati[pozitie]->getSalariu());
+        StatisticiAngajat::adaugaSalariu(angajatNou->getSalariu());
+
+        delete angajati[pozitie]; //Eliberez vechiul obiect
+        angajati[pozitie]=angajatNou; //Inlocuiesc cu noul obiect
+
         salveazaAngajatiInFisier();
 
         std::cout<<"Salariul a fost modificat\n";
@@ -853,9 +871,10 @@ void Hotel::concediereAngajat()
         }
         pozitie++;
     }
-    if(ok==1)
+    if(ok)
     {
-        angajati.erase(angajati.begin()+pozitie);
+        delete angajati[pozitie]; //sterg de tot obiectul si eliberez memoria
+        angajati.erase(angajati.begin()+pozitie); //sterg pointerul din vector
         salveazaAngajatiInFisier();
         std::cout<<"Angajatul cu ID-ul "<<id<<" a fost concediat\n\n";
     }
@@ -917,6 +936,16 @@ void Hotel::angajare()
     {
         std::cout<<"Functia introdusa nu exista\n";
     }
+}
+
+void Hotel::afiseazaStatisticiAngajati()
+{
+    std::cout<<"Total angajati: "<<StatisticiAngajat::totalAngajati<<"\n";
+    std::cout<<"Salariu total: "<<StatisticiAngajat::salariuTotal<<"\n";
+    std::cout<<"Salariu mediu: "<<StatisticiAngajat::salariuMediu()<<"\n";
+    std::cout<<"Salariu minim: "<<StatisticiAngajat::salariuMinim<<"\n";
+    std::cout<<"Salariu maxim: "<<StatisticiAngajat::salariuMaxim<<"\n";
+    std::cout<<"\n";
 }
 
 //Functiile din optiunea(metoda) angajare()
@@ -1166,17 +1195,17 @@ void Hotel::salveazaAngajatiInFisier()
 
 void Hotel::adaugaAngajatInFisier(Angajat* angajat)
 {
-    std::ofstream fout("Fisiere_txt/angajati.txt", std::ios::app);
+    std::ofstream fout("Fisiere_txt/angajati.txt", std::ios::app); //append
     if (!fout.is_open()) {
         std::cerr << "Eroare la deschiderea fisierului.\n";
         return;
     }
 
     if (Ingrijitor* i = dynamic_cast<Ingrijitor*>(angajat)) {
-        fout << "ingrijitor;"<< i->getNume() << ";"<< i->getEmail() << ";"<< i->getVarsta() << ";"<< i->getId() << ";"<< i->getSalariu() << ";"<< i->getFunctie() << ";"<< i->getEtaj() << "\n";
+        fout << "ingrijitor;"<< i->getNume() << ";"<< i->getEmail() << ";"<< i->getVarsta() << ";"<< i->getId() << ";"<< i->getSalariu() << ";"<< i->getEtaj() << "\n";
     }
     else if (Receptioner* r = dynamic_cast<Receptioner*>(angajat)) {
-        fout << "receptioner;"<< r->getNume() << ";"<< r->getEmail() << ";"<< r->getVarsta() << ";"<< r->getId() << ";"<< r->getSalariu() << ";"<< r->getFunctie() << ";"<< r->getSchimb() << ";";
+        fout << "receptioner;"<< r->getNume() << ";"<< r->getEmail() << ";"<< r->getVarsta() << ";"<< r->getId() << ";"<< r->getSalariu() << ";"<< r->getSchimb() << ";";
 
         const auto& limbi = r->getLimbi();
         for (int i = 0; i < limbi.size(); ++i) {
@@ -1186,7 +1215,7 @@ void Hotel::adaugaAngajatInFisier(Angajat* angajat)
         fout << "\n";
     }
     else if (Bucatar* b = dynamic_cast<Bucatar*>(angajat)) {
-        fout << "bucatar;"<< b->getNume() << ";"<< b->getEmail() << ";"<< b->getVarsta() << ";"<< b->getId() << ";"<< b->getSalariu() << ";"<< b->getFunctie() << ";"<< b->getSpecializare() << ";";
+        fout << "bucatar;"<< b->getNume() << ";"<< b->getEmail() << ";"<< b->getVarsta() << ";"<< b->getId() << ";"<< b->getSalariu() << ";"<< b->getSpecializare() << ";";
 
         const auto& certif = b->getCertificari();
         for (int i = 0; i < certif.size(); ++i) {
@@ -1196,7 +1225,7 @@ void Hotel::adaugaAngajatInFisier(Angajat* angajat)
         fout << "\n";
     }
     else if (Manager* m = dynamic_cast<Manager*>(angajat)) {
-        fout << "manager;"<< m->getNume() << ";"<< m->getEmail() << ";"<< m->getVarsta() << ";"<< m->getId() << ";"<< m->getSalariu() << ";"<< m->getFunctie() << ";";
+        fout << "manager;"<< m->getNume() << ";"<< m->getEmail() << ";"<< m->getVarsta() << ";"<< m->getId() << ";"<< m->getSalariu() << ";";
 
         const auto& dept = m->getDepartamente();
         for (int i = 0; i < dept.size(); ++i) {

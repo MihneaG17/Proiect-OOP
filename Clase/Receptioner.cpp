@@ -70,3 +70,10 @@ void Receptioner::eliminaLimba(std::string limba)
         std::cout<<"Limba nu a fost gasita in lista\n";
     }
 }
+
+//Operator overloading +
+Angajat* Receptioner::operator+(int suma) const {
+    Receptioner* copie = new Receptioner(*this); //Copy constructor
+    copie->setSalariu(this->getSalariu() + suma);
+    return copie;
+}

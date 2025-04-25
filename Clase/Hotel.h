@@ -14,6 +14,8 @@
 #include "Receptioner.h"
 #include "Bucatar.h"
 #include "Manager.h"
+#include "Autentificabil.h"
+#include "Administrator.h"
 
 class Hotel
 {
@@ -67,6 +69,7 @@ public:
     void micsoreazaSalariuAdmin(); //micsoreaza salariul angajatului prin actiunea din consola a adminului
     void concediereAngajat();
     void angajare();
+    void afiseazaStatisticiAngajati();
 
     //Functiile din optiunea(metoda) angajare()
     void adaugaIngrijitor(std::string nume, std::string email,int varsta,int id,int salariu,std::string functie);

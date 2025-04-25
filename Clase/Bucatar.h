@@ -26,6 +26,10 @@ public:
     void afisareDetalii() const override;
     void adaugaCertificare(std::string certificare);
     void eliminaCertificare(std::string certificare);
+
+    //Operator overloading +
+    Angajat* operator+(int suma) const override;
 };
+
 
 #endif //BUCATAR_H

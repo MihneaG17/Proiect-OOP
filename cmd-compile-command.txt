@@ -1,2 +1,2 @@
-g++ main.cpp Clase/Angajat.cpp Clase/Persoana.cpp Clase/Camera.cpp Clase/Client.cpp Clase/Rezervare.cpp Clase/Review.cpp Clase/Hotel.cpp Clase/Receptioner.cpp Clase/Ingrijitor.cpp Clase/Bucatar.cpp Clase/Manager.cpp Clase/utils.cpp -o program
+g++ main.cpp Clase/Angajat.cpp Clase/Persoana.cpp Clase/Camera.cpp Clase/Client.cpp Clase/Rezervare.cpp Clase/Review.cpp Clase/Hotel.cpp Clase/Receptioner.cpp Clase/Ingrijitor.cpp Clase/Bucatar.cpp Clase/Manager.cpp Clase/Administrator.cpp Clase/utils.cpp -o program
 ./program

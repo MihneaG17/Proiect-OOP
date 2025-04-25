@@ -29,6 +29,9 @@ public:
     void afisareDetalii() const override;
     void adaugaDepartament(std::string dept);
     void eliminaDepartament(std::string dept);
+
+    //Operator overloading +
+    Angajat* operator+(int suma) const override;
 };
 
 #endif //MANAGER_H

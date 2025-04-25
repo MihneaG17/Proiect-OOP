@@ -26,3 +26,10 @@ void Ingrijitor::afisareDetalii() const
     std::cout<<"Functie: "<<getFunctie()<<"\n";
     std::cout<<"Etaj atribuit pentru ingrijire: "<<etaj_curatenie<<"\n";
 }
+
+//Operator overloading +
+Angajat* Ingrijitor::operator+(int suma) const {
+    Ingrijitor* copie = new Ingrijitor(*this); //Copy constructor
+    copie->setSalariu(this->getSalariu() + suma);
+    return copie;
+}

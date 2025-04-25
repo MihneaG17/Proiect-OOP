@@ -33,3 +33,11 @@ void Camera::afisareDetaliiCamera()
     std::cout<<"\n";
 };
 
+//Overloading operator <<
+
+std::ostream& operator<<(std::ostream& out, Camera& cam)
+{
+    out<<"Camera "<<cam.numar<<" - "<<cam.tip_camera<<" - "<<cam.pret_noapte<<" RON/noapte";
+    return out;
+}
+

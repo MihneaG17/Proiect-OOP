@@ -1,5 +1,5 @@
 ingrijitor;Ion Popescu;ion@gmail.com;35;1;2500;2
-receptioner;Maria Ionescu;maria@gmail.com;30;2;3000;zi;romana,engleza
+receptioner;Maria Ionescu;maria@gmail.com;30;2;3300;zi;romana,engleza
 manager;Ioana Dobrin;ioana@gmail.com;40;3;7000;Receptie,Curatenie;10
-receptioner;Popovici Matei;mateipopovici@yahoo.com;40;2;3750;zi;romana,engleza
-bucatar;Stefan Pop;stefan@gmail.com;22;5;4670;bucatar;patiserie;patiserie,brutarie
+receptioner;Popovici Matei;mateipopovici@yahoo.com;40;4;3750;zi;romana,engleza
+receptioner;Lupu Teodor;teolupu@gmail.com;23;5;6200;noapte;romana,spaniola
