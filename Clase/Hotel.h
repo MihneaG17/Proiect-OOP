@@ -42,7 +42,10 @@ public:
     void salvareRezervareFisier(const Rezervare& r);
     void scrieCameraInFisier(const Camera& camera);
     void incarcaCamereDinFisier();
+    void actualizeazaCamereDupaRezervare();
     void incarcaAngajatiDinFisier();
+    void incarcaRezervariDinFisier();
+    void actualizareRezervariDupaAnulare(); 
     void salveazaAngajatiInFisier(); //folosita la mariri/micsorari salariale sau la concediere
     void adaugaAngajatInFisier(Angajat* angajat); //folosita cu modul append doar pentru a adauga la finalul fisierului un angajat
 

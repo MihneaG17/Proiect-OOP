@@ -1,7 +1,7 @@
 #include "Review.h"
 #include <iostream>
 
-Review::Review(): nota(0.0), comentariu("N/A") {}; //Constructor implicit
+Review::Review(): nota(0.0), comentariu("-") {}; //Constructor implicit
 Review::Review(double nota, std::string comentariu): nota(nota), comentariu(comentariu) {}; // Constructor parametrizat (foloseste referinta constanta pentru eficienta)
 Review::Review(const Review& rw): nota(rw.nota), comentariu(rw.comentariu) {}; //Copy constructor
 Review::~Review() {}; //Destructor

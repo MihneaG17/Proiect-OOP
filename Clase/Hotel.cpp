@@ -8,6 +8,7 @@
 Hotel::Hotel() {
     incarcaCamereDinFisier();
     incarcaAngajatiDinFisier();
+    incarcaRezervariDinFisier();
 };
 
 Hotel::~Hotel() {}; //Destructor
@@ -49,7 +50,7 @@ void Hotel::meniuClient()
         std::cout<<"Ce doriti sa faceti?\n";
         std::cout<<"1. Vezi camerele disponibile.\n";
         std::cout<<"2. Efectueaza o rezervare.\n";
-        std::cout<<"3. Vezi toate rezervarile efectuate.\n";
+        std::cout<<"3. Vezi rezervarile efectuate pe un anumit nume.\n";
         std::cout<<"4. Anuleaza o rezervare.\n";
         std::cout<<"5. Ofera review unei rezervari.\n";
         std::cout<<"6. Inapoi\n";
@@ -91,7 +92,7 @@ void Hotel::meniuAdministrator()
             std::cout<<"Ce doriti sa faceti?: \n";
             std::cout<<"1. Adaugati camere. \n";
             std::cout<<"2. Gestionati angajati. \n";
-            std::cout<<"3. Vizualizati clienti. \n";
+            std::cout<<"3. Vizualizati clienti. - Momentan indisponibil \n";
             std::cout<<"4. Vizualizati toate rezervarile. \n";
             std::cout<<"5. Inapoi \n";
             std::cout<<"Alegeti:\n";
@@ -105,7 +106,7 @@ void Hotel::meniuAdministrator()
                 gestionareAngajati();
                 break;
             case 3:
-                vizualizareClienti();
+                vizualizareClienti(); //urmeaza
                 break;
             case 4:
                 vizualizareToateRezervarile();
@@ -155,6 +156,8 @@ void Hotel::salvareRezervareFisier(const Rezervare& r)
         f<<"Discount: "<<r.getDiscount()<<"\n";
         f<<"Metoda plata: "<<r.getMetodaPlata()<<"\n";
         f<<"Observatii: "<<r.getObservatii()<<"\n";
+        f<<"Rating: "<<r.getReview().getNota()<<"\n";
+        f<<"Comentariu: "<<r.getReview().getComentariu()<<"\n";
         f<<"------------------------------\n";
 
         f.close();
@@ -192,7 +195,85 @@ void Hotel::incarcaCamereDinFisier()
     }
     in.close();
 }
+void Hotel::incarcaRezervariDinFisier()
+{
+    std::ifstream fin("Fisiere_txt/rezervari.txt");
+    if (!fin.is_open()) {
+        std::cerr << "Eroare la deschiderea fisierului de rezervari.\n";
+        return;
+    }
+    std::string linie;
+    while(std::getline(fin,linie)) //cat timp citim linii
+    {
+        if(linie.empty()) continue;
 
+        int id=std::stoi(linie.substr(14)); //substring-ul de la pozitia 15 - id-ul care se afla dupa ":" !!!!!
+
+        std::getline(fin,linie);
+        std::string nume=linie.substr(13); //nume client:
+
+        std::getline(fin, linie);
+        std::string email = linie.substr(7); //email:
+
+        std::getline(fin, linie); // Camera: 2 - Double - 200RON/noapte
+        int nrCamera, pretCamera;
+        std::string tipCamera;
+
+        size_t start = linie.find(':') + 2; // începe după "Camera: "
+        size_t dash1 = linie.find('-', start);
+        nrCamera = std::stoi(linie.substr(start, dash1 - start));
+
+        size_t dash2 = linie.find('-', dash1 + 2);
+        tipCamera = linie.substr(dash1 + 2, dash2 - dash1 - 3);
+
+        size_t ronPos = linie.find("RON");
+        pretCamera = std::stoi(linie.substr(dash2 + 2, ronPos - dash2 - 2));
+
+        Camera cam(nrCamera, true, pretCamera, tipCamera);
+
+        std::getline(fin, linie);
+        std::string checkIn = linie.substr(10); //check-in:
+
+        std::getline(fin, linie);
+        std::string checkOut = linie.substr(11); //check-out:
+
+        std::getline(fin, linie);
+        int nopti = std::stoi(linie.substr(7)); //nopti:
+
+        std::getline(fin, linie);
+        double pretTotal = std::stod(linie.substr(12)); //pret total:
+
+        std::getline(fin, linie);
+        double discount = std::stod(linie.substr(9)); //discount:
+
+        std::getline(fin, linie);
+        std::string metoda = linie.substr(14); //metoda plata:
+
+        std::getline(fin, linie);
+        std::string observatii = linie.substr(12); //observatii:
+
+        std::getline(fin,linie);
+        double rating = std::stod(linie.substr(7)); //rating:
+
+        std::getline(fin,linie);
+        std::string comentariu=linie.substr(12); //comentariu:
+
+        Client client;
+        client.setNume(nume);
+        client.setEmail(email);
+
+        Review rv;
+        rv.setNota(rating);
+        rv.setComentariu(comentariu);
+
+        Rezervare r(id, checkIn, checkOut, pretTotal, client, cam, metoda, observatii, discount, nopti);
+        r.setReview(rv);
+        rezervari.push_back(r);
+
+        std::getline(fin,linie); //dam skip la separatorul ------------------------
+    }
+    fin.close();
+}
 void Hotel::adaugaRezervare(Camera &camera, std::string& data_check_in, std::string& data_check_out)
 {
     Client client;
@@ -257,6 +338,7 @@ void Hotel::adaugaRezervare(Camera &camera, std::string& data_check_in, std::str
     salvareRezervareFisier(r);
 
     camera.setDisponibilitate(false);
+    actualizeazaCamereDupaRezervare();
 
     std::cout << "Rezervarea a fost efectuata cu succes! Detalii:\n";
     r.afisareDetalii();
@@ -320,16 +402,19 @@ void Hotel::efectueazaRezervare()
 
 void Hotel::vizualizareRezervari()
 {
-    if(rezervari.empty()) //Metoda din libraria <vector> pentru a verifica daca vectorul este sau nu gol
+    bool gasit=0;
+    std::string nume;
+
+    std::cout<<"Introduceti numele pe care au fost efectuate rezervari: ";
+
+    std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+    std::getline(std::cin,nume);
+
+    for(auto& rezervare : rezervari)
     {
-        std::cout<<"Momentan nu ati efectuat nicio rezervare"<<"\n";
-        std::cout<<"\n";
-        return;
-    }
-    else
-    {
-        for(auto& rezervare : rezervari)
+        if(rezervare.getClient().getNume()==nume)
         {
+            gasit=1;
             std::cout<<"-------------------------------"<<"\n";
             std::cout<<"ID-ul rezervarii: "<<rezervare.getId()<<"\n";
             std::cout<<"Data de check-in: "<<rezervare.getDataCheckIn()<<"\n";
@@ -353,13 +438,15 @@ void Hotel::vizualizareRezervari()
 
             std::cout<<"\n";
             
-            if(rezervare.areReview())
-            {
-                Review r=rezervare.getReview();
-                std::cout<<"Rating: "<<r.getNota()<<"\n";
-                std::cout<<"Comentariu: "<<r.getComentariu()<<"\n";
-            }
+            Review r=rezervare.getReview();
+            std::cout<<"Rating: "<<r.getNota()<<"\n";
+            std::cout<<"Comentariu: "<<r.getComentariu()<<"\n";
+            
         }
+    }
+    if(!gasit)
+    {
+        std::cout<<"Nu au fost gasite rezervari efectuate pe numele "<<nume;
         std::cout<<"\n";
     }
 }
@@ -396,6 +483,8 @@ void Hotel::anuleazaRezervare()
                 }
             }
             rezervari.erase(rezervari.begin()+pozitie);
+            actualizareRezervariDupaAnulare();
+            actualizeazaCamereDupaRezervare();
             std::cout<<"Rezervarea a fost anulata cu succes!\n";
             std::cout<<"\n";
             break;
@@ -406,6 +495,59 @@ void Hotel::anuleazaRezervare()
     {
         std::cout<<"Rezervarea cautata nu a fost gasita\n";
     }
+}
+
+void Hotel::actualizareRezervariDupaAnulare()
+{
+    std::ofstream fout("Fisiere_txt/rezervari.txt", std::ios::out); //std::ios::out este folosit pentru a rescrie fisierul (overwrite) folosind continutul actual din vector
+    if(!fout.is_open())
+    {
+        std::cerr<<"Eroare la deschiderea fisierului";
+        return;
+    }
+
+    for(auto& rezervare : rezervari)
+    {
+            fout<<"ID rezervare: "<<rezervare.getId()<<"\n";
+            fout<<"Nume client: "<<rezervare.getClient().getNume()<<"\n";
+            fout<<"Email: "<<rezervare.getClient().getEmail()<<"\n";
+            
+            const Camera cam = rezervare.getCamera();
+
+            fout<<"Camera: "<<cam.getNumar()<<" - "<<cam.getTip()<<" - "<<cam.getPret()<<"RON/noapte\n";
+            fout<<"Check-in: "<<rezervare.getDataCheckIn()<<"\n";
+            fout<<"Check-out: "<<rezervare.getDataCheckOut()<<"\n";
+            fout<<"Nopti: "<<rezervare.getNumarNopti()<<"\n";
+            fout<<"Pret total: "<<rezervare.getPretTotal()<<"\n";
+            fout<<"Discount: "<<rezervare.getDiscount()<<"%\n";
+            fout<<"Metoda plata: "<<rezervare.getMetodaPlata()<<"\n";
+            fout<<"Observatii: "<<rezervare.getObservatii()<<"\n";
+            
+            Review r=rezervare.getReview();
+            fout<<"Rating: "<<r.getNota()<<"\n";
+            fout<<"Comentariu: "<<r.getComentariu()<<"\n";
+            
+            fout<<"-------------------------------"<<"\n";
+    }
+    fout.close();
+}
+void Hotel::actualizeazaCamereDupaRezervare()
+{
+    std::ofstream fout("Fisiere_txt/camere.txt", std::ios::out); //overwrite
+    if(!fout.is_open())
+    {
+        std::cerr<<"Eroare la deschiderea fisierului";
+        return;
+    }
+
+    for(auto& camera : camere)
+    {
+        fout<<camera.getNumar()<<" ";
+        fout<<camera.getTip()<<" ";
+        fout<<camera.getPret()<<" ";
+        fout<<camera.getStatus()<<"\n";
+    }
+    fout.close();
 }
 
 void Hotel::oferaReview() 
@@ -442,6 +584,7 @@ void Hotel::oferaReview()
             review.setComentariu(comentariu);
 
             rezervare.setReview(review);
+            actualizareRezervariDupaAnulare(); //folosesc aceeasi functie care ~rescrie fisierul dupa anulare~ pentru a adauga un review
         }
     }
     if(!gasit)
