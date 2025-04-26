@@ -7,8 +7,8 @@
 
 class Bucatar: public Angajat
 {
-    std::string specializare; //tipul "dish-urilor" in care este specializat
-    std::vector<std::string> certificari; //tipuri de meniuri pe care le poate prepara
+    std::string m_specializare; //tipul "dish-urilor" in care este specializat
+    std::vector<std::string> m_certificari; //tipuri de meniuri pe care le poate prepara
 public:
     Bucatar(); //Constructor implicit
     Bucatar(std::string nume, std::string email, int varsta, int id_angajat, int salariu, std::string functie, std::string specializare, std::vector<std::string> certificari); //Constructor parametrizat
@@ -17,15 +17,15 @@ public:
     ~Bucatar(); //Destructor
 
     //Getteri si setteri
-    std::string getSpecializare() const;
-    std::vector<std::string> getCertificari() const;
+    std::string GetSpecializare() const;
+    std::vector<std::string> GetCertificari() const;
 
-    void setSpecializare(std::string specializare);
+    void SetSpecializare(std::string specializare);
 
     //Metode suplimentare
-    void afisareDetalii() const override;
-    void adaugaCertificare(std::string certificare);
-    void eliminaCertificare(std::string certificare);
+    void AfisareDetalii() const override;
+    void AdaugaCertificare(std::string certificare);
+    void EliminaCertificare(std::string certificare);
 
     //Operator overloading +
     Angajat* operator+(int suma) const override;

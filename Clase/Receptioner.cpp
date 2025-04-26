@@ -2,63 +2,63 @@
 #include <iostream>
 #include <vector>
 
-Receptioner::Receptioner(): Angajat(), schimb("N/A"), limbi_vorbite() {}; //Constructor implicit
+Receptioner::Receptioner(): Angajat(), m_schimb("-"), m_limbi_vorbite() {}; //Constructor implicit
 
 Receptioner::Receptioner(std::string nume, std::string email, int varsta, int id_angajat, int salariu, std::string functie, std::string schimb, std::vector <std::string> limbi_vorbite): 
-Angajat(nume,email,varsta,id_angajat,salariu,functie), schimb(schimb), limbi_vorbite(limbi_vorbite) {}; //Constructor parametrizat
+Angajat(nume,email,varsta,id_angajat,salariu,functie), m_schimb(schimb), m_limbi_vorbite(limbi_vorbite) {}; //Constructor parametrizat
 
-Receptioner::Receptioner(const Receptioner& obj): Angajat(obj), schimb(obj.schimb), limbi_vorbite(obj.limbi_vorbite) {}; //Copy constructor
+Receptioner::Receptioner(const Receptioner& obj): Angajat(obj), m_schimb(obj.m_schimb), m_limbi_vorbite(obj.m_limbi_vorbite) {}; //Copy constructor
 
 Receptioner::~Receptioner() {}; //Destructor
 
 //Getteri si setteri
-std::string Receptioner::getSchimb() const { return schimb; };
-std::vector <std::string> Receptioner::getLimbi() const { return limbi_vorbite; };
+std::string Receptioner::GetSchimb() const { return m_schimb; };
+std::vector <std::string> Receptioner::GetLimbi() const { return m_limbi_vorbite; };
 
-void Receptioner::setSchimb(std::string schimb) { this->schimb=schimb; };
+void Receptioner::SetSchimb(std::string schimb) { m_schimb=schimb; };
 
 //Metode suplimentare
-void Receptioner::afisareDetalii() const
+void Receptioner::AfisareDetalii() const
 {
-    std::cout<<"Nume: "<<getNume()<<"\n";
-    std::cout<<"Email: "<<getEmail()<<"\n";
-    std::cout<<"Varsta: "<<getVarsta()<<"\n";
-    std::cout<<"ID Angajat: "<<getId()<<"\n";
-    std::cout<<"Salariu: "<<getSalariu()<<"\n";
-    std::cout<<"Functie: "<<getFunctie()<<"\n";
-    std::cout<<"Schimb: "<<schimb<<"\n";
-    if(!limbi_vorbite.empty())
+    std::cout<<"Nume: "<<GetNume()<<"\n";
+    std::cout<<"Email: "<<GetEmail()<<"\n";
+    std::cout<<"Varsta: "<<GetVarsta()<<"\n";
+    std::cout<<"ID Angajat: "<<GetId()<<"\n";
+    std::cout<<"Salariu: "<<GetSalariu()<<"\n";
+    std::cout<<"Functie: "<<GetFunctie()<<"\n";
+    std::cout<<"Schimb: "<<GetSchimb()<<"\n";
+    if(!m_limbi_vorbite.empty())
     {
         std::cout<<"Limbi vorbite: \n";
-        for(auto& a : limbi_vorbite)
-            std::cout<<a<<" ";
+        for(auto& l : GetLimbi())
+            std::cout<<l<<" ";
         std::cout<<"\n";
     }
 }
 
-void Receptioner::adaugaLimba(std::string limba)
+void Receptioner::AdaugaLimba(std::string limba)
 {
-    for(auto& a : limbi_vorbite)
+    for(auto& l : m_limbi_vorbite)
     {
-        if(a==limba)
+        if(l==limba)
         {
             std::cout<<"Angajatul vorbeste deja limba introdusa\n";
             return;
         }
     }
-    limbi_vorbite.push_back(limba);
+    m_limbi_vorbite.push_back(limba);
     std::cout<<"Limba selectata a fost adaugata cu succes!\n";
 }
 
-void Receptioner::eliminaLimba(std::string limba)
+void Receptioner::EliminaLimba(std::string limba)
 {
     int pozitie=0;
     bool ok=0;
-    for(auto& a : limbi_vorbite)
+    for(auto& l : m_limbi_vorbite)
     {
-        if(a==limba)
+        if(l==limba)
         {
-            limbi_vorbite.erase(limbi_vorbite.begin()+pozitie);
+            m_limbi_vorbite.erase(m_limbi_vorbite.begin()+pozitie);
             ok=1;
             std::cout<<"Limba selectata a fost eliminata.\n";
             return;
@@ -74,6 +74,6 @@ void Receptioner::eliminaLimba(std::string limba)
 //Operator overloading +
 Angajat* Receptioner::operator+(int suma) const {
     Receptioner* copie = new Receptioner(*this); //Copy constructor
-    copie->setSalariu(this->getSalariu() + suma);
+    copie->SetSalariu(this->GetSalariu() + suma);
     return copie;
 }

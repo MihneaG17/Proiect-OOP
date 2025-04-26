@@ -6,14 +6,14 @@
 #include <limits>
 
 Hotel::Hotel() {
-    incarcaCamereDinFisier();
-    incarcaAngajatiDinFisier();
-    incarcaRezervariDinFisier();
+    IncarcaCamereDinFisier();
+    IncarcaAngajatiDinFisier();
+    IncarcaRezervariDinFisier();
 };
 
 Hotel::~Hotel() {}; //Destructor
 
-void Hotel::ruleaza()
+void Hotel::Ruleaza()
 {
     int opt;
 
@@ -27,10 +27,10 @@ void Hotel::ruleaza()
 
         switch (opt) {
             case 1:
-                meniuClient();
+                MeniuClient();
                 break;
             case 2:
-                meniuAdministrator();
+                MeniuAdministrator();
                 break;
             case 3:
                 std::cout << "La revedere!\n";
@@ -43,7 +43,7 @@ void Hotel::ruleaza()
     } while (opt != 3);
 }
 
-void Hotel::meniuClient()
+void Hotel::MeniuClient()
 {
     int choice;
     do {
@@ -59,19 +59,19 @@ void Hotel::meniuClient()
         switch (choice)
         {
         case 1:
-            veziCamereDisponibile();
+            VeziCamereDisponibile();
             break;
         case 2:
-            efectueazaRezervare();
+            EfectueazaRezervare();
             break;
         case 3:
-            vizualizareRezervari();
+            VizualizareRezervari();
             break;
         case 4:
-            anuleazaRezervare();
+            AnuleazaRezervare();
             break;
         case 5:
-            oferaReview();
+            OferaReview();
             break;
         case 6:
             std::cout<<"Revenim la meniul principal\n";
@@ -80,10 +80,10 @@ void Hotel::meniuClient()
     }
    }while(choice!=6);
 }
-void Hotel::meniuAdministrator()
+void Hotel::MeniuAdministrator()
 {
     bool ok=false;
-    logareAdmin(ok);
+    LogareAdmin(ok);
     if(ok==true)
     {
         int choice;
@@ -100,16 +100,16 @@ void Hotel::meniuAdministrator()
             switch (choice)
             {
             case 1:
-                adaugaCamere();
+                AdaugaCamere();
                 break;
             case 2:
-                gestionareAngajati();
+                GestionareAngajati();
                 break;
             case 3:
-                vizualizareClienti(); //urmeaza
+                VizualizareClienti(); //urmeaza
                 break;
             case 4:
-                vizualizareToateRezervarile();
+                VizualizareToateRezervarile();
                 break;
             case 5:
                 std::cout<<"Revenim la meniul principal\n";
@@ -122,43 +122,43 @@ void Hotel::meniuAdministrator()
 
 //Actiuni client
 
-void Hotel::veziCamereDisponibile()
+void Hotel::VeziCamereDisponibile()
 {  
-    std::cout<<"Urmatoarele camere sunt disponibile pentru rezervare: "<<"\n";
-    for(auto& camera : camere) //referinta - pentru a nu copia fiecare element din vector - este accesat obiectul in sine
+    std::cout<<"In hotel exista "<<Camera::GetTotalCamere()<<" camere, urmatoarele fiind disponibile pentru rezervare: "<<"\n";
+    for(auto& camera : m_camere) //referinta - pentru a nu copia fiecare element din vector - este accesat obiectul in sine
     {
-        if(camera.verificaDisponibilitate()==true)
+        if(camera.VerificaDisponibilitate()==true)
         {
-            std::cout<<camera<<"\n";
+            std::cout<<camera<<"\n"; //operator overloading <<
             //std::cout<<"Camera "<<camera.getNumar()<<" - "<<camera.getTip()<<" - "<<camera.getPret()<<" RON/noapte"<<"\n";
         }
     }
     std::cout<<"\n";
 }
 
-void Hotel::salvareRezervareFisier(const Rezervare& r)
+void Hotel::SalvareRezervareFisier(const Rezervare& r)
 {
     std::ofstream f("Fisiere_txt/rezervari.txt",std::ios::app); //deschide fisierul in modul append pentru a adauga date la finalul sau
 
     if(f.is_open())
     {
-        f<<"ID rezervare: "<<r.getId()<<"\n";
-        f<<"Nume client: "<<r.getClient().getNume()<<"\n";
-        f<<"Email: "<<r.getClient().getEmail()<<"\n";
+        f<<"ID rezervare: "<<r.GetId()<<"\n";
+        f<<"Nume client: "<<r.GetClient().GetNume()<<"\n";
+        f<<"Email: "<<r.GetClient().GetEmail()<<"\n";
 
-        const Camera cam = r.getCamera();
+        const Camera cam = r.GetCamera();
 
-        f<<"Camera: "<<cam.getNumar()<<" - "<<cam.getTip()<<" - "<<cam.getPret()<<"RON/noapte\n";
+        f<<"Camera: "<<cam.GetNumar()<<" - "<<cam.GetTip()<<" - "<<cam.GetPret()<<"RON/noapte\n";
 
-        f<<"Check-in: "<<r.getDataCheckIn()<<"\n";
-        f<<"Check-out: "<<r.getDataCheckOut()<<"\n";
-        f<<"Nopti: "<<r.getNumarNopti()<<"\n";
-        f<<"Pret total: "<<r.getPretTotal()<<"\n";
-        f<<"Discount: "<<r.getDiscount()<<"\n";
-        f<<"Metoda plata: "<<r.getMetodaPlata()<<"\n";
-        f<<"Observatii: "<<r.getObservatii()<<"\n";
-        f<<"Rating: "<<r.getReview().getNota()<<"\n";
-        f<<"Comentariu: "<<r.getReview().getComentariu()<<"\n";
+        f<<"Check-in: "<<r.GetDataCheckIn()<<"\n";
+        f<<"Check-out: "<<r.GetDataCheckOut()<<"\n";
+        f<<"Nopti: "<<r.GetNumarNopti()<<"\n";
+        f<<"Pret total: "<<r.GetPretTotal()<<"\n";
+        f<<"Discount: "<<r.GetDiscount()<<"\n";
+        f<<"Metoda plata: "<<r.GetMetodaPlata()<<"\n";
+        f<<"Observatii: "<<r.GetObservatii()<<"\n";
+        f<<"Rating: "<<r.GetReview().GetNota()<<"\n";
+        f<<"Comentariu: "<<r.GetReview().GetComentariu()<<"\n";
         f<<"------------------------------\n";
 
         f.close();
@@ -169,7 +169,7 @@ void Hotel::salvareRezervareFisier(const Rezervare& r)
     }
 }
 
-void Hotel::incarcaCamereDinFisier()
+void Hotel::IncarcaCamereDinFisier()
 {
     std::ifstream in("Fisiere_txt/camere.txt");
 
@@ -179,24 +179,24 @@ void Hotel::incarcaCamereDinFisier()
         return;
     }
 
-    int nrCamera,pret;
+    int nr_camera,pret;
     std::string tip;
     bool disponibilitate;
 
     //cat timp citim linii valide
-    while(in >> nrCamera >> tip >> pret >> disponibilitate)
+    while(in >> nr_camera >> tip >> pret >> disponibilitate)
     {
         Camera camera;
-        camera.setNumar(nrCamera);
-        camera.setTip(tip);
-        camera.setPret(pret);
-        camera.setDisponibilitate(disponibilitate);
+        camera.SetNumar(nr_camera);
+        camera.SetTip(tip);
+        camera.SetPret(pret);
+        camera.SetDisponibilitate(disponibilitate);
 
-        camere.push_back(camera);
+        m_camere.push_back(camera);
     }
     in.close();
 }
-void Hotel::incarcaRezervariDinFisier()
+void Hotel::IncarcaRezervariDinFisier()
 {
     std::ifstream fin("Fisiere_txt/rezervari.txt");
     if (!fin.is_open()) {
@@ -217,32 +217,32 @@ void Hotel::incarcaRezervariDinFisier()
         std::string email = linie.substr(7); //email:
 
         std::getline(fin, linie); // Camera: 2 - Double - 200RON/noapte
-        int nrCamera, pretCamera;
+        int nr_camera, pret_camera;
         std::string tipCamera;
 
         size_t start = linie.find(':') + 2; // începe după "Camera: "
         size_t dash1 = linie.find('-', start);
-        nrCamera = std::stoi(linie.substr(start, dash1 - start));
+        nr_camera = std::stoi(linie.substr(start, dash1 - start));
 
         size_t dash2 = linie.find('-', dash1 + 2);
         tipCamera = linie.substr(dash1 + 2, dash2 - dash1 - 3);
 
         size_t ronPos = linie.find("RON");
-        pretCamera = std::stoi(linie.substr(dash2 + 2, ronPos - dash2 - 2));
+        pret_camera = std::stoi(linie.substr(dash2 + 2, ronPos - dash2 - 2));
 
-        Camera cam(nrCamera, true, pretCamera, tipCamera);
-
-        std::getline(fin, linie);
-        std::string checkIn = linie.substr(10); //check-in:
+        Camera cam(nr_camera, true, pret_camera, tipCamera);
 
         std::getline(fin, linie);
-        std::string checkOut = linie.substr(11); //check-out:
+        std::string check_in = linie.substr(10); //check-in:
+
+        std::getline(fin, linie);
+        std::string check_out = linie.substr(11); //check-out:
 
         std::getline(fin, linie);
         int nopti = std::stoi(linie.substr(7)); //nopti:
 
         std::getline(fin, linie);
-        double pretTotal = std::stod(linie.substr(12)); //pret total:
+        double pret_total = std::stod(linie.substr(12)); //pret total:
 
         std::getline(fin, linie);
         double discount = std::stod(linie.substr(9)); //discount:
@@ -260,22 +260,22 @@ void Hotel::incarcaRezervariDinFisier()
         std::string comentariu=linie.substr(12); //comentariu:
 
         Client client;
-        client.setNume(nume);
-        client.setEmail(email);
+        client.SetNume(nume);
+        client.SetEmail(email);
 
         Review rv;
-        rv.setNota(rating);
-        rv.setComentariu(comentariu);
+        rv.SetNota(rating);
+        rv.SetComentariu(comentariu);
 
-        Rezervare r(id, checkIn, checkOut, pretTotal, client, cam, metoda, observatii, discount, nopti);
-        r.setReview(rv);
-        rezervari.push_back(r);
+        Rezervare r(id, check_in, check_out, pret_total, client, cam, metoda, observatii, discount, nopti);
+        r.SetReview(rv);
+        m_rezervari.push_back(r);
 
         std::getline(fin,linie); //dam skip la separatorul ------------------------
     }
     fin.close();
 }
-void Hotel::adaugaRezervare(Camera &camera, std::string& data_check_in, std::string& data_check_out)
+void Hotel::AdaugaRezervare(Camera &camera, std::string& data_check_in, std::string& data_check_out)
 {
     Client client;
     std::string nume, email;
@@ -285,15 +285,15 @@ void Hotel::adaugaRezervare(Camera &camera, std::string& data_check_in, std::str
     
     std::cout<<"Introduceti numele si prenumele pe care doriti sa efectuati rezervarea: "<<"\n";
     std::getline(std::cin, nume);
-    client.setNume(nume);
+    client.SetNume(nume);
 
     std::cout<<"Introduceti email-ul: "<<"\n";
     std::cin>>email;
-    client.setEmail(email);
+    client.SetEmail(email);
 
     std::cout<<"Introduceti varsta: "<<"\n";
     std::cin>>varsta;
-    client.setVarsta(varsta);
+    client.SetVarsta(varsta);
 
     std::string metoda_plata, observatii;
 
@@ -309,14 +309,14 @@ void Hotel::adaugaRezervare(Camera &camera, std::string& data_check_in, std::str
     std::cout<<"\n";
 
     //Calculeaza pretul total al rezervarii
-    int nopti=calculeazaDiferentaZile(data_check_in,data_check_out);
+    int nopti=CalculeazaDiferentaZile(data_check_in,data_check_out);
 
     double pret_total;
-    pret_total=nopti*camera.getPret();
+    pret_total=nopti*camera.GetPret();
 
     double discount=0.0;
 
-    int id_rezervare=rezervari.size()+1;
+    int id_rezervare=m_rezervari.size()+1;
 
     Rezervare r(id_rezervare, data_check_in, data_check_out, pret_total, client, camera, metoda_plata, observatii, discount, nopti);
 
@@ -330,27 +330,27 @@ void Hotel::adaugaRezervare(Camera &camera, std::string& data_check_in, std::str
     }
     if(discount!=0)
     {
-        r.calcularePretDupaDiscount();
-        r.setDiscount(discount);
+        r.CalcularePretDupaDiscount();
+        r.SetDiscount(discount);
     }
     
-    rezervari.push_back(r);
+    m_rezervari.push_back(r);
 
-    salvareRezervareFisier(r);
+    SalvareRezervareFisier(r);
 
-    camera.setDisponibilitate(false);
-    actualizeazaCamereDupaRezervare();
+    camera.SetDisponibilitate(false);
+    ActualizeazaCamereDupaRezervare();
 
     std::cout << "Rezervarea a fost efectuata cu succes! Detalii:\n";
-    r.afisareDetalii();
+    r.AfisareDetalii();
 
 }
-void Hotel::efectueazaRezervare()
+void Hotel::EfectueazaRezervare()
 {
     bool ok=0;
-    for(auto& camera : camere)
+    for(auto& camera : m_camere)
     {
-        if(camera.verificaDisponibilitate()==true)
+        if(camera.VerificaDisponibilitate()==true)
             ok=1;
     }
     if (ok==0)
@@ -359,15 +359,15 @@ void Hotel::efectueazaRezervare()
         std::cout<<"\n";
         return;
     }
-    int nrCamera;
+    int nr_camera;
     std::cout<<"Selectati camera pe care doriti sa o rezervati: ";
-    std::cin>>nrCamera;
+    std::cin>>nr_camera;
     bool gasita=false;
-    for(auto& camera : camere)
+    for(auto& camera : m_camere)
     {
-        if (camera.getNumar()==nrCamera)
+        if (camera.GetNumar()==nr_camera)
         {
-            if(camera.verificaDisponibilitate()==false)
+            if(camera.VerificaDisponibilitate()==false)
             {
                 std::cout<<"Camera selectata nu este disponibila."<<"\n";
                 std::cout<<"\n";
@@ -380,13 +380,13 @@ void Hotel::efectueazaRezervare()
                 std::cout<<"Data check-out (YYYY-MM-DD): ";
                 std::cin>>data_check_out;
 
-                if (calculeazaDiferentaZile(data_check_in,data_check_out) <= 0)
+                if (CalculeazaDiferentaZile(data_check_in,data_check_out) <= 0)
                 {
                     std::cout<<"Datele introduse nu sunt valide"<<"\n";
                     return;
                 }
 
-                adaugaRezervare(camera, data_check_in, data_check_out);
+                AdaugaRezervare(camera, data_check_in, data_check_out);
 
             }
             gasita=true;
@@ -401,7 +401,7 @@ void Hotel::efectueazaRezervare()
     
 }
 
-void Hotel::vizualizareRezervari()
+void Hotel::VizualizareRezervari()
 {
     bool gasit=0;
     std::string nume;
@@ -411,37 +411,37 @@ void Hotel::vizualizareRezervari()
     std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
     std::getline(std::cin,nume);
 
-    for(auto& rezervare : rezervari)
+    for(auto& rezervare : m_rezervari)
     {
-        if(rezervare.getClient().getNume()==nume)
+        if(rezervare.GetClient().GetNume()==nume)
         {
             gasit=1;
             std::cout<<"-------------------------------"<<"\n";
-            std::cout<<"ID-ul rezervarii: "<<rezervare.getId()<<"\n";
-            std::cout<<"Data de check-in: "<<rezervare.getDataCheckIn()<<"\n";
-            std::cout<<"Data de check-out: "<<rezervare.getDataCheckOut()<<"\n";
-            std::cout<<"Numar nopti: "<<rezervare.getNumarNopti()<<"\n";
-            std::cout<<"Pret total: "<<rezervare.getPretTotal()<<"\n";
-            if (rezervare.getDiscount()!=0)
+            std::cout<<"ID-ul rezervarii: "<<rezervare.GetId()<<"\n";
+            std::cout<<"Data de check-in: "<<rezervare.GetDataCheckIn()<<"\n";
+            std::cout<<"Data de check-out: "<<rezervare.GetDataCheckOut()<<"\n";
+            std::cout<<"Numar nopti: "<<rezervare.GetNumarNopti()<<"\n";
+            std::cout<<"Pret total: "<<rezervare.GetPretTotal()<<"\n";
+            if (rezervare.GetDiscount()!=0)
             {
-                std::cout<<"Discount aplicat: "<<rezervare.getDiscount()<<"%\n";
+                std::cout<<"Discount aplicat: "<<rezervare.GetDiscount()<<"%\n";
             }
-            std::cout<<"Metoda de plata: "<<rezervare.getMetodaPlata()<<"\n";
-            std::cout<<"Observatii: "<<rezervare.getObservatii()<<"\n";
+            std::cout<<"Metoda de plata: "<<rezervare.GetMetodaPlata()<<"\n";
+            std::cout<<"Observatii: "<<rezervare.GetObservatii()<<"\n";
 
-            const Camera& cam = rezervare.getCamera();
+            const Camera& cam = rezervare.GetCamera();
 
             std::cout<<"\n";
             std::cout<<"Detaliile camerei asociate rezervarii: "<<"\n";
-            std::cout<<"Numar: "<<cam.getNumar()<<"\n";
-            std::cout<<"Pret/noapte: "<<cam.getPret()<<"\n";
-            std::cout<<"Tip: "<<cam.getTip()<<"\n";
+            std::cout<<"Numar: "<<cam.GetNumar()<<"\n";
+            std::cout<<"Pret/noapte: "<<cam.GetPret()<<"\n";
+            std::cout<<"Tip: "<<cam.GetTip()<<"\n";
 
             std::cout<<"\n";
             
-            Review r=rezervare.getReview();
-            std::cout<<"Rating: "<<r.getNota()<<"\n";
-            std::cout<<"Comentariu: "<<r.getComentariu()<<"\n";
+            Review r=rezervare.GetReview();
+            std::cout<<"Rating: "<<r.GetNota()<<"\n";
+            std::cout<<"Comentariu: "<<r.GetComentariu()<<"\n";
             
         }
     }
@@ -452,9 +452,9 @@ void Hotel::vizualizareRezervari()
     }
 }
 
-void Hotel::anuleazaRezervare()
+void Hotel::AnuleazaRezervare()
 {
-    if(rezervari.empty())
+    if(m_rezervari.empty())
     {
         std::cout<<"Nu exista nicio rezervare activa.\n";
         std::cout<<"\n";
@@ -466,26 +466,26 @@ void Hotel::anuleazaRezervare()
     int pozitie=0;
     bool gasit=false;
 
-    for(auto& rezervare : rezervari)
+    for(auto& rezervare : m_rezervari)
     {
-        if(rezervare.getId()==id_rezervare)
+        if(rezervare.GetId()==id_rezervare)
         {
             gasit=true;
 
-            Camera cam=rezervare.getCamera();
-            int nrCamera=cam.getNumar(); //Setez statusul camerei ca fiind true (libera)
+            Camera cam=rezervare.GetCamera();
+            int nrCamera=cam.GetNumar(); //Setez statusul camerei ca fiind true (libera)
             
-            for(auto& camera : camere)
+            for(auto& camera : m_camere)
             {
-                if(camera.getNumar()==nrCamera)
+                if(camera.GetNumar()==nrCamera)
                 {
-                    camera.setDisponibilitate(true);
+                    camera.SetDisponibilitate(true);
                     break;
                 }
             }
-            rezervari.erase(rezervari.begin()+pozitie);
-            actualizareRezervariDupaAnulare();
-            actualizeazaCamereDupaRezervare();
+            m_rezervari.erase(m_rezervari.begin()+pozitie);
+            ActualizareRezervariDupaAnulare();
+            ActualizeazaCamereDupaRezervare();
             std::cout<<"Rezervarea a fost anulata cu succes!\n";
             std::cout<<"\n";
             break;
@@ -498,7 +498,7 @@ void Hotel::anuleazaRezervare()
     }
 }
 
-void Hotel::actualizareRezervariDupaAnulare()
+void Hotel::ActualizareRezervariDupaAnulare()
 {
     std::ofstream fout("Fisiere_txt/rezervari.txt", std::ios::out); //std::ios::out este folosit pentru a rescrie fisierul (overwrite) folosind continutul actual din vector
     if(!fout.is_open())
@@ -507,32 +507,32 @@ void Hotel::actualizareRezervariDupaAnulare()
         return;
     }
 
-    for(auto& rezervare : rezervari)
+    for(auto& rezervare : m_rezervari)
     {
-            fout<<"ID rezervare: "<<rezervare.getId()<<"\n";
-            fout<<"Nume client: "<<rezervare.getClient().getNume()<<"\n";
-            fout<<"Email: "<<rezervare.getClient().getEmail()<<"\n";
+            fout<<"ID rezervare: "<<rezervare.GetId()<<"\n";
+            fout<<"Nume client: "<<rezervare.GetClient().GetNume()<<"\n";
+            fout<<"Email: "<<rezervare.GetClient().GetEmail()<<"\n";
             
-            const Camera cam = rezervare.getCamera();
+            const Camera cam = rezervare.GetCamera();
 
-            fout<<"Camera: "<<cam.getNumar()<<" - "<<cam.getTip()<<" - "<<cam.getPret()<<"RON/noapte\n";
-            fout<<"Check-in: "<<rezervare.getDataCheckIn()<<"\n";
-            fout<<"Check-out: "<<rezervare.getDataCheckOut()<<"\n";
-            fout<<"Nopti: "<<rezervare.getNumarNopti()<<"\n";
-            fout<<"Pret total: "<<rezervare.getPretTotal()<<"\n";
-            fout<<"Discount: "<<rezervare.getDiscount()<<"%\n";
-            fout<<"Metoda plata: "<<rezervare.getMetodaPlata()<<"\n";
-            fout<<"Observatii: "<<rezervare.getObservatii()<<"\n";
+            fout<<"Camera: "<<cam.GetNumar()<<" - "<<cam.GetTip()<<" - "<<cam.GetPret()<<"RON/noapte\n";
+            fout<<"Check-in: "<<rezervare.GetDataCheckIn()<<"\n";
+            fout<<"Check-out: "<<rezervare.GetDataCheckOut()<<"\n";
+            fout<<"Nopti: "<<rezervare.GetNumarNopti()<<"\n";
+            fout<<"Pret total: "<<rezervare.GetPretTotal()<<"\n";
+            fout<<"Discount: "<<rezervare.GetDiscount()<<"%\n";
+            fout<<"Metoda plata: "<<rezervare.GetMetodaPlata()<<"\n";
+            fout<<"Observatii: "<<rezervare.GetObservatii()<<"\n";
             
-            Review r=rezervare.getReview();
-            fout<<"Rating: "<<r.getNota()<<"\n";
-            fout<<"Comentariu: "<<r.getComentariu()<<"\n";
+            Review r=rezervare.GetReview();
+            fout<<"Rating: "<<r.GetNota()<<"\n";
+            fout<<"Comentariu: "<<r.GetComentariu()<<"\n";
             
             fout<<"-------------------------------"<<"\n";
     }
     fout.close();
 }
-void Hotel::actualizeazaCamereDupaRezervare()
+void Hotel::ActualizeazaCamereDupaRezervare()
 {
     std::ofstream fout("Fisiere_txt/camere.txt", std::ios::out); //overwrite
     if(!fout.is_open())
@@ -541,19 +541,19 @@ void Hotel::actualizeazaCamereDupaRezervare()
         return;
     }
 
-    for(auto& camera : camere)
+    for(auto& camera : m_camere)
     {
-        fout<<camera.getNumar()<<" ";
-        fout<<camera.getTip()<<" ";
-        fout<<camera.getPret()<<" ";
-        fout<<camera.getStatus()<<"\n";
+        fout<<camera.GetNumar()<<" ";
+        fout<<camera.GetTip()<<" ";
+        fout<<camera.GetPret()<<" ";
+        fout<<camera.GetStatus()<<"\n";
     }
     fout.close();
 }
 
-void Hotel::oferaReview() 
+void Hotel::OferaReview() 
 {
-    if(rezervari.empty())
+    if(m_rezervari.empty())
     {
         std::cout<<"Nu ati efectuat nicio rezervare. Un review poate fi oferit doar unei rezervari.\n";
         std::cout<<"\n";
@@ -566,9 +566,9 @@ void Hotel::oferaReview()
     bool gasit=false;
     double rating;
     std::string comentariu;
-    for(auto& rezervare : rezervari)
+    for(auto& rezervare : m_rezervari)
     {
-        if(rezervare.getId()==id_rezervare)
+        if(rezervare.GetId()==id_rezervare)
         {
             gasit=true;
 
@@ -578,14 +578,14 @@ void Hotel::oferaReview()
                 std::cout << "Rating-ul trebuie să fie între 1 și 5.\n";
                 return;
             }            
-            review.setNota(rating);
+            review.SetNota(rating);
             std::cout<<"Lasati un comentariu in care descrieti experienta dvs: \n";
             std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
             std::getline(std::cin, comentariu);
-            review.setComentariu(comentariu);
+            review.SetComentariu(comentariu);
 
-            rezervare.setReview(review);
-            actualizareRezervariDupaAnulare(); //folosesc aceeasi functie care ~rescrie fisierul dupa anulare~ pentru a adauga un review
+            rezervare.SetReview(review);
+            ActualizareRezervariDupaAnulare(); //folosesc aceeasi functie care ~rescrie fisierul dupa anulare~ pentru a adauga un review
         }
     }
     if(!gasit)
@@ -596,7 +596,7 @@ void Hotel::oferaReview()
 
 //Actiuni administrator
 
-void Hotel::logareAdmin(bool &ok)
+void Hotel::LogareAdmin(bool &ok)
 {   
     std::string email, parola;
     std::cout<<"Introduceti email-ul: \n";
@@ -606,9 +606,11 @@ void Hotel::logareAdmin(bool &ok)
     std::cin>>parola;
     std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
 
-    Administrator admin("mihnea298@gmail.com", "mihnea123"); 
+    std::string email_corect="mihnea298@gmail.com";
+    std::string parola_corecta="mihnea123";
+    Administrator admin(email_corect, parola_corecta); 
 
-    if(admin.autentificare(email,parola))
+    if(admin.Autentificare(email,parola))
     {
         std::cout<<"V-ati autentificat cu succes!\n";
         ok=true;
@@ -619,12 +621,12 @@ void Hotel::logareAdmin(bool &ok)
     }
 }
 
-void Hotel::scrieCameraInFisier(const Camera& camera)
+void Hotel::ScrieCameraInFisier(const Camera& camera)
 {
     std::ofstream out("Fisiere_txt/camere.txt", std::ios::app); //deschide in modul append
     if(out)
     {
-        out<<camera.getNumar()<<" "<<camera.getTip()<<" "<<camera.getPret()<<" "<<camera.getStatus()<<"\n";
+        out<<camera.GetNumar()<<" "<<camera.GetTip()<<" "<<camera.GetPret()<<" "<<camera.GetStatus()<<"\n";
         out.close();
     }
     else
@@ -633,25 +635,25 @@ void Hotel::scrieCameraInFisier(const Camera& camera)
     }
 }
 
-void Hotel::adaugaCamere()
+void Hotel::AdaugaCamere()
 {
-    int nrCamera;
+    int nr_camera;
     std::cout<<"Introduceti numarul camerei: \n";
-    std::cin>>nrCamera;
+    std::cin>>nr_camera;
     
-    for(auto& camera : camere)
+    for(auto& camera : m_camere)
     {
-        if(camera.getNumar()==nrCamera)
+        if(camera.GetNumar()==nr_camera)
         {
-            std::cout<<"Camera cu ID-ul "<<nrCamera<<" deja exista.\n";
+            std::cout<<"Camera cu ID-ul "<<nr_camera<<" deja exista.\n";
             std::cout<<'\n';
             return;
         }
     }
 
-    std::string tipCamera;
+    std::string tip_camera;
     std::cout<<"Introduceti tipul camerei: \n";
-    std::cin>>tipCamera;
+    std::cin>>tip_camera;
     std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
 
     int pret;
@@ -670,7 +672,7 @@ void Hotel::adaugaCamere()
 
     std::string confirmare;
     std::cout<<"Sunteti sigur ca doriti sa adaugati o noua camera? Va reamintim detaliile introduse: \n";
-    std::cout<<"Numar camera: "<<nrCamera<<"\nTipul camerei: "<<tipCamera<<"\nPretul camerei: "<<pret<<"\nDisponibilitate: "<<status<<"\n";
+    std::cout<<"Numar camera: "<<nr_camera<<"\nTipul camerei: "<<tip_camera<<"\nPretul camerei: "<<pret<<"\nDisponibilitate: "<<status<<"\n";
     std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
     do
     { 
@@ -681,9 +683,9 @@ void Hotel::adaugaCamere()
 
         if(confirmare=="DA")
         {
-            Camera newCam(nrCamera, status, pret, tipCamera);
-            camere.push_back(newCam);
-            scrieCameraInFisier(newCam);
+            Camera newCam(nr_camera, status, pret, tip_camera);
+            m_camere.push_back(newCam);
+            ScrieCameraInFisier(newCam);
             std::cout<<"Camera a fost adaugata cu succes!\n";
             return;
         }
@@ -704,7 +706,7 @@ void Hotel::adaugaCamere()
 
 }
 
-void Hotel::gestionareAngajati()
+void Hotel::GestionareAngajati()
 {
     int choice;
     std::cout<<"Alegeti: \n";
@@ -722,22 +724,22 @@ void Hotel::gestionareAngajati()
         switch (choice)
         {
         case 1:
-            vizualizareAngajati();
+            VizualizareAngajati();
             break;
         case 2:
-            maresteSalariuAdmin();
+            MaresteSalariuAdmin();
             break;
         case 3:
-            micsoreazaSalariuAdmin();
+            MicsoreazaSalariuAdmin();
             break;
         case 4:
-            concediereAngajat();
+            ConcediereAngajat();
             break;
         case 5:
-            angajare();
+            Angajare();
             break;
         case 6:
-            afiseazaStatisticiAngajati();
+            AfiseazaStatisticiAngajati();
             break;
         case 7:
             std::cout<<"Inapoi\n";
@@ -748,11 +750,11 @@ void Hotel::gestionareAngajati()
         
     } while (choice!=7);
 }
-void Hotel::vizualizareClienti()
+void Hotel::VizualizareClienti()
 {
     //in viitor
 }
-void Hotel::vizualizareToateRezervarile()
+void Hotel::VizualizareToateRezervarile()
 {
     std::ifstream fin("Fisiere_txt/rezervari.txt");
     if(!fin.is_open())
@@ -772,24 +774,24 @@ void Hotel::vizualizareToateRezervarile()
 }
 
 //Metodele (optiunile) din gestionareAngajati()
-void Hotel::vizualizareAngajati()
+void Hotel::VizualizareAngajati()
 {
-    for(auto& angajat : angajati)
+    for(auto& angajat : m_angajati)
     {
-        angajat->afisareDetalii();
+        angajat->AfisareDetalii();
         std::cout<<"\n";
     }
 }
 
-void Hotel::maresteSalariuAdmin()
+void Hotel::MaresteSalariuAdmin()
 {
     int id, pozitie=0;
     bool ok=0;
     std::cout<<"Introduceti ID-ul angajatului caruia doriti sa-i mariti salariul:\n";
     std::cin>>id;
-    for(auto& angajat : angajati)
+    for(auto& angajat : m_angajati)
     {
-        if(angajat->getId()==id)
+        if(angajat->GetId()==id)
         {
             ok=1;
             break;
@@ -803,16 +805,16 @@ void Hotel::maresteSalariuAdmin()
         std::cin>>suma;
 
         //Folosesc operatorul overloaded +
-        Angajat* angajatNou = *(angajati[pozitie])+suma;
+        Angajat* angajat_nou = *(m_angajati[pozitie])+suma;
 
         //Actualizez struct-ul cu statistici pentru angajati
-        StatisticiAngajat::eliminaSalariu(angajati[pozitie]->getSalariu());
-        StatisticiAngajat::adaugaSalariu(angajatNou->getSalariu());
+        StatisticiAngajat::EliminaSalariu(m_angajati[pozitie]->GetSalariu());
+        StatisticiAngajat::AdaugaSalariu(angajat_nou->GetSalariu());
 
-        delete angajati[pozitie]; //Eliberez vechiul obiect
-        angajati[pozitie]=angajatNou; //Inlocuiesc cu noul obiect
+        delete m_angajati[pozitie]; //Eliberez vechiul obiect
+        m_angajati[pozitie]=angajat_nou; //Inlocuiesc cu noul obiect
 
-        salveazaAngajatiInFisier();
+        SalveazaAngajatiInFisier();
 
         std::cout<<"Salariul a fost modificat\n";
     }
@@ -822,49 +824,15 @@ void Hotel::maresteSalariuAdmin()
     }
 }
 
-void Hotel::micsoreazaSalariuAdmin()
+void Hotel::MicsoreazaSalariuAdmin()
 {
     int id, pozitie=0;
     bool ok=0;
     std::cout<<"Introduceti ID-ul angajatului caruia doriti sa-i micsorati salariul:\n";
     std::cin>>id;
-    for(auto& angajat : angajati)
+    for(auto& angajat : m_angajati)
     {
-        if(angajat->getId()==id)
-        {
-            ok=1;
-            break;
-        }
-        pozitie++;
-    }
-    if(ok==1)
-    {
-        int procent;
-        std::cout<<"Introduceti procentul cu care doriti sa micsorati salariul angajatului: \n";
-        std::cin>>procent;
-
-        angajati[pozitie]->MinorareSalariala(procent);
-        salveazaAngajatiInFisier();
-
-        std::cout<<"Salariul a fost modificat\n";
-    }
-    else
-    {
-        std::cout<<"Angajatul nu a fost gasit.\n\n";
-    }
-    salveazaAngajatiInFisier();
-}
-
-void Hotel::concediereAngajat()
-{
-    int id, pozitie=0;
-    bool ok=0;
-    std::cout<<"Introduceti ID-ul angajatului pe care doriti sa-l concediati: \n";
-    std::cin>>id;
-
-    for(auto& angajat : angajati)
-    {
-        if(angajat->getId()==id)
+        if(angajat->GetId()==id)
         {
             ok=1;
             break;
@@ -873,19 +841,53 @@ void Hotel::concediereAngajat()
     }
     if(ok)
     {
-        delete angajati[pozitie]; //sterg de tot obiectul si eliberez memoria
-        angajati.erase(angajati.begin()+pozitie); //sterg pointerul din vector
-        salveazaAngajatiInFisier();
+        int procent;
+        std::cout<<"Introduceti procentul cu care doriti sa micsorati salariul angajatului: \n";
+        std::cin>>procent;
+
+        m_angajati[pozitie]->MinorareSalariala(procent);
+        SalveazaAngajatiInFisier();
+
+        std::cout<<"Salariul a fost modificat\n";
+    }
+    else
+    {
+        std::cout<<"Angajatul nu a fost gasit.\n\n";
+    }
+    SalveazaAngajatiInFisier();
+}
+
+void Hotel::ConcediereAngajat()
+{
+    int id, pozitie=0;
+    bool ok=0;
+    std::cout<<"Introduceti ID-ul angajatului pe care doriti sa-l concediati: \n";
+    std::cin>>id;
+
+    for(auto& angajat : m_angajati)
+    {
+        if(angajat->GetId()==id)
+        {
+            ok=1;
+            break;
+        }
+        pozitie++;
+    }
+    if(ok)
+    {
+        delete m_angajati[pozitie]; //sterg de tot obiectul si eliberez memoria
+        m_angajati.erase(m_angajati.begin()+pozitie); //sterg pointerul din vector
+        SalveazaAngajatiInFisier();
         std::cout<<"Angajatul cu ID-ul "<<id<<" a fost concediat\n\n";
     }
     else
     {
         std::cout<<"Angajatul nu a fost gasit.\n\n";
     }
-    salveazaAngajatiInFisier();
+    SalveazaAngajatiInFisier();
 }
 
-void Hotel::angajare()
+void Hotel::Angajare()
 {
     std::string nume,email,functie;
     int varsta,id,salariu;
@@ -910,7 +912,7 @@ void Hotel::angajare()
     std::cout<<"Functie (Ingrijitor / Receptioner / Bucatar / Manager): ";
     std::getline(std::cin,functie);
 
-    id=angajati.size()+1;
+    id=m_angajati.size()+1;
 
     for(auto& c : functie)
     {
@@ -918,19 +920,19 @@ void Hotel::angajare()
     }
     if(functie=="ingrijitor")
     {
-        adaugaIngrijitor(nume,email,varsta,id,salariu,functie);
+        AdaugaIngrijitor(nume,email,varsta,id,salariu,functie);
     }
     else if(functie=="receptioner")
     {
-        adaugaReceptioner(nume,email,varsta,id,salariu,functie);
+        AdaugaReceptioner(nume,email,varsta,id,salariu,functie);
     }
     else if(functie=="bucatar")
     {
-        adaugaBucatar(nume,email,varsta,id,salariu,functie);
+        AdaugaBucatar(nume,email,varsta,id,salariu,functie);
     }
     else if(functie=="manager")
     {
-        adaugaManager(nume,email,varsta,id,salariu,functie);
+        AdaugaManager(nume,email,varsta,id,salariu,functie);
     }
     else
     {
@@ -938,32 +940,32 @@ void Hotel::angajare()
     }
 }
 
-void Hotel::afiseazaStatisticiAngajati()
+void Hotel::AfiseazaStatisticiAngajati()
 {
-    std::cout<<"Total angajati: "<<StatisticiAngajat::totalAngajati<<"\n";
-    std::cout<<"Salariu total: "<<StatisticiAngajat::salariuTotal<<"\n";
-    std::cout<<"Salariu mediu: "<<StatisticiAngajat::salariuMediu()<<"\n";
-    std::cout<<"Salariu minim: "<<StatisticiAngajat::salariuMinim<<"\n";
-    std::cout<<"Salariu maxim: "<<StatisticiAngajat::salariuMaxim<<"\n";
+    std::cout<<"Total angajati: "<<StatisticiAngajat::total_angajati<<"\n";
+    std::cout<<"Salariu total: "<<StatisticiAngajat::salariu_total<<"\n";
+    std::cout<<"Salariu mediu: "<<StatisticiAngajat::SalariuMediu()<<"\n";
+    std::cout<<"Salariu minim: "<<StatisticiAngajat::salariu_minim<<"\n";
+    std::cout<<"Salariu maxim: "<<StatisticiAngajat::salariu_maxim<<"\n";
     std::cout<<"\n";
 }
 
 //Functiile din optiunea(metoda) angajare()
 
-void Hotel::adaugaIngrijitor(std::string nume, std::string email, int varsta, int id, int salariu, std::string functie)
+void Hotel::AdaugaIngrijitor(std::string nume, std::string email, int varsta, int id, int salariu, std::string functie)
 {
     int etaj_curatenie;
     std::cout<<"Asociati angajatului etajul la care sa faca curatenie: ";
     std::cin>>etaj_curatenie;
 
-    angajati.push_back(new Ingrijitor(nume,email,varsta,id,salariu,functie,etaj_curatenie));
-    adaugaAngajatInFisier(angajati.back());
+    m_angajati.push_back(new Ingrijitor(nume,email,varsta,id,salariu,functie,etaj_curatenie));
+    AdaugaAngajatInFisier(m_angajati.back());
     std::cout<<"Angajatul a fost adaugat cu succes!\n";
 }
 
-void Hotel::adaugaReceptioner(std::string nume, std::string email, int varsta, int id, int salariu, std::string functie)
+void Hotel::AdaugaReceptioner(std::string nume, std::string email, int varsta, int id, int salariu, std::string functie)
 {
-    int nrLimbi;
+    int nr_limbi;
     std::string schimb, limba;
     std::vector<std::string> limbi_vorbite;
 
@@ -971,69 +973,69 @@ void Hotel::adaugaReceptioner(std::string nume, std::string email, int varsta, i
     std::cin>>schimb;
 
     std::cout<<"Introduceti numarul de limbi ce urmeaza sa fie adaugat: ";
-    std::cin>>nrLimbi;
+    std::cin>>nr_limbi;
 
     std::cout<<"Introduceti limbile vorbite: \n";
-    for(int i=0;i<nrLimbi;i++)
+    for(int i=0;i<nr_limbi;i++)
     {
         std::cin>>limba;
         limbi_vorbite.push_back(limba);
     }
 
-    angajati.push_back(new Receptioner(nume,email,varsta,id,salariu,functie,schimb,limbi_vorbite));
-    adaugaAngajatInFisier(angajati.back());
+    m_angajati.push_back(new Receptioner(nume,email,varsta,id,salariu,functie,schimb,limbi_vorbite));
+    AdaugaAngajatInFisier(m_angajati.back());
     std::cout<<"Angajatul a fost adaugat cu succes!\n";
 }
 
-void Hotel::adaugaBucatar(std::string nume, std::string email, int varsta, int id, int salariu, std::string functie)
+void Hotel::AdaugaBucatar(std::string nume, std::string email, int varsta, int id, int salariu, std::string functie)
 {
     std::string specializare,certificare;
     std::vector<std::string> certificari;
-    int nrCertificari;
+    int nr_certificari;
 
     std::cout<<"Introduceti specializare: ";
     std::cin>>specializare;
 
     std::cout<<"Introduceti numarul de certificari: ";
-    std::cin>>nrCertificari;
+    std::cin>>nr_certificari;
 
     std::cout<<"Introduceti certificarile detinute: ";
-    for(int i=0;i<nrCertificari;i++)
+    for(int i=0;i<nr_certificari;i++)
     {
         std::cin>>certificare;
         certificari.push_back(certificare);
     }
 
-    angajati.push_back(new Bucatar(nume,email,varsta,id,salariu,functie,specializare,certificari));
-    adaugaAngajatInFisier(angajati.back());
+    m_angajati.push_back(new Bucatar(nume,email,varsta,id,salariu,functie,specializare,certificari));
+    AdaugaAngajatInFisier(m_angajati.back());
     std::cout<<"Angajatul a fost adaugat cu succes!\n";
 }
 
-void Hotel::adaugaManager(std::string nume, std::string email, int varsta, int id, int salariu, std::string functie)
+void Hotel::AdaugaManager(std::string nume, std::string email, int varsta, int id, int salariu, std::string functie)
 {
-    int aniExp,nrDept;
+    int ani_exp,nr_dept;
     std::vector<std::string> departamente;
     std::string dept;
 
     std::cout<<"Introduceti anii de experienta: ";
-    std::cin>>aniExp;
+    std::cin>>ani_exp;
 
     std::cout<<"Introduceti numarul de departamente: ";
-    std::cin>>nrDept;
+    std::cin>>nr_dept;
 
     std::cout<<"Introduceti departamentele: ";
-    for(int i=0;i<nrDept;i++)
+    for(int i=0;i<nr_dept;i++)
     {
         std::cin>>dept;
         departamente.push_back(dept);
     }
 
-    angajati.push_back(new Manager(nume,email,varsta,id,salariu,functie,departamente,aniExp));
-    adaugaAngajatInFisier(angajati.back());
+    m_angajati.push_back(new Manager(nume,email,varsta,id,salariu,functie,departamente,ani_exp));
+    AdaugaAngajatInFisier(m_angajati.back());
     std::cout<<"Angajatul a fost adaugat cu succes!\n";
 }
 
-void Hotel::incarcaAngajatiDinFisier()
+void Hotel::IncarcaAngajatiDinFisier()
 {
     std::ifstream fin("Fisiere_txt/angajati.txt");
     if(!fin.is_open())
@@ -1065,76 +1067,76 @@ void Hotel::incarcaAngajatiDinFisier()
 
         if(functie=="ingrijitor")
         {
-            incarcaIngrijitor(nume,email,varsta,id,salariu,functie,atribut1);
+            IncarcaIngrijitor(nume,email,varsta,id,salariu,functie,atribut1);
         }
         else if(functie=="receptioner")
         {
-            incarcaReceptioner(nume,email,varsta,id,salariu,functie,atribut1,atribut2);
+            IncarcaReceptioner(nume,email,varsta,id,salariu,functie,atribut1,atribut2);
         }
         else if(functie=="bucatar")
         {
-            incarcaBucatar(nume,email,varsta,id,salariu,functie,atribut1,atribut2);
+            IncarcaBucatar(nume,email,varsta,id,salariu,functie,atribut1,atribut2);
         }
         else if(functie=="manager")
         {
-            incarcaManager(nume,email,varsta,id,salariu,functie,atribut1,atribut2);
+            IncarcaManager(nume,email,varsta,id,salariu,functie,atribut1,atribut2);
         }
     }
     fin.close();
 }
 
-void Hotel::incarcaIngrijitor(std::string nume, std::string email, int varsta, int id, int salariu, std::string functie, std::string atribut1)
+void Hotel::IncarcaIngrijitor(std::string nume, std::string email, int varsta, int id, int salariu, std::string functie, std::string atribut1)
 {
     int etaj=std::stoi(atribut1);
-    angajati.push_back(new Ingrijitor(nume,email,varsta,id,salariu,functie,etaj));
+    m_angajati.push_back(new Ingrijitor(nume,email,varsta,id,salariu,functie,etaj));
 }
 
-void Hotel::incarcaReceptioner(std::string nume, std::string email, int varsta, int id, int salariu, std::string functie, std::string atribut1, std::string atribut2)
+void Hotel::IncarcaReceptioner(std::string nume, std::string email, int varsta, int id, int salariu, std::string functie, std::string atribut1, std::string atribut2)
 {
     std::string schimb=atribut1;
     std::vector<std::string> limbi;
-    std::istringstream limbiStream(atribut2);
+    std::istringstream limbi_stream(atribut2);
     std::string limba;
 
     //al doilea atribut contine mai multe limbi: extrag fiecare limba si o adaug in vector
-    while(std::getline(limbiStream, limba, ','))
+    while(std::getline(limbi_stream, limba, ','))
     {
         limbi.push_back(limba);
     }
-    angajati.push_back(new Receptioner(nume,email,varsta,id,salariu,functie,schimb,limbi));
+    m_angajati.push_back(new Receptioner(nume,email,varsta,id,salariu,functie,schimb,limbi));
 }
 
-void Hotel::incarcaBucatar(std::string nume, std::string email, int varsta, int id, int salariu, std::string functie, std::string atribut1, std::string atribut2)
+void Hotel::IncarcaBucatar(std::string nume, std::string email, int varsta, int id, int salariu, std::string functie, std::string atribut1, std::string atribut2)
 {
     std::string specializare=atribut1;
     std::vector<std::string> certificari;
-    std::istringstream certStream(atribut2);
+    std::istringstream cert_stream(atribut2);
     std::string certificare;
 
     //la fel ca la receptioner - citim fiecare certificare si o adaugam in vector
-    while(std::getline(certStream, certificare, ','))
+    while(std::getline(cert_stream, certificare, ','))
     {
         certificari.push_back(certificare);
     }
-    angajati.push_back(new Bucatar(nume,email,varsta,id,salariu,functie,specializare,certificari));
+    m_angajati.push_back(new Bucatar(nume,email,varsta,id,salariu,functie,specializare,certificari));
 }
 
-void Hotel::incarcaManager(std::string nume, std::string email, int varsta, int id, int salariu, std::string functie, std::string atribut1, std::string atribut2)
+void Hotel::IncarcaManager(std::string nume, std::string email, int varsta, int id, int salariu, std::string functie, std::string atribut1, std::string atribut2)
 {
     int aniExp=std::stoi(atribut2);
     std::vector<std::string> departamente;
-    std::istringstream deptStream(atribut1);
+    std::istringstream dept_stream(atribut1);
     std::string dept;
 
     //la fel ca la receptioner - citim fiecare certificare si o adaugam in vector
-    while(std::getline(deptStream, dept, ','))
+    while(std::getline(dept_stream, dept, ','))
     {
         departamente.push_back(dept);
     }
-    angajati.push_back(new Manager(nume,email,varsta,id,salariu,functie,departamente,aniExp));
+    m_angajati.push_back(new Manager(nume,email,varsta,id,salariu,functie,departamente,aniExp));
 }
 
-void Hotel::salveazaAngajatiInFisier()
+void Hotel::SalveazaAngajatiInFisier()
 {
     std::ofstream fout("Fisiere_txt/angajati.txt", std::ios::out); //std::ios::out este folosit pentru a rescrie fisierul (overwrite) folosind continutul actual din vector (util pentru functiile de marire/micsorare salariala si concediere)
     if(!fout.is_open())
@@ -1142,21 +1144,21 @@ void Hotel::salveazaAngajatiInFisier()
         std::cerr<<"Eroare la deschiderea fisierului";
         return;
     }
-    for(auto& angajat : angajati) //parcurgem fiecare angajat din vector
+    for(auto& angajat : m_angajati) //parcurgem fiecare angajat din vector
     {
-        fout<<angajat->getFunctie()<<";"<<angajat->getNume()<<";"<<angajat->getEmail()<<";"<<angajat->getVarsta()<<";"
-        <<angajat->getId()<<";"<<angajat->getSalariu()<<";";
+        fout<<angajat->GetFunctie()<<";"<<angajat->GetNume()<<";"<<angajat->GetEmail()<<";"<<angajat->GetVarsta()<<";"
+        <<angajat->GetId()<<";"<<angajat->GetSalariu()<<";";
 
         //Downcast pentru fiecare subtip de angajat (facem acest lucru pentru a scrie atributele specifice fiecarui tip angajat)
         //toate obiectele sunt convertite la runtime
         if(auto ingrijitor=dynamic_cast<Ingrijitor*>(angajat))
         {
-            fout<<ingrijitor->getEtaj();
+            fout<<ingrijitor->GetEtaj();
         }
         else if(auto receptioner=dynamic_cast<Receptioner*>(angajat))
         {
-            fout<<receptioner->getSchimb()<<";";
-            const auto& limbi=receptioner->getLimbi();
+            fout<<receptioner->GetSchimb()<<";";
+            const auto& limbi=receptioner->GetLimbi();
             //for care scrie toate string-urile (limbile) stocate in vector
             for(int i=0;i<limbi.size();i++)
             {
@@ -1167,8 +1169,8 @@ void Hotel::salveazaAngajatiInFisier()
         }
         else if(auto bucatar=dynamic_cast<Bucatar*>(angajat))
         {
-            fout<<bucatar->getSpecializare()<<";";
-            const auto& certificari=bucatar->getCertificari();
+            fout<<bucatar->GetSpecializare()<<";";
+            const auto& certificari=bucatar->GetCertificari();
             //for care scrie toate string-urile (certificarile) stocate in vector
             for(int i=0;i<certificari.size();i++)
             {
@@ -1179,21 +1181,21 @@ void Hotel::salveazaAngajatiInFisier()
         }
         else if(auto manager=dynamic_cast<Manager*>(angajat))
         {
-            const auto& departamente=manager->getDepartamente();
+            const auto& departamente=manager->GetDepartamente();
             for(int i=0;i<departamente.size();i++)
             {
                 fout<<departamente[i];
                 if(i<departamente.size()-1)
                     fout<<",";
             }
-            fout<<";"<<manager->getExperienta();
+            fout<<";"<<manager->GetExperienta();
         }
         fout<<"\n";
     }
     fout.close();
 }
 
-void Hotel::adaugaAngajatInFisier(Angajat* angajat)
+void Hotel::AdaugaAngajatInFisier(Angajat* angajat)
 {
     std::ofstream fout("Fisiere_txt/angajati.txt", std::ios::app); //append
     if (!fout.is_open()) {
@@ -1202,12 +1204,12 @@ void Hotel::adaugaAngajatInFisier(Angajat* angajat)
     }
 
     if (Ingrijitor* i = dynamic_cast<Ingrijitor*>(angajat)) {
-        fout << "ingrijitor;"<< i->getNume() << ";"<< i->getEmail() << ";"<< i->getVarsta() << ";"<< i->getId() << ";"<< i->getSalariu() << ";"<< i->getEtaj() << "\n";
+        fout << "ingrijitor;"<< i->GetNume() << ";"<< i->GetEmail() << ";"<< i->GetVarsta() << ";"<< i->GetId() << ";"<< i->GetSalariu() << ";"<< i->GetEtaj() << "\n";
     }
     else if (Receptioner* r = dynamic_cast<Receptioner*>(angajat)) {
-        fout << "receptioner;"<< r->getNume() << ";"<< r->getEmail() << ";"<< r->getVarsta() << ";"<< r->getId() << ";"<< r->getSalariu() << ";"<< r->getSchimb() << ";";
+        fout << "receptioner;"<< r->GetNume() << ";"<< r->GetEmail() << ";"<< r->GetVarsta() << ";"<< r->GetId() << ";"<< r->GetSalariu() << ";"<< r->GetSchimb() << ";";
 
-        const auto& limbi = r->getLimbi();
+        const auto& limbi = r->GetLimbi();
         for (int i = 0; i < limbi.size(); ++i) {
             fout << limbi[i];
             if (i < limbi.size() - 1) fout << ",";
@@ -1215,9 +1217,9 @@ void Hotel::adaugaAngajatInFisier(Angajat* angajat)
         fout << "\n";
     }
     else if (Bucatar* b = dynamic_cast<Bucatar*>(angajat)) {
-        fout << "bucatar;"<< b->getNume() << ";"<< b->getEmail() << ";"<< b->getVarsta() << ";"<< b->getId() << ";"<< b->getSalariu() << ";"<< b->getSpecializare() << ";";
+        fout << "bucatar;"<< b->GetNume() << ";"<< b->GetEmail() << ";"<< b->GetVarsta() << ";"<< b->GetId() << ";"<< b->GetSalariu() << ";"<< b->GetSpecializare() << ";";
 
-        const auto& certif = b->getCertificari();
+        const auto& certif = b->GetCertificari();
         for (int i = 0; i < certif.size(); ++i) {
             fout << certif[i];
             if (i < certif.size() - 1) fout << ",";
@@ -1225,14 +1227,14 @@ void Hotel::adaugaAngajatInFisier(Angajat* angajat)
         fout << "\n";
     }
     else if (Manager* m = dynamic_cast<Manager*>(angajat)) {
-        fout << "manager;"<< m->getNume() << ";"<< m->getEmail() << ";"<< m->getVarsta() << ";"<< m->getId() << ";"<< m->getSalariu() << ";";
+        fout << "manager;"<< m->GetNume() << ";"<< m->GetEmail() << ";"<< m->GetVarsta() << ";"<< m->GetId() << ";"<< m->GetSalariu() << ";";
 
-        const auto& dept = m->getDepartamente();
+        const auto& dept = m->GetDepartamente();
         for (int i = 0; i < dept.size(); ++i) {
             fout << dept[i];
             if (i < dept.size() - 1) fout << ",";
         }
-        fout<<";"<<m->getExperienta();
+        fout<<";"<<m->GetExperienta();
         fout << "\n";
     }
     fout.close();

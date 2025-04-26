@@ -3,7 +3,7 @@
 
 #include <iostream>
 
-int numarZileInLuna(int luna, int an);
-int calculeazaDiferentaZile(const std::string& data1, const std::string& data2);
+int NumarZileInLuna(int luna, int an);
+int CalculeazaDiferentaZile(const std::string& data1, const std::string& data2);
 
 #endif

@@ -7,7 +7,7 @@
 
 class Ingrijitor: public Angajat
 {
-    int etaj_curatenie;
+    int m_etaj_curatenie;
 public:
     Ingrijitor(); //Constructor implicit
     Ingrijitor(std::string nume, std::string email, int varsta, int id_angajat, int salariu, std::string functie, int etaj_curatenie); //Constructor parametrizat
@@ -16,12 +16,12 @@ public:
     ~Ingrijitor(); //Destructor
 
     //Getteri si setteri
-    int getEtaj() const;
+    int GetEtaj() const;
 
-    void setEtaj(int etaj_curatenie);
+    void SetEtaj(int etaj_curatenie);
 
     //Metode suplimentare
-    void afisareDetalii() const override;
+    void AfisareDetalii() const override;
 
     //Operator overloading +
     Angajat* operator+(int suma) const override;

@@ -1,35 +1,35 @@
 #include "Camera.h"
 #include <iostream>
 
-int Camera::totalCamere = 0;
+int Camera::m_total_camere = 0;
 //Constructori si destructor
-Camera::Camera(): numar(0), status(0), pret_noapte(0), tip_camera("Nedefinit") { totalCamere++; }; //Constructor implicit
+Camera::Camera(): m_numar(0), m_status(0), m_pret_noapte(0), m_tip_camera("Nedefinit") { m_total_camere++; }; //Constructor implicit
 
 //Constructor parametrizat
-Camera::Camera(int numar, bool status, int pret_noapte, std::string tip_camera): numar(numar), status(status), pret_noapte(pret_noapte), tip_camera(tip_camera) { totalCamere++; };
+Camera::Camera(int numar, bool status, int pret_noapte, std::string tip_camera): m_numar(numar), m_status(status), m_pret_noapte(pret_noapte), m_tip_camera(tip_camera) {};
 
 Camera::~Camera() {};
 
 //Getteri si setteri
-int Camera::getNumar() const { return numar; };
-int Camera::getPret() const { return pret_noapte; };
-std::string Camera::getTip() const { return tip_camera; };
-bool Camera::getStatus() const { return status; };
-int Camera::getTotalCamere() { return totalCamere; }
+int Camera::GetNumar() const { return m_numar; };
+int Camera::GetPret() const { return m_pret_noapte; };
+std::string Camera::GetTip() const { return m_tip_camera; };
+bool Camera::GetStatus() const { return m_status; };
+int Camera::GetTotalCamere() { return m_total_camere; }
 
-void Camera::setNumar(int numar) { this->numar=numar; };
-void Camera::setPret(int pret_noapte) { this->pret_noapte=pret_noapte; };
-void Camera::setDisponibilitate(bool status) { this->status=status; };
-void Camera::setTip(std::string tip_camera) { this->tip_camera=tip_camera; };
+void Camera::SetNumar(int numar) { m_numar=numar; };
+void Camera::SetPret(int pret_noapte) { m_pret_noapte=pret_noapte; };
+void Camera::SetDisponibilitate(bool status) { m_status=status; };
+void Camera::SetTip(std::string tip_camera) { m_tip_camera=tip_camera; };
 
 //Metode suplimentare
-bool Camera::verificaDisponibilitate() { return status; };
-void Camera::afisareDetaliiCamera() 
+bool Camera::VerificaDisponibilitate() { return m_status; };
+void Camera::AfisareDetaliiCamera() 
 {
-    std::cout<<"Numar camera: "<<numar<<"\n";
-    std::cout<<"Status: "<<status<<"\n";
-    std::cout<<"Pret: "<<pret_noapte<<"\n";
-    std::cout<<"Tip: "<<tip_camera<<"\n";
+    std::cout<<"Numar camera: "<<m_numar<<"\n";
+    std::cout<<"Status: "<<m_status<<"\n";
+    std::cout<<"Pret: "<<m_pret_noapte<<"\n";
+    std::cout<<"Tip: "<<m_tip_camera<<"\n";
     std::cout<<"\n";
 };
 
@@ -37,7 +37,7 @@ void Camera::afisareDetaliiCamera()
 
 std::ostream& operator<<(std::ostream& out, Camera& cam)
 {
-    out<<"Camera "<<cam.numar<<" - "<<cam.tip_camera<<" - "<<cam.pret_noapte<<" RON/noapte";
+    out<<"Camera "<<cam.m_numar<<" - "<<cam.m_tip_camera<<" - "<<cam.m_pret_noapte<<" RON/noapte";
     return out;
 }
 

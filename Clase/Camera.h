@@ -5,11 +5,11 @@
 
 class Camera
 {
-    int numar;
-    bool status;
-    int pret_noapte;
-    std::string tip_camera;
-    static int totalCamere;
+    int m_numar;
+    bool m_status;
+    int m_pret_noapte;
+    std::string m_tip_camera;
+    static int m_total_camere;
 public:
     Camera(); //Constructor implicit
     Camera(int numar, bool status, int pret_noapte, std::string tip_camera); //Constructor parametrizat
@@ -17,20 +17,20 @@ public:
     ~Camera(); //Destructor
 
     //Getteri si setteri
-    int getNumar() const;
-    int getPret() const;
-    std::string getTip() const;
-    bool getStatus() const;
-    static int getTotalCamere();
+    int GetNumar() const;
+    int GetPret() const;
+    std::string GetTip() const;
+    bool GetStatus() const;
+    static int GetTotalCamere();
 
-    void setNumar(int numar);
-    void setPret(int pret_noapte);
-    void setDisponibilitate(bool status);
-    void setTip(std::string tip_camera);
+    void SetNumar(int numar);
+    void SetPret(int pret_noapte);
+    void SetDisponibilitate(bool status);
+    void SetTip(std::string tip_camera);
 
     //Metode suplimentare
-    bool verificaDisponibilitate();
-    void afisareDetaliiCamera();
+    bool VerificaDisponibilitate();
+    void AfisareDetaliiCamera();
 
     //Overloading operator <<
     friend std::ostream& operator<<(std::ostream& out, Camera& cam); //functie friend deoarece accesez atributele private ale clasei (fara a folosi getteri)

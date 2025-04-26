@@ -7,7 +7,7 @@
 class Autentificabil
 {
 public:
-    virtual bool autentificare(std::string& email, std::string& parola) = 0;
+    virtual bool Autentificare(std::string email, std::string parola) = 0;
     virtual ~Autentificabil() {}; //Destructor virtual
 };
 

@@ -12,12 +12,13 @@
 #include "Clase/Receptioner.h"
 #include "Clase/Bucatar.h"
 #include "Clase/Manager.h"
+#include "Clase/Administrator.h"
 #include "Clase/utils.h"
 
 int main()
 {   
     Hotel hotel;
-    hotel.ruleaza();
+    hotel.Ruleaza();
     
     return 0;
 }

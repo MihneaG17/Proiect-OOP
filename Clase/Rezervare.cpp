@@ -6,85 +6,79 @@
 #include <iostream>
 #include <string>
 
-Rezervare::Rezervare():id_rezervare(-1), data_check_in("N/A"), data_check_out("N/A"), pret_total(0.0), numar_nopti(0), discount(0.0), metoda_plata("N/A"), observatii("N/A") {}; //Constructor implicit
+Rezervare::Rezervare(): m_id_rezervare(-1), m_data_check_in("-"), m_data_check_out("-"), m_pret_total(0.0), m_numar_nopti(0), m_discount(0.0), m_metoda_plata("-"), m_observatii("-") {}; //Constructor implicit
 
 //Constructor parametrizat
 Rezervare::Rezervare(int id_rezervare, std::string data_check_in, std::string data_check_out, double pret_total, 
     const Client& client, const Camera& camera, std::string metoda_plata, std::string observatii, double discount, int numar_nopti):
-id_rezervare(id_rezervare), data_check_in(data_check_in), data_check_out(data_check_out), pret_total(pret_total), client(client), camera(camera),
-metoda_plata(metoda_plata), observatii(observatii), discount(discount), numar_nopti(numar_nopti) {}; 
+m_id_rezervare(id_rezervare), m_data_check_in(data_check_in), m_data_check_out(data_check_out), m_pret_total(pret_total), m_client(client), m_camera(camera),
+m_metoda_plata(metoda_plata), m_observatii(observatii), m_discount(discount), m_numar_nopti(numar_nopti) {}; 
 
 //Copy Constructor
-Rezervare::Rezervare(const Rezervare& r): id_rezervare(r.id_rezervare), data_check_in(r.data_check_in), data_check_out(r.data_check_out), pret_total(r.pret_total),
-client(r.client), camera(r.camera), discount(r.discount), numar_nopti(r.numar_nopti), observatii(r.observatii), metoda_plata(r.metoda_plata) {}; 
+Rezervare::Rezervare(const Rezervare& r): m_id_rezervare(r.m_id_rezervare), m_data_check_in(r.m_data_check_in), m_data_check_out(r.m_data_check_out), m_pret_total(r.m_pret_total),
+m_client(r.m_client), m_camera(r.m_camera), m_discount(r.m_discount), m_numar_nopti(r.m_numar_nopti), m_observatii(r.m_observatii), m_metoda_plata(r.m_metoda_plata) {}; 
 
 //Destructor
 Rezervare::~Rezervare() {};
 
 //Getteri si setteri
-int Rezervare::getId() const { return id_rezervare; };
-std::string Rezervare::getDataCheckIn() const { return data_check_in; };
-std::string Rezervare::getDataCheckOut() const { return data_check_out; };
-int Rezervare::getNumarNopti() const { return numar_nopti; };
-double Rezervare::getPretTotal() const { return pret_total; };
-double Rezervare::getDiscount() const { return discount; };
-std::string Rezervare::getMetodaPlata() const { return metoda_plata; };
-std::string Rezervare::getObservatii() const { return observatii; };
-const Client& Rezervare::getClient() const { return client; };
-const Camera& Rezervare::getCamera() const { return camera; };
-const Review& Rezervare::getReview() const { return review; };
+int Rezervare::GetId() const { return m_id_rezervare; };
+std::string Rezervare::GetDataCheckIn() const { return m_data_check_in; };
+std::string Rezervare::GetDataCheckOut() const { return m_data_check_out; };
+int Rezervare::GetNumarNopti() const { return m_numar_nopti; };
+double Rezervare::GetPretTotal() const { return m_pret_total; };
+double Rezervare::GetDiscount() const { return m_discount; };
+std::string Rezervare::GetMetodaPlata() const { return m_metoda_plata; };
+std::string Rezervare::GetObservatii() const { return m_observatii; };
+const Client& Rezervare::GetClient() const { return m_client; };
+const Camera& Rezervare::GetCamera() const { return m_camera; };
+const Review& Rezervare::GetReview() const { return m_review; };
 
-void Rezervare::setId(int id) { this->id_rezervare=id_rezervare; };
-void Rezervare::setDataCheckIn(std::string getDataCheckIn) { this->data_check_in=data_check_in; };
-void Rezervare::setDataCheckOut(std::string getDataCheckOut) { this->data_check_out=data_check_out; };
-void Rezervare::setNumarNopti(int numar_nopti) { this->numar_nopti=numar_nopti; };
-void Rezervare::setDiscount(double discount) { this->discount=discount;  };
-void Rezervare::setMetodaPlata(std::string metoda_plata) { this->metoda_plata=metoda_plata; };
-void Rezervare::setObservatii(std::string observatii) { this->observatii=observatii; };
-void Rezervare::setReview(const Review& review) { this->review=review; };
+void Rezervare::SetId(int id_rezervare) { m_id_rezervare=id_rezervare; };
+void Rezervare::SetDataCheckIn(std::string data_check_in) { m_data_check_in=data_check_in; };
+void Rezervare::SetDataCheckOut(std::string data_check_out) { m_data_check_out=data_check_out; };
+void Rezervare::SetNumarNopti(int numar_nopti) { m_numar_nopti=numar_nopti; };
+void Rezervare::SetDiscount(double discount) { m_discount=discount;  };
+void Rezervare::SetMetodaPlata(std::string metoda_plata) { m_metoda_plata=metoda_plata; };
+void Rezervare::SetObservatii(std::string observatii) { m_observatii=observatii; };
+void Rezervare::SetReview(const Review& review) { m_review=review; };
 
 //Metode suplimentare
-void Rezervare::calcularePretDupaDiscount()
+void Rezervare::CalcularePretDupaDiscount()
 {
-    pret_total-=(pret_total*discount/100);
+    m_pret_total-=(m_pret_total*m_discount/100);
 };
 
-void Rezervare::prelungireRezervare(int nopti)
+void Rezervare::AfisareDetalii()
 {
-    numar_nopti+=nopti;
-    std::cout<<"Numarul total de nopti dupa actualizare este: "<<numar_nopti<<"\n";
-}
-
-void Rezervare::afisareDetalii()
-{
-    std::cout<<"ID rezervare: "<<id_rezervare<<"\n";
-    std::cout<<"Data Check-in: "<<data_check_in<<"\n";
-    std::cout<<"Data Check-out: "<<data_check_out<<"\n";
-    std::cout<<"Pret total: "<<pret_total<<"\n";
-    std::cout<<"Numar nopti: "<<numar_nopti<<"\n";
-    std::cout<<"Discount aplicat: "<<discount<< "%\n";
-    std::cout<<"Metoda de plata: "<<metoda_plata<< "\n";
-    std::cout<<"Observatii: "<<observatii<< "\n";
+    std::cout<<"ID rezervare: "<<m_id_rezervare<<"\n";
+    std::cout<<"Data Check-in: "<<m_data_check_in<<"\n";
+    std::cout<<"Data Check-out: "<<m_data_check_out<<"\n";
+    std::cout<<"Pret total: "<<m_pret_total<<"\n";
+    std::cout<<"Numar nopti: "<<m_numar_nopti<<"\n";
+    std::cout<<"Discount aplicat: "<<m_discount<< "%\n";
+    std::cout<<"Metoda de plata: "<<m_metoda_plata<< "\n";
+    std::cout<<"Observatii: "<<m_observatii<< "\n";
     std::cout<<"\n";
     std::cout<<"Detaliile clientului: \n";
-    client.afisareDetalii();
+    m_client.AfisareDetalii();
     std::cout<<"Detaliile camerei: \n";
-    camera.afisareDetaliiCamera();
+    m_camera.AfisareDetaliiCamera();
 };
 
-void Rezervare::calcularePretTotal() {
-    int zile=calculeazaDiferentaZile(data_check_in,data_check_out);
+void Rezervare::CalcularePretTotal() {
+    int zile=CalculeazaDiferentaZile(m_data_check_in,m_data_check_out);
 
     if(zile>0)
     {
-        pret_total=zile*camera.getPret();
-        numar_nopti=zile;
+        m_pret_total=zile*m_camera.GetPret();
+        m_numar_nopti=zile;
     }
     else
         std::cout<<"Datele introduse nu sunt valide.\n";
     };
 
-bool Rezervare::areReview()
+bool Rezervare::AreReview()
 {
-    return review.getNota()>0 || review.getComentariu()!="N/A";
+    return m_review.GetNota()>0 || m_review.GetComentariu()!="-";
 }

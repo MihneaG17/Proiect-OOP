@@ -1,9 +1,9 @@
 #include "Administrator.h"
 #include <iostream>
 
-Administrator::Administrator(std::string email, std::string parola): email(email), parola(parola) {}; //Constructor
+Administrator::Administrator(std::string email, std::string parola): m_email(email), m_parola(parola) {}; //Constructor
 
-bool Administrator::autentificare(std::string& e, std::string& p)
+bool Administrator::Autentificare(std::string e, std::string p)
 {
-    return email==e && parola==p;
+    return m_email==e && m_parola==p;
 }

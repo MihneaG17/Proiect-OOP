@@ -19,63 +19,63 @@
 
 class Hotel
 {
-    std::vector <Client> clienti;
-    std::vector <Angajat*> angajati;
-    std::vector <Camera> camere;
-    std::vector <Rezervare> rezervari;
+    std::vector <Client> m_clienti;
+    std::vector <Angajat*> m_angajati;
+    std::vector <Camera> m_camere;
+    std::vector <Rezervare> m_rezervari;
 public:
     Hotel();
     ~Hotel();
-    void ruleaza();
+    void Ruleaza();
 
     //Meniuri
-    void meniuClient();
-    void meniuAdministrator();
+    void MeniuClient();
+    void MeniuAdministrator();
     
     //Actiuni client
-    void efectueazaRezervare();
-    void veziCamereDisponibile();
-    void adaugaRezervare(Camera& camera, std::string& data_check_in, std::string& data_check_out);
-    void vizualizareRezervari();
-    void anuleazaRezervare();
-    void oferaReview();
+    void EfectueazaRezervare();
+    void VeziCamereDisponibile();
+    void AdaugaRezervare(Camera& camera, std::string& data_check_in, std::string& data_check_out);
+    void VizualizareRezervari();
+    void AnuleazaRezervare();
+    void OferaReview();
 
     //Metode pentru lucru cu fisiere (salvare date/citire date)
-    void salvareRezervareFisier(const Rezervare& r);
-    void scrieCameraInFisier(const Camera& camera);
-    void incarcaCamereDinFisier();
-    void actualizeazaCamereDupaRezervare();
-    void incarcaAngajatiDinFisier();
-    void incarcaRezervariDinFisier();
-    void actualizareRezervariDupaAnulare(); 
-    void salveazaAngajatiInFisier(); //folosita la mariri/micsorari salariale sau la concediere
-    void adaugaAngajatInFisier(Angajat* angajat); //folosita cu modul append doar pentru a adauga la finalul fisierului un angajat
+    void SalvareRezervareFisier(const Rezervare& r);
+    void ScrieCameraInFisier(const Camera& camera);
+    void IncarcaCamereDinFisier();
+    void ActualizeazaCamereDupaRezervare();
+    void IncarcaAngajatiDinFisier();
+    void IncarcaRezervariDinFisier();
+    void ActualizareRezervariDupaAnulare(); 
+    void SalveazaAngajatiInFisier(); //folosita la mariri/micsorari salariale sau la concediere
+    void AdaugaAngajatInFisier(Angajat* angajat); //folosita cu modul append doar pentru a adauga la finalul fisierului un angajat
 
-    void incarcaIngrijitor(std::string nume, std::string email, int varsta, int id, int salariu, std::string functie, std::string atribut1);
-    void incarcaReceptioner(std::string nume, std::string email, int varsta, int id, int salariu, std::string functie, std::string atribut1, std::string atribut2);
-    void incarcaBucatar(std::string nume, std::string email, int varsta, int id, int salariu, std::string functie, std::string atribut1, std::string atribut2);
-    void incarcaManager(std::string nume, std::string email, int varsta, int id, int salariu, std::string functie, std::string atribut1, std::string atribut2);
+    void IncarcaIngrijitor(std::string nume, std::string email, int varsta, int id, int salariu, std::string functie, std::string atribut1);
+    void IncarcaReceptioner(std::string nume, std::string email, int varsta, int id, int salariu, std::string functie, std::string atribut1, std::string atribut2);
+    void IncarcaBucatar(std::string nume, std::string email, int varsta, int id, int salariu, std::string functie, std::string atribut1, std::string atribut2);
+    void IncarcaManager(std::string nume, std::string email, int varsta, int id, int salariu, std::string functie, std::string atribut1, std::string atribut2);
 
     //Actiuni administrator
-    void logareAdmin(bool &ok);
-    void adaugaCamere();
-    void gestionareAngajati();
-    void vizualizareClienti();
-    void vizualizareToateRezervarile();
+    void LogareAdmin(bool &ok);
+    void AdaugaCamere();
+    void GestionareAngajati();
+    void VizualizareClienti();
+    void VizualizareToateRezervarile();
 
     //Din gestionareAngajati()
-    void vizualizareAngajati();
-    void maresteSalariuAdmin(); //mareste salariul angajatului prin actiunea din consola a adminului
-    void micsoreazaSalariuAdmin(); //micsoreaza salariul angajatului prin actiunea din consola a adminului
-    void concediereAngajat();
-    void angajare();
-    void afiseazaStatisticiAngajati();
+    void VizualizareAngajati();
+    void MaresteSalariuAdmin(); //mareste salariul angajatului prin actiunea din consola a adminului
+    void MicsoreazaSalariuAdmin(); //micsoreaza salariul angajatului prin actiunea din consola a adminului
+    void ConcediereAngajat();
+    void Angajare();
+    void AfiseazaStatisticiAngajati();
 
     //Functiile din optiunea(metoda) angajare()
-    void adaugaIngrijitor(std::string nume, std::string email,int varsta,int id,int salariu,std::string functie);
-    void adaugaReceptioner(std::string nume, std::string email,int varsta,int id,int salariu,std::string functie);
-    void adaugaBucatar(std::string nume, std::string email,int varsta,int id,int salariu,std::string functie);
-    void adaugaManager(std::string nume, std::string email,int varsta,int id,int salariu,std::string functie);
+    void AdaugaIngrijitor(std::string nume, std::string email,int varsta,int id,int salariu,std::string functie);
+    void AdaugaReceptioner(std::string nume, std::string email,int varsta,int id,int salariu,std::string functie);
+    void AdaugaBucatar(std::string nume, std::string email,int varsta,int id,int salariu,std::string functie);
+    void AdaugaManager(std::string nume, std::string email,int varsta,int id,int salariu,std::string functie);
 
 };
 

@@ -7,8 +7,8 @@
 
 class Receptioner: public Angajat
 {
-    std::string schimb; //zi sau noapte
-    std::vector <std::string> limbi_vorbite;
+    std::string m_schimb; //zi sau noapte
+    std::vector <std::string> m_limbi_vorbite;
 public:
     Receptioner(); //Constructor implicit
     Receptioner(std::string nume, std::string email, int varsta, int id_angajat, int salariu, std::string functie, std::string schimb, std::vector <std::string> limbi_vorbite); //Constructor parametrizat
@@ -17,15 +17,15 @@ public:
     ~Receptioner(); //Destructor
 
     //Getteri si setteri
-    std::string getSchimb() const;
-    std::vector <std::string> getLimbi() const;
+    std::string GetSchimb() const;
+    std::vector <std::string> GetLimbi() const;
 
-    void setSchimb(std::string schimb);
+    void SetSchimb(std::string schimb);
 
     //Metode suplimentare
-    void afisareDetalii() const override;
-    void adaugaLimba(std::string limba);
-    void eliminaLimba(std::string limba);
+    void AfisareDetalii() const override;
+    void AdaugaLimba(std::string limba);
+    void EliminaLimba(std::string limba);
 
     //Operator overloading +
     Angajat* operator+(int suma) const override;

@@ -1,6 +1,6 @@
 #include "utils.h"
 
-int numarZileInLuna(int luna, int an)
+int NumarZileInLuna(int luna, int an)
 {
     switch(luna)
     {
@@ -10,7 +10,7 @@ int numarZileInLuna(int luna, int an)
     }
 }
 
-int calculeazaDiferentaZile(const std::string& check_in, const std::string& check_out)
+int CalculeazaDiferentaZile(const std::string& check_in, const std::string& check_out)
 {
     int zi1, luna1, an1;
     int zi2, luna2, an2;
@@ -29,7 +29,7 @@ int calculeazaDiferentaZile(const std::string& check_in, const std::string& chec
     {
         zi1++;
         zile++;
-        if (zi1 > numarZileInLuna(luna1, an1))
+        if (zi1 > NumarZileInLuna(luna1, an1))
         {
             zi1 = 1;
             luna1++;

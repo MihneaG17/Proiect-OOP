@@ -2,67 +2,67 @@
 #include <iostream>
 
 //Metodele si variabilele din struct StatisticiAngajati
-int StatisticiAngajat::totalAngajati=0;
-int StatisticiAngajat::salariuTotal=0;
-int StatisticiAngajat::salariuMinim=INT_MAX;
-int StatisticiAngajat::salariuMaxim=INT_MIN;
+int StatisticiAngajat::total_angajati=0;
+int StatisticiAngajat::salariu_total=0;
+int StatisticiAngajat::salariu_minim=INT_MAX;
+int StatisticiAngajat::salariu_maxim=INT_MIN;
 
-void StatisticiAngajat::adaugaSalariu(int salariu) {
-    salariuTotal+=salariu;
-    totalAngajati++;
-    if(salariu<salariuMinim) 
-        salariuMinim=salariu;
-    if(salariu>salariuMaxim)
-        salariuMaxim=salariu;
+void StatisticiAngajat::AdaugaSalariu(int salariu) {
+    salariu_total+=salariu;
+    total_angajati++;
+    if(salariu<salariu_minim) 
+        salariu_minim=salariu;
+    if(salariu>salariu_maxim)
+        salariu_maxim=salariu;
 }
 
-void StatisticiAngajat::eliminaSalariu(int salariu)
+void StatisticiAngajat::EliminaSalariu(int salariu)
 {
-    salariuTotal-=salariu;
-    totalAngajati--;
-    //salariuMin/Max trebuie recalculate
+    salariu_total-=salariu;
+    total_angajati--;
+    //salariu_min/max trebuie recalculate
 }
 
-double StatisticiAngajat::salariuMediu()
+double StatisticiAngajat::SalariuMediu()
 {
-    return totalAngajati==0 ? 0 : static_cast<double>(salariuTotal)/totalAngajati;
+    return total_angajati==0 ? 0 : static_cast<double>(salariu_total)/total_angajati;
 }
 
 //Clasa Angajat
 
 //Constructori si Destructor
-Angajat::Angajat():Persoana(), id_angajat(0), salariu(0), functie("Nedefinit") {}; //Constructor implicit - Fiind o clasa derivata din clasa de baza Persoana,
+Angajat::Angajat():Persoana(), m_id_angajat(0), m_salariu(0), m_functie("Nedefinit") {}; //Constructor implicit - Fiind o clasa derivata din clasa de baza Persoana,
 //Pentru atributele mostenite se apeleaza constructorul clasei de baza
 
 Angajat::Angajat(std::string nume, std::string email, int varsta, int id_angajat, int salariu, std::string functie):Persoana(nume, email, varsta),
-id_angajat(id_angajat), salariu(salariu), functie(functie) 
+m_id_angajat(id_angajat), m_salariu(salariu), m_functie(functie) 
 {
-    StatisticiAngajat::adaugaSalariu(salariu);
+    StatisticiAngajat::AdaugaSalariu(salariu);
 }; 
 //Constructor parametrizat - Fiind o clasa derivata din clasa de baza Persoana,
 //Pentru atributele mostenite se apeleaza constructorul clasei de baza
 
-Angajat::Angajat(const Angajat& a):Persoana(a), id_angajat(a.id_angajat), salariu(a.salariu), functie(a.functie){}; //Copy constructor
+Angajat::Angajat(const Angajat& a):Persoana(a), m_id_angajat(a.m_id_angajat), m_salariu(a.m_salariu), m_functie(a.m_functie){}; //Copy constructor
 
 Angajat::~Angajat() 
 {
-    StatisticiAngajat::eliminaSalariu(salariu);
+    StatisticiAngajat::EliminaSalariu(m_salariu);
 } //Destructor
 
 //Getteri si setteri specifici pentru clasa Angajat (cei din clasa de baza Persoana fiind mosteniti)
-int Angajat::getId() const { return id_angajat; };
-int Angajat::getSalariu() const { return salariu; };
-std::string Angajat::getFunctie() const { return functie; };
+int Angajat::GetId() const { return m_id_angajat; };
+int Angajat::GetSalariu() const { return m_salariu; };
+std::string Angajat::GetFunctie() const { return m_functie; };
 
-void Angajat::setId(int id_angajat) { this->id_angajat=id_angajat; };
-void Angajat::setSalariu(int salariu)
+void Angajat::SetId(int id_angajat) { m_id_angajat=id_angajat; };
+void Angajat::SetSalariu(int salariu)
 {
     if(salariu<0)
         std::cout<<"Salariul trebuie sa fie un numar pozitiv";
     else
-        this->salariu=salariu;
+        m_salariu=salariu;
 };
-void Angajat::setFunctie(std::string functie) { this->functie=functie; };
+void Angajat::SetFunctie(std::string functie) { m_functie=functie; };
 
 //Metode suplimentare
 
@@ -73,23 +73,23 @@ void Angajat::setFunctie(std::string functie) { this->functie=functie; };
 
 void Angajat::MinorareSalariala(int procent)
 {
-    salariu=salariu-(procent*salariu)/100;
+    m_salariu=m_salariu-(procent*m_salariu)/100;
 };
 
-void Angajat::afisareDetalii() const
+void Angajat::AfisareDetalii() const
 {
-    std::cout<<"Nume: "<<getNume()<<"\n";
-    std::cout<<"Email: "<<getEmail()<<"\n";
-    std::cout<<"Varsta: "<<getVarsta()<<"\n";
-    std::cout<<"ID Angajat: "<<id_angajat<<"\n";
-    std::cout<<"Salariu: "<<salariu<<"\n";
-    std::cout<<"Functie: "<<functie<<"\n";
+    std::cout<<"Nume: "<<GetNume()<<"\n";
+    std::cout<<"Email: "<<GetEmail()<<"\n";
+    std::cout<<"Varsta: "<<GetVarsta()<<"\n";
+    std::cout<<"ID Angajat: "<<GetId()<<"\n";
+    std::cout<<"Salariu: "<<GetSalariu()<<"\n";
+    std::cout<<"Functie: "<<GetFunctie()<<"\n";
 };
 
 //Operator overloading +
 Angajat* Angajat::operator+(int suma) const
 {
     Angajat* copie = new Angajat(*this); //copie dupa obiectul original
-    copie->salariu += suma;
+    copie->m_salariu += suma;
     return copie;
 }

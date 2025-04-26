@@ -6,3 +6,5 @@
 6 Single 100 1
 7 Double 200 1
 8 Double 200 1
+9 Triple 300 1
+10 Premium 500 1

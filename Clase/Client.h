@@ -7,28 +7,28 @@
 
 class Client: public Persoana
 {
-    int id_client;
-    std::vector<int> istoricRezervari;
+    int m_id_client;
+    std::vector<int> m_istoric_rezervari;
 public:
     Client(); //Constructor implicit
-    Client(std::string nume, std::string email, int varsta, int id_client, std::vector<int> istoricRezervari); //Constructor parametrizat
+    Client(std::string nume, std::string email, int varsta, int id_client, std::vector<int> istoric_rezervari); //Constructor parametrizat
     Client(const Client& c); //Copy constructor
 
     ~Client(); //Destructor
 
     //Getteri si setteri
-    int getIdC() const;
-    std::vector<int> getIstoric() const;
+    int GetIdC() const;
+    std::vector<int> GetIstoric() const;
 
-    void setIdC(int id_client);
+    void SetIdC(int id_client);
 
     //Supraincarcarea operatorului =+ (adauga rezervare la istoric)
     Client& operator+=(int rezervare);
 
     //Metode suplimentare
-    void adaugaRezervare(int rezervare);
-    void afisareIstoricRezervari();
-    void afisareDetalii() const override;
+    void AdaugaRezervare(int rezervare);
+    void AfisareIstoricRezervari();
+    void AfisareDetalii() const override;
 };
 
 #endif //CLIENT_H

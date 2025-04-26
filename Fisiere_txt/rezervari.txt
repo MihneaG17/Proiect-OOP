@@ -34,9 +34,9 @@ Check-in: 2025-10-10
 Check-out: 2025-10-21
 Nopti: 11
 Pret total: 3300
-Discount: 15
+Discount: 15%
 Metoda plata: Card
 Observatii: Nu
 Rating: 0
 Comentariu: -
-------------------------------
+-------------------------------

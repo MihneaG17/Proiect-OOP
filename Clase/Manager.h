@@ -7,28 +7,28 @@
 
 class Manager : public Angajat
 {
-    std::vector<std::string> departamenteCoordonate;
-    int aniExperienta;
+    std::vector<std::string> m_departamente_coordonate;
+    int m_ani_experienta;
 
 public:
     Manager(); // Constructor implicit
     Manager(std::string nume, std::string email, int varsta, int id_angajat, int salariu,
-            std::string functie, std::vector<std::string> departamenteCoordonate, int aniExperienta); // Constructor parametrizat
+            std::string functie, std::vector<std::string> departamente_coordonate, int ani_experienta); // Constructor parametrizat
     Manager(const Manager& obj); // Copy constructor
 
     ~Manager(); // Destructor
 
     // Getteri si setteri
-    std::vector<std::string> getDepartamente() const;
-    int getExperienta() const;
+    std::vector<std::string> GetDepartamente() const;
+    int GetExperienta() const;
 
-    void setDepartamente(std::vector<std::string> departamente);
-    void setExperienta(int ani);
+    void SetDepartamente(std::vector<std::string> departamente);
+    void SetExperienta(int ani);
 
     // Metode suplimentare
-    void afisareDetalii() const override;
-    void adaugaDepartament(std::string dept);
-    void eliminaDepartament(std::string dept);
+    void AfisareDetalii() const override;
+    void AdaugaDepartament(std::string dept);
+    void EliminaDepartament(std::string dept);
 
     //Operator overloading +
     Angajat* operator+(int suma) const override;
