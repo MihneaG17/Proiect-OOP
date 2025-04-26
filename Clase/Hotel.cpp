@@ -50,7 +50,7 @@ void Hotel::MeniuClient()
         std::cout<<"Ce doriti sa faceti?\n";
         std::cout<<"1. Vezi camerele disponibile.\n";
         std::cout<<"2. Efectueaza o rezervare.\n";
-        std::cout<<"3. Vezi rezervarile efectuate pe un anumit nume.\n";
+        std::cout<<"3. Vezi rezervari efectuate.\n";
         std::cout<<"4. Anuleaza o rezervare.\n";
         std::cout<<"5. Ofera review unei rezervari.\n";
         std::cout<<"6. Inapoi\n";
@@ -403,55 +403,71 @@ void Hotel::EfectueazaRezervare()
 
 void Hotel::VizualizareRezervari()
 {
-    bool gasit=0;
-    std::string nume;
+    std::cout<<"Cautati rezervarea dupa: \n";
+    std::cout<<"1. ID rezervare\n";
+    std::cout<<"2. Nume client\n";
+    int opt;
+    std::cin>>opt;
 
-    std::cout<<"Introduceti numele pe care au fost efectuate rezervari: ";
+    if(opt==1)
+    {
+        int id;
+        std::cout<<"Introduceti ID-ul rezervarii: \n";
+        std::cin>>id;
 
-    std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-    std::getline(std::cin,nume);
+        Rezervare* r=CautaRezervare(id);
+        if(r)
+            r->AfisareDetalii();
+        else
+            std::cout<<"Rezervarea nu a fost gasita\n";
+    }
+    else if(opt==2)
+    {
+        std::string nume;
+        std::cout<<"Introduceti numele pentru care doriti sa vedeti rezervarile efectuate: \n";
+        std::cin.ignore();
+        std::getline(std::cin,nume);
 
+        std::vector<Rezervare*> rezervari_gasite=CautaRezervare(nume);
+
+        if(rezervari_gasite.empty())
+        {
+            std::cout<<"Nu au fost gasite rezervari pentru acest nume\n";
+        }
+        else
+        {
+            for(auto& rezervare : rezervari_gasite)
+            {
+                rezervare->AfisareDetalii();
+                std::cout<<"-------------------------\n";
+            }
+        }
+    }
+    else
+    {
+        std::cout<<"Optiune invalida\n";
+    }
+}
+Rezervare* Hotel::CautaRezervare(int id)
+{
+    for(auto& rezervare : m_rezervari)
+    {
+        if(rezervare.GetId()==id)
+            return &rezervare;
+    }
+    return nullptr; //pointer null - rezervarea nu a fost gasita
+}
+
+std::vector<Rezervare*> Hotel::CautaRezervare(std::string nume)
+{
+    std::vector<Rezervare*> rezultate;
     for(auto& rezervare : m_rezervari)
     {
         if(rezervare.GetClient().GetNume()==nume)
-        {
-            gasit=1;
-            std::cout<<"-------------------------------"<<"\n";
-            std::cout<<"ID-ul rezervarii: "<<rezervare.GetId()<<"\n";
-            std::cout<<"Data de check-in: "<<rezervare.GetDataCheckIn()<<"\n";
-            std::cout<<"Data de check-out: "<<rezervare.GetDataCheckOut()<<"\n";
-            std::cout<<"Numar nopti: "<<rezervare.GetNumarNopti()<<"\n";
-            std::cout<<"Pret total: "<<rezervare.GetPretTotal()<<"\n";
-            if (rezervare.GetDiscount()!=0)
-            {
-                std::cout<<"Discount aplicat: "<<rezervare.GetDiscount()<<"%\n";
-            }
-            std::cout<<"Metoda de plata: "<<rezervare.GetMetodaPlata()<<"\n";
-            std::cout<<"Observatii: "<<rezervare.GetObservatii()<<"\n";
-
-            const Camera& cam = rezervare.GetCamera();
-
-            std::cout<<"\n";
-            std::cout<<"Detaliile camerei asociate rezervarii: "<<"\n";
-            std::cout<<"Numar: "<<cam.GetNumar()<<"\n";
-            std::cout<<"Pret/noapte: "<<cam.GetPret()<<"\n";
-            std::cout<<"Tip: "<<cam.GetTip()<<"\n";
-
-            std::cout<<"\n";
-            
-            Review r=rezervare.GetReview();
-            std::cout<<"Rating: "<<r.GetNota()<<"\n";
-            std::cout<<"Comentariu: "<<r.GetComentariu()<<"\n";
-            
-        }
+            rezultate.push_back(&rezervare);
     }
-    if(!gasit)
-    {
-        std::cout<<"Nu au fost gasite rezervari efectuate pe numele "<<nume;
-        std::cout<<"\n";
-    }
+    return rezultate;
 }
-
 void Hotel::AnuleazaRezervare()
 {
     if(m_rezervari.empty())

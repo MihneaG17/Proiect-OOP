@@ -64,6 +64,8 @@ void Rezervare::AfisareDetalii()
     m_client.AfisareDetalii();
     std::cout<<"Detaliile camerei: \n";
     m_camera.AfisareDetaliiCamera();
+    std::cout<<"\n";
+    m_review.AfisareReview();
 };
 
 void Rezervare::CalcularePretTotal() {

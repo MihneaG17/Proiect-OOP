@@ -37,6 +37,8 @@ public:
     void VeziCamereDisponibile();
     void AdaugaRezervare(Camera& camera, std::string& data_check_in, std::string& data_check_out);
     void VizualizareRezervari();
+    Rezervare* CautaRezervare(int id);
+    std::vector<Rezervare*> CautaRezervare(std::string nume); //Functii supraincarcate - cauta rezervare fie dupa ID, fie dupa nume
     void AnuleazaRezervare();
     void OferaReview();
 

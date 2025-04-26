@@ -1,5 +1,5 @@
 ID rezervare: 1
-Nume client: Mihnea
+Nume client: Mihnea Gabriel
 Email: mihnea298@gmail.com
 Camera: 2 - Double - 200RON/noapte
 Check-in: 2025-11-17
