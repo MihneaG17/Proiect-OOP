@@ -4,6 +4,7 @@
 #include <iostream>
 
 //Clasa pur abstracta - Interfata
+//In viitor va fi folosita si pentru autentificarea clientilor, nu doar pentru administrator
 class Autentificabil
 {
 public:

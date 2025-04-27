@@ -75,5 +75,5 @@ void Receptioner::EliminaLimba(std::string limba)
 Angajat* Receptioner::operator+(int suma) const {
     Receptioner* copie = new Receptioner(*this); //Copy constructor
     copie->SetSalariu(this->GetSalariu() + suma);
-    return copie;
+    return copie; //Returneaza o copie a obiectului initial cu salariu actualizat
 }

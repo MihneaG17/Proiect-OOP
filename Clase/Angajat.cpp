@@ -16,7 +16,7 @@ void StatisticiAngajat::AdaugaSalariu(int salariu) {
         salariu_maxim=salariu;
 }
 
-void StatisticiAngajat::EliminaSalariu(int salariu)
+void StatisticiAngajat::EliminaSalariu(int salariu) //apelat in destructor
 {
     salariu_total-=salariu;
     total_angajati--;
@@ -30,14 +30,14 @@ double StatisticiAngajat::SalariuMediu()
 
 //Clasa Angajat
 
-//Constructori si Destructor
+//Constructori
 Angajat::Angajat():Persoana(), m_id_angajat(0), m_salariu(0), m_functie("Nedefinit") {}; //Constructor implicit - Fiind o clasa derivata din clasa de baza Persoana,
 //Pentru atributele mostenite se apeleaza constructorul clasei de baza
 
 Angajat::Angajat(std::string nume, std::string email, int varsta, int id_angajat, int salariu, std::string functie):Persoana(nume, email, varsta),
 m_id_angajat(id_angajat), m_salariu(salariu), m_functie(functie) 
 {
-    StatisticiAngajat::AdaugaSalariu(salariu);
+    StatisticiAngajat::AdaugaSalariu(salariu); //Cand se creeaza un nou obiect de tip angajat cu datele completate, se apeleaza functia AdaugaSalariu() ce modifica salariul si nr de angajati
 }; 
 //Constructor parametrizat - Fiind o clasa derivata din clasa de baza Persoana,
 //Pentru atributele mostenite se apeleaza constructorul clasei de baza
@@ -46,7 +46,7 @@ Angajat::Angajat(const Angajat& a):Persoana(a), m_id_angajat(a.m_id_angajat), m_
 
 Angajat::~Angajat() 
 {
-    StatisticiAngajat::EliminaSalariu(m_salariu);
+    StatisticiAngajat::EliminaSalariu(m_salariu); //Cand un obiect de tip angajat este sters, datele sale sunt eliminate din Statistici
 } //Destructor
 
 //Getteri si setteri specifici pentru clasa Angajat (cei din clasa de baza Persoana fiind mosteniti)
@@ -76,7 +76,7 @@ void Angajat::MinorareSalariala(int procent)
     m_salariu=m_salariu-(procent*m_salariu)/100;
 };
 
-void Angajat::AfisareDetalii() const
+void Angajat::AfisareDetalii() const //Metoda suprascrisa (cea din clasa de baza Persoana)
 {
     std::cout<<"Nume: "<<GetNume()<<"\n";
     std::cout<<"Email: "<<GetEmail()<<"\n";
@@ -89,7 +89,7 @@ void Angajat::AfisareDetalii() const
 //Operator overloading +
 Angajat* Angajat::operator+(int suma) const
 {
-    Angajat* copie = new Angajat(*this); //copie dupa obiectul original
-    copie->m_salariu += suma;
-    return copie;
+    Angajat* copie = new Angajat(*this); //copie dupa obiectul original - se apeleaza copy constructorul
+    copie->m_salariu += suma; 
+    return copie; //se intoarce copia obiectului, cu salariu modificat
 }

@@ -5,7 +5,7 @@
 #include <iostream>
 
 struct StatisticiAngajat {
-    //Variabile declarate statice - apartin struct-ului, nu instantelor (obiectelor)
+    //Variabile declarate static - apartin struct-ului, nu instantelor
     static int total_angajati;
     static int salariu_total;
     static int salariu_minim;
@@ -24,11 +24,11 @@ class Angajat: public Persoana
     std::string m_functie;
 
 public:
-    Angajat(); //Constructor predefinit
+    Angajat(); //Constructor implicit
     Angajat(std::string nume, std::string email, int varsta, int id_angajat, int salariu, std::string functie); //Constructor parametrizat
     Angajat(const Angajat& a); //Copy Constructor
 
-    ~Angajat(); //Destructor
+    virtual ~Angajat(); //Destructor
 
     //Getteri si setteri specifici pentru clasa Angajat (cei din clasa de baza Persoana fiind mosteniti)
     int GetId() const;

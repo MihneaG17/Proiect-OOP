@@ -16,7 +16,7 @@ int Ingrijitor::GetEtaj() const { return m_etaj_curatenie; };
 void Ingrijitor::SetEtaj(int etaj_curatenie) { m_etaj_curatenie=etaj_curatenie; };
 
 //Metode suplimentare
-void Ingrijitor::AfisareDetalii() const
+void Ingrijitor::AfisareDetalii() const //Metoda suprascrisa din clasa de baza Persoana
 {
     std::cout<<"Nume: "<<GetNume()<<"\n";
     std::cout<<"Email: "<<GetEmail()<<"\n";
@@ -31,5 +31,5 @@ void Ingrijitor::AfisareDetalii() const
 Angajat* Ingrijitor::operator+(int suma) const {
     Ingrijitor* copie = new Ingrijitor(*this); //Copy constructor
     copie->SetSalariu(this->GetSalariu() + suma);
-    return copie;
+    return copie; //Returneaza o copie a obiectului initial cu salariu actualizat
 }

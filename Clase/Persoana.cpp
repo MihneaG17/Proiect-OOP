@@ -3,7 +3,6 @@
 
 //Constructori si destructor
 Persoana::Persoana(): m_nume("Necunoscut"), m_email("Necunoscut"), m_varsta(0) {}; //Constructor implicit - initializeaza atributele obiectului dinainte sa fie creat
-//Daca ar fi fost de forma Persoana() { nume=....} atunci obiectul ar fi fost mai intai creat, apoi initializat
 
 Persoana::Persoana(std::string nume, std::string email, int varsta):
 m_nume(nume), m_email(email), m_varsta(varsta) {}; //Constructor parametrizat - initializeaza atributele cu cele primite ca argumente
@@ -28,3 +27,5 @@ void Persoana::SetVarsta(int varsta)
     else
         m_varsta=varsta;
 }
+
+//Metoda AfiseazaDetalii() este suprascrisa in clasele derivate

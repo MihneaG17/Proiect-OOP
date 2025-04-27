@@ -37,12 +37,12 @@ void Client::AfisareIstoricRezervari()
         std::cout<<rezervare<<" ";
 };
 
-void Client::AfisareDetalii() const
+void Client::AfisareDetalii() const //Metoda suprascrisa din clasa de baza Persoana
 {
     std::cout<<"Nume: "<<GetNume()<<std::endl;
     std::cout<<"Email: "<<GetEmail()<<std::endl;
     std::cout<<"Varsta: "<<GetVarsta()<<std::endl;
-    std::cout<<"ID Client: "<<m_id_client<<"\n";
+    std::cout<<"ID Client: "<<GetIdC()<<"\n";
     //std::cout<<"Istoric de rezervari: ";
     //for(auto i:istoricRezervari)
     //    std::cout<<i<<" ";

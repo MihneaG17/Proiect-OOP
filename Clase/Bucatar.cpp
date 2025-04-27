@@ -19,7 +19,7 @@ void Bucatar::SetSpecializare(std::string specializare) { m_specializare=special
 
 //Metode suplimentare
 
-void Bucatar::AfisareDetalii() const
+void Bucatar::AfisareDetalii() const //Metoda suprascrisa din clasa de baza Persoana
 {
     std::cout<<"Nume: "<<GetNume()<<"\n";
     std::cout<<"Email: "<<GetEmail()<<"\n";
@@ -49,7 +49,7 @@ void Bucatar::AdaugaCertificare(std::string certificare)
     }
     m_certificari.push_back(certificare);
     std::cout<<"Certificarea a fost adaugata cu succes!\n";
-}
+} //Adauga o certificare noua in vector
 
 void Bucatar::EliminaCertificare(std::string certificare)
 {
@@ -70,11 +70,11 @@ void Bucatar::EliminaCertificare(std::string certificare)
     {
         std::cout<<"Certificarea nu a fost gasita in lista\n";
     }
-}
+}   //Elimina o certificare din vector
 
 //Operator overloading +
 Angajat* Bucatar::operator+(int suma) const {
     Bucatar* copie = new Bucatar(*this); //Copy constructor
     copie->SetSalariu(this->GetSalariu() + suma);
-    return copie;
+    return copie; //Se returneaza copia obiectului cu salariul modificat
 }

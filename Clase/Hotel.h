@@ -73,7 +73,7 @@ public:
     void Angajare();
     void AfiseazaStatisticiAngajati();
 
-    //Functiile din optiunea(metoda) angajare()
+    //Functiile din optiunea(metoda) Angajare()
     void AdaugaIngrijitor(std::string nume, std::string email,int varsta,int id,int salariu,std::string functie);
     void AdaugaReceptioner(std::string nume, std::string email,int varsta,int id,int salariu,std::string functie);
     void AdaugaBucatar(std::string nume, std::string email,int varsta,int id,int salariu,std::string functie);

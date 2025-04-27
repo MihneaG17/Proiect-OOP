@@ -9,11 +9,17 @@ Hotel::Hotel() {
     IncarcaCamereDinFisier();
     IncarcaAngajatiDinFisier();
     IncarcaRezervariDinFisier();
-};
+}; //Cand se creaza un obiect de tip Hotel (in main, unic) se incarca automat in vectori datele despre camere, rezervari si angajati
 
-Hotel::~Hotel() {}; //Destructor
+Hotel::~Hotel() {
+    for(auto& angajat : m_angajati)
+    {
+        delete angajat;
+    }
+    m_angajati.clear();
+}; //Destructor - sunt sterse obiectele de tip Angajat alocate pe heap
 
-void Hotel::Ruleaza()
+void Hotel::Ruleaza() //Meniul principal - metoda Ruleaza() se apeleaza in main
 {
     int opt;
 
@@ -43,7 +49,7 @@ void Hotel::Ruleaza()
     } while (opt != 3);
 }
 
-void Hotel::MeniuClient()
+void Hotel::MeniuClient() //Meniul clientului
 {
     int choice;
     do {
@@ -80,7 +86,7 @@ void Hotel::MeniuClient()
     }
    }while(choice!=6);
 }
-void Hotel::MeniuAdministrator()
+void Hotel::MeniuAdministrator() //Meniu administrator - necesita log-in cu date unice (mail si parola)
 {
     bool ok=false;
     LogareAdmin(ok);
@@ -106,7 +112,7 @@ void Hotel::MeniuAdministrator()
                 GestionareAngajati();
                 break;
             case 3:
-                VizualizareClienti(); //urmeaza
+                VizualizareClienti(); //urmeaza sa fie implementata
                 break;
             case 4:
                 VizualizareToateRezervarile();
@@ -129,7 +135,7 @@ void Hotel::VeziCamereDisponibile()
     {
         if(camera.VerificaDisponibilitate()==true)
         {
-            std::cout<<camera<<"\n"; //operator overloading <<
+            std::cout<<camera<<"\n"; //operator overloading << - afisam detaliile camerei
             //std::cout<<"Camera "<<camera.getNumar()<<" - "<<camera.getTip()<<" - "<<camera.getPret()<<" RON/noapte"<<"\n";
         }
     }
@@ -138,10 +144,11 @@ void Hotel::VeziCamereDisponibile()
 
 void Hotel::SalvareRezervareFisier(const Rezervare& r)
 {
-    std::ofstream f("Fisiere_txt/rezervari.txt",std::ios::app); //deschide fisierul in modul append pentru a adauga date la finalul sau
+    std::ofstream f("Fisiere_txt/rezervari.txt",std::ios::app); //deschide fisierul in modul append pentru a adauga date la finalul acestuia
 
-    if(f.is_open())
-    {
+    if(f.is_open()) 
+    {   
+        //Se adauga datele rezervarii in fisier
         f<<"ID rezervare: "<<r.GetId()<<"\n";
         f<<"Nume client: "<<r.GetClient().GetNume()<<"\n";
         f<<"Email: "<<r.GetClient().GetEmail()<<"\n";
@@ -192,7 +199,8 @@ void Hotel::IncarcaCamereDinFisier()
         camera.SetPret(pret);
         camera.SetDisponibilitate(disponibilitate);
 
-        m_camere.push_back(camera);
+        m_camere.push_back(camera); //Pentru fiecare camera din fisier, se creeaza un obiect de tip Camera, ii sunt setate atributele si este incarcat in vector
+        //Din acest motiv variabila statica m_total_camere este incrementata in constructorul default, deoarece mai intai sunt create obiectele si apoi populate cu date
     }
     in.close();
 }
@@ -200,15 +208,15 @@ void Hotel::IncarcaRezervariDinFisier()
 {
     std::ifstream fin("Fisiere_txt/rezervari.txt");
     if (!fin.is_open()) {
-        std::cerr << "Eroare la deschiderea fisierului de rezervari.\n";
+        std::cerr << "Eroare la deschiderea fisierului de rezervari.\n"; //standard error stream used to output the errors
         return;
     }
     std::string linie;
     while(std::getline(fin,linie)) //cat timp citim linii
     {
-        if(linie.empty()) continue;
+        if(linie.empty()) continue; //ignoram liniile goale
 
-        int id=std::stoi(linie.substr(14)); //substring-ul de la pozitia 15 - id-ul care se afla dupa ":" !!!!!
+        int id=std::stoi(linie.substr(14)); //substring-ul de la pozitia 14 - id-ul care se afla dupa ":" !!!!!
 
         std::getline(fin,linie);
         std::string nume=linie.substr(13); //nume client:
@@ -221,16 +229,16 @@ void Hotel::IncarcaRezervariDinFisier()
         std::string tipCamera;
 
         size_t start = linie.find(':') + 2; // începe după "Camera: "
-        size_t dash1 = linie.find('-', start);
+        size_t dash1 = linie.find('-', start); //prima "-" dupa pozitia start
         nr_camera = std::stoi(linie.substr(start, dash1 - start));
 
-        size_t dash2 = linie.find('-', dash1 + 2);
+        size_t dash2 = linie.find('-', dash1 + 2); //a doua "-" dupa prima
         tipCamera = linie.substr(dash1 + 2, dash2 - dash1 - 3);
 
-        size_t ronPos = linie.find("RON");
-        pret_camera = std::stoi(linie.substr(dash2 + 2, ronPos - dash2 - 2));
+        size_t ron_pos = linie.find("RON"); //cauta pozitia unde scrie "RON" in fisier
+        pret_camera = std::stoi(linie.substr(dash2 + 2, ron_pos - dash2 - 2)); //ia valoarea dintre dash2 si RON si o transforma in int (reprezinta pretul camerei)
 
-        Camera cam(nr_camera, true, pret_camera, tipCamera);
+        Camera cam(nr_camera, true, pret_camera, tipCamera); //Aici se creeaza un obiect de tip camera cu constructorul parametrizat - m_total_camere nu se incrementeaza !! nu se creeaza camere noi, doar se asociaza una deja existenta unei rezervari
 
         std::getline(fin, linie);
         std::string check_in = linie.substr(10); //check-in:
@@ -269,7 +277,7 @@ void Hotel::IncarcaRezervariDinFisier()
 
         Rezervare r(id, check_in, check_out, pret_total, client, cam, metoda, observatii, discount, nopti);
         r.SetReview(rv);
-        m_rezervari.push_back(r);
+        m_rezervari.push_back(r); //se adauga rezervarea in vector
 
         std::getline(fin,linie); //dam skip la separatorul ------------------------
     }
@@ -309,7 +317,7 @@ void Hotel::AdaugaRezervare(Camera &camera, std::string& data_check_in, std::str
     std::cout<<"\n";
 
     //Calculeaza pretul total al rezervarii
-    int nopti=CalculeazaDiferentaZile(data_check_in,data_check_out);
+    int nopti=CalculeazaDiferentaZile(data_check_in,data_check_out); //functie helper din utils.h
 
     double pret_total;
     pret_total=nopti*camera.GetPret();
@@ -338,7 +346,7 @@ void Hotel::AdaugaRezervare(Camera &camera, std::string& data_check_in, std::str
 
     SalvareRezervareFisier(r);
 
-    camera.SetDisponibilitate(false);
+    camera.SetDisponibilitate(false); //Camera rezervata devine ocupata
     ActualizeazaCamereDupaRezervare();
 
     std::cout << "Rezervarea a fost efectuata cu succes! Detalii:\n";
@@ -355,7 +363,7 @@ void Hotel::EfectueazaRezervare()
     }
     if (ok==0)
     {
-        std::cout<<"Momentan nu mai este nicio camera libera."<<"\n";
+        std::cout<<"Momentan nu mai este nicio camera libera."<<"\n"; //Daca nicio camera nu mai e disponibila atunci nu se mai pot efectua rezervari
         std::cout<<"\n";
         return;
     }
@@ -386,7 +394,7 @@ void Hotel::EfectueazaRezervare()
                     return;
                 }
 
-                AdaugaRezervare(camera, data_check_in, data_check_out);
+                AdaugaRezervare(camera, data_check_in, data_check_out); //Daca datele de mai sus sunt valide, se apeleaza functia AdaugaRezervare() care continua cu crearea rezervarii
 
             }
             gasita=true;
@@ -415,8 +423,8 @@ void Hotel::VizualizareRezervari()
         std::cout<<"Introduceti ID-ul rezervarii: \n";
         std::cin>>id;
 
-        Rezervare* r=CautaRezervare(id);
-        if(r)
+        Rezervare* r=CautaRezervare(id); //CautaRezervare() intoarce un pointer pentru o rezervare existenta
+        if(r) //Daca a fost gasita rezervarea, sunt afisate detaliile
             r->AfisareDetalii();
         else
             std::cout<<"Rezervarea nu a fost gasita\n";
@@ -428,7 +436,7 @@ void Hotel::VizualizareRezervari()
         std::cin.ignore();
         std::getline(std::cin,nume);
 
-        std::vector<Rezervare*> rezervari_gasite=CautaRezervare(nume);
+        std::vector<Rezervare*> rezervari_gasite=CautaRezervare(nume); //CautaRezervare() intoarce un vector de pointeri catre obiecte de tip Rezervare
 
         if(rezervari_gasite.empty())
         {
@@ -453,7 +461,7 @@ Rezervare* Hotel::CautaRezervare(int id)
     for(auto& rezervare : m_rezervari)
     {
         if(rezervare.GetId()==id)
-            return &rezervare;
+            return &rezervare; //intoarce referinta catre rezervarea gasita
     }
     return nullptr; //pointer null - rezervarea nu a fost gasita
 }
@@ -464,7 +472,7 @@ std::vector<Rezervare*> Hotel::CautaRezervare(std::string nume)
     for(auto& rezervare : m_rezervari)
     {
         if(rezervare.GetClient().GetNume()==nume)
-            rezultate.push_back(&rezervare);
+            rezultate.push_back(&rezervare); //e adaugata referinta catre rezervarea cautata in vector
     }
     return rezultate;
 }
@@ -489,11 +497,11 @@ void Hotel::AnuleazaRezervare()
             gasit=true;
 
             Camera cam=rezervare.GetCamera();
-            int nrCamera=cam.GetNumar(); //Setez statusul camerei ca fiind true (libera)
+            int nr_camera=cam.GetNumar(); //Setez statusul camerei ca fiind true (libera)
             
             for(auto& camera : m_camere)
             {
-                if(camera.GetNumar()==nrCamera)
+                if(camera.GetNumar()==nr_camera)
                 {
                     camera.SetDisponibilitate(true);
                     break;
@@ -514,12 +522,12 @@ void Hotel::AnuleazaRezervare()
     }
 }
 
-void Hotel::ActualizareRezervariDupaAnulare()
+void Hotel::ActualizareRezervariDupaAnulare() //Rescrie fisierul cu continutul actual al vectorului de rezervari
 {
     std::ofstream fout("Fisiere_txt/rezervari.txt", std::ios::out); //std::ios::out este folosit pentru a rescrie fisierul (overwrite) folosind continutul actual din vector
     if(!fout.is_open())
     {
-        std::cerr<<"Eroare la deschiderea fisierului";
+        std::cerr<<"Eroare la deschiderea fisierului"; //standard error stream used to output the errors
         return;
     }
 
@@ -548,12 +556,12 @@ void Hotel::ActualizareRezervariDupaAnulare()
     }
     fout.close();
 }
-void Hotel::ActualizeazaCamereDupaRezervare()
+void Hotel::ActualizeazaCamereDupaRezervare() //Rescrie fisierul cu continutul actual al vectorului de camere
 {
     std::ofstream fout("Fisiere_txt/camere.txt", std::ios::out); //overwrite
     if(!fout.is_open())
     {
-        std::cerr<<"Eroare la deschiderea fisierului";
+        std::cerr<<"Eroare la deschiderea fisierului"; //standard error stream used to output the errors
         return;
     }
 
@@ -571,7 +579,7 @@ void Hotel::OferaReview()
 {
     if(m_rezervari.empty())
     {
-        std::cout<<"Nu ati efectuat nicio rezervare. Un review poate fi oferit doar unei rezervari.\n";
+        std::cout<<"Nu ati efectuat nicio rezervare. Un review poate fi oferit doar daca exista cel putin o rezervare.\n";
         std::cout<<"\n";
         return;
     }
@@ -596,12 +604,12 @@ void Hotel::OferaReview()
             }            
             review.SetNota(rating);
             std::cout<<"Lasati un comentariu in care descrieti experienta dvs: \n";
-            std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+            std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n'); //curata buffer-ul 
             std::getline(std::cin, comentariu);
             review.SetComentariu(comentariu);
 
             rezervare.SetReview(review);
-            ActualizareRezervariDupaAnulare(); //folosesc aceeasi functie care ~rescrie fisierul dupa anulare~ pentru a adauga un review
+            ActualizareRezervariDupaAnulare(); //folosesc aceeasi functie care ~rescrie fisierul dupa anulare~ pentru a adauga un review (se actualizeaza continutul fisierului cu cel modificat din vector)
         }
     }
     if(!gasit)
@@ -617,14 +625,14 @@ void Hotel::LogareAdmin(bool &ok)
     std::string email, parola;
     std::cout<<"Introduceti email-ul: \n";
     std::cin>>email;
-    std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+    std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n'); //curata buffer-ul
     std::cout<<"Introduceti parola: \n";
     std::cin>>parola;
-    std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+    std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n'); //curata buffer-ul
 
     std::string email_corect="mihnea298@gmail.com";
     std::string parola_corecta="mihnea123";
-    Administrator admin(email_corect, parola_corecta); 
+    Administrator admin(email_corect, parola_corecta); //obiect de tip administrator care are asociate email-ul si parola necesare pentru autentificare in meniu
 
     if(admin.Autentificare(email,parola))
     {
@@ -639,7 +647,7 @@ void Hotel::LogareAdmin(bool &ok)
 
 void Hotel::ScrieCameraInFisier(const Camera& camera)
 {
-    std::ofstream out("Fisiere_txt/camere.txt", std::ios::app); //deschide in modul append
+    std::ofstream out("Fisiere_txt/camere.txt", std::ios::app); //deschide in modul append - adauga camera la finalul fisierului
     if(out)
     {
         out<<camera.GetNumar()<<" "<<camera.GetTip()<<" "<<camera.GetPret()<<" "<<camera.GetStatus()<<"\n";
@@ -647,7 +655,7 @@ void Hotel::ScrieCameraInFisier(const Camera& camera)
     }
     else
     {
-        std::cerr<<"Eroare la deschiderea fisierului.\n";
+        std::cerr<<"Eroare la deschiderea fisierului.\n"; //standard error stream used to output the errors
     }
 }
 
@@ -670,7 +678,7 @@ void Hotel::AdaugaCamere()
     std::string tip_camera;
     std::cout<<"Introduceti tipul camerei: \n";
     std::cin>>tip_camera;
-    std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+    std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n'); //curata buffer-ul
 
     int pret;
     std::cout<<"Introduceti pretul camerei (per noapte - in RON): \n";
@@ -684,7 +692,7 @@ void Hotel::AdaugaCamere()
     bool status;
     std::cout<<"Introduceti disponibilitatea camerei (1-libera / 0-ocupata): \n";
     std::cin>>status;
-    std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+    std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n'); //curata buffer-ul
 
     std::string confirmare;
     std::cout<<"Sunteti sigur ca doriti sa adaugati o noua camera? Va reamintim detaliile introduse: \n";
@@ -722,7 +730,7 @@ void Hotel::AdaugaCamere()
 
 }
 
-void Hotel::GestionareAngajati()
+void Hotel::GestionareAngajati() //meniu cu optiuni pentru gestionarea angajatilor
 {
     int choice;
     std::cout<<"Alegeti: \n";
@@ -770,12 +778,12 @@ void Hotel::VizualizareClienti()
 {
     //in viitor
 }
-void Hotel::VizualizareToateRezervarile()
+void Hotel::VizualizareToateRezervarile() //afiseaza intreg continutul fisierului cu rezervari
 {
     std::ifstream fin("Fisiere_txt/rezervari.txt");
     if(!fin.is_open())
     {
-        std::cerr<<"Eroare la deschiderea fisierului.\n";
+        std::cerr<<"Eroare la deschiderea fisierului.\n"; //standard error stream used to output the errors
         return;
     }
     std::string linie;
@@ -821,7 +829,7 @@ void Hotel::MaresteSalariuAdmin()
         std::cin>>suma;
 
         //Folosesc operatorul overloaded +
-        Angajat* angajat_nou = *(m_angajati[pozitie])+suma;
+        Angajat* angajat_nou = *(m_angajati[pozitie])+suma; //creez o copie dupa angajatul vechi dar care are salariul modificat
 
         //Actualizez struct-ul cu statistici pentru angajati
         StatisticiAngajat::EliminaSalariu(m_angajati[pozitie]->GetSalariu());
@@ -861,7 +869,7 @@ void Hotel::MicsoreazaSalariuAdmin()
         std::cout<<"Introduceti procentul cu care doriti sa micsorati salariul angajatului: \n";
         std::cin>>procent;
 
-        m_angajati[pozitie]->MinorareSalariala(procent);
+        m_angajati[pozitie]->MinorareSalariala(procent); //este folosita metoda din clasa Angajat
         SalveazaAngajatiInFisier();
 
         std::cout<<"Salariul a fost modificat\n";
@@ -956,7 +964,7 @@ void Hotel::Angajare()
     }
 }
 
-void Hotel::AfiseazaStatisticiAngajati()
+void Hotel::AfiseazaStatisticiAngajati() //Se afiseaza datele "statice" din struct
 {
     std::cout<<"Total angajati: "<<StatisticiAngajat::total_angajati<<"\n";
     std::cout<<"Salariu total: "<<StatisticiAngajat::salariu_total<<"\n";
@@ -974,7 +982,7 @@ void Hotel::AdaugaIngrijitor(std::string nume, std::string email, int varsta, in
     std::cout<<"Asociati angajatului etajul la care sa faca curatenie: ";
     std::cin>>etaj_curatenie;
 
-    m_angajati.push_back(new Ingrijitor(nume,email,varsta,id,salariu,functie,etaj_curatenie));
+    m_angajati.push_back(new Ingrijitor(nume,email,varsta,id,salariu,functie,etaj_curatenie)); //se creaza pe heap un obiect de tip Ingrijitor si e adaugat in vectorul de angajati
     AdaugaAngajatInFisier(m_angajati.back());
     std::cout<<"Angajatul a fost adaugat cu succes!\n";
 }
@@ -998,7 +1006,7 @@ void Hotel::AdaugaReceptioner(std::string nume, std::string email, int varsta, i
         limbi_vorbite.push_back(limba);
     }
 
-    m_angajati.push_back(new Receptioner(nume,email,varsta,id,salariu,functie,schimb,limbi_vorbite));
+    m_angajati.push_back(new Receptioner(nume,email,varsta,id,salariu,functie,schimb,limbi_vorbite)); //se creaza pe heap un obiect de tip Receptioner si e adaugat in vectorul de angajati
     AdaugaAngajatInFisier(m_angajati.back());
     std::cout<<"Angajatul a fost adaugat cu succes!\n";
 }
@@ -1022,7 +1030,7 @@ void Hotel::AdaugaBucatar(std::string nume, std::string email, int varsta, int i
         certificari.push_back(certificare);
     }
 
-    m_angajati.push_back(new Bucatar(nume,email,varsta,id,salariu,functie,specializare,certificari));
+    m_angajati.push_back(new Bucatar(nume,email,varsta,id,salariu,functie,specializare,certificari)); //se creaza pe heap un obiect de tip Bucatar si e adaugat in vectorul de angajati
     AdaugaAngajatInFisier(m_angajati.back());
     std::cout<<"Angajatul a fost adaugat cu succes!\n";
 }
@@ -1046,7 +1054,7 @@ void Hotel::AdaugaManager(std::string nume, std::string email, int varsta, int i
         departamente.push_back(dept);
     }
 
-    m_angajati.push_back(new Manager(nume,email,varsta,id,salariu,functie,departamente,ani_exp));
+    m_angajati.push_back(new Manager(nume,email,varsta,id,salariu,functie,departamente,ani_exp)); //se creaza pe heap un obiect de tip Manager si e adaugat in vectorul de angajati
     AdaugaAngajatInFisier(m_angajati.back());
     std::cout<<"Angajatul a fost adaugat cu succes!\n";
 }
@@ -1101,6 +1109,7 @@ void Hotel::IncarcaAngajatiDinFisier()
     fin.close();
 }
 
+//pentru fiecare angajat incarcat din fisier se creeaza pe heap un obiect specific functiei sale
 void Hotel::IncarcaIngrijitor(std::string nume, std::string email, int varsta, int id, int salariu, std::string functie, std::string atribut1)
 {
     int etaj=std::stoi(atribut1);
@@ -1144,7 +1153,7 @@ void Hotel::IncarcaManager(std::string nume, std::string email, int varsta, int 
     std::istringstream dept_stream(atribut1);
     std::string dept;
 
-    //la fel ca la receptioner - citim fiecare certificare si o adaugam in vector
+    //la fel ca la receptioner - citim fiecare departament si il adaugam in vector
     while(std::getline(dept_stream, dept, ','))
     {
         departamente.push_back(dept);
@@ -1166,8 +1175,9 @@ void Hotel::SalveazaAngajatiInFisier()
         <<angajat->GetId()<<";"<<angajat->GetSalariu()<<";";
 
         //Downcast pentru fiecare subtip de angajat (facem acest lucru pentru a scrie atributele specifice fiecarui tip angajat)
-        //toate obiectele sunt convertite la runtime
-        if(auto ingrijitor=dynamic_cast<Ingrijitor*>(angajat))
+        //verificam la runtime daca un pointer/referinta la clasa de baza poate fi convertit in pointer/referinta la o clasa derivata
+        //<Angajati*> e un vector de pointeri - fiecare elem pointeaza la un obiect de tipul Angajat - care poate fi Ingrijitor, Bucatar etc
+        if(auto ingrijitor=dynamic_cast<Ingrijitor*>(angajat)) //se verifica daca se poate face cast-ul la obiectul derivat - daca nu, se returneaza nullptr si se trece la else
         {
             fout<<ingrijitor->GetEtaj();
         }
@@ -1219,6 +1229,7 @@ void Hotel::AdaugaAngajatInFisier(Angajat* angajat)
         return;
     }
 
+    //Aici se intampla acelasi lucru ca la functia anterioara, insa aici primesc ca argument un singur pointer la un angajat si ii verific tipul real, spre deosebire de functia anterioara unde iau toti pointerii de angajati din vector si ii verific
     if (Ingrijitor* i = dynamic_cast<Ingrijitor*>(angajat)) {
         fout << "ingrijitor;"<< i->GetNume() << ";"<< i->GetEmail() << ";"<< i->GetVarsta() << ";"<< i->GetId() << ";"<< i->GetSalariu() << ";"<< i->GetEtaj() << "\n";
     }

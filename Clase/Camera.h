@@ -13,7 +13,7 @@ class Camera
 public:
     Camera(); //Constructor implicit
     Camera(int numar, bool status, int pret_noapte, std::string tip_camera); //Constructor parametrizat
-
+    Camera(const Camera& cam); //Copy constructor
     ~Camera(); //Destructor
 
     //Getteri si setteri

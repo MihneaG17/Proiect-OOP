@@ -8,6 +8,9 @@ Camera::Camera(): m_numar(0), m_status(0), m_pret_noapte(0), m_tip_camera("Nedef
 //Constructor parametrizat
 Camera::Camera(int numar, bool status, int pret_noapte, std::string tip_camera): m_numar(numar), m_status(status), m_pret_noapte(pret_noapte), m_tip_camera(tip_camera) {};
 
+//Copy Constructor
+Camera::Camera(const Camera& cam): m_numar(cam.m_numar), m_status(cam.m_status), m_pret_noapte(cam.m_pret_noapte), m_tip_camera(cam.m_tip_camera) {};
+//Destructor
 Camera::~Camera() {};
 
 //Getteri si setteri
@@ -35,7 +38,7 @@ void Camera::AfisareDetaliiCamera()
 
 //Overloading operator <<
 
-std::ostream& operator<<(std::ostream& out, Camera& cam)
+std::ostream& operator<<(std::ostream& out, Camera& cam) //Afiseaza detaliile camerei
 {
     out<<"Camera "<<cam.m_numar<<" - "<<cam.m_tip_camera<<" - "<<cam.m_pret_noapte<<" RON/noapte";
     return out;

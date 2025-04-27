@@ -86,5 +86,5 @@ void Manager::EliminaDepartament(std::string dept)
 Angajat* Manager::operator+(int suma) const {
     Manager* copie = new Manager(*this); //Copy constructor
     copie->SetSalariu(this->GetSalariu() + suma);
-    return copie;
+    return copie; //Returneaza o copie a obiectului initial cu salariul actualizat
 }
