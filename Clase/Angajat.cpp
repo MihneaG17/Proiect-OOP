@@ -25,7 +25,7 @@ void StatisticiAngajat::EliminaSalariu(int salariu) //apelat in destructor
 
 double StatisticiAngajat::SalariuMediu()
 {
-    return total_angajati==0 ? 0 : static_cast<double>(salariu_total)/total_angajati;
+    return total_angajati==0 ? 0 : static_cast<double>(salariu_total)/total_angajati; //conversie int in double
 }
 
 //Clasa Angajat

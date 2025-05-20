@@ -9,3 +9,4 @@
 9 Triple 300 1
 10 Premium 500 1
 11 Single 100 1
+12 Single 100 1

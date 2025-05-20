@@ -2,5 +2,5 @@ ingrijitor;Ion Popescu;ion@gmail.com;35;1;2500;2
 receptioner;Maria Ionescu;maria@gmail.com;30;2;3500;zi;romana,engleza
 manager;Ioana Dobrin;ioana@gmail.com;40;3;7000;Receptie,Curatenie;10
 receptioner;Popovici Matei;mateipopovici@yahoo.com;40;4;3750;zi;romana,engleza
-ingrijitor;Andrei Marius;andreim@gmail.com;23;5;3500;2
-receptioner;Andrei Marian;amarian@hotel.ro;44;6;3479;zi;engleza,franceza
+ingrijitor;Andrei Marius;andreim@gmail.com;23;5;3150;2
+receptioner;Andrei Marian;amarian@hotel.ro;44;6;3480;zi;engleza,franceza

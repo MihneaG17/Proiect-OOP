@@ -16,6 +16,7 @@
 #include "Manager.h"
 #include "Autentificabil.h"
 #include "Administrator.h"
+#include "utils.h"
 
 class Hotel
 {
