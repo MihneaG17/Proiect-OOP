@@ -9,7 +9,8 @@ Hotel::Hotel() {
     IncarcaCamereDinFisier();
     IncarcaAngajatiDinFisier();
     IncarcaRezervariDinFisier();
-}; //Cand se creaza un obiect de tip Hotel (in main, unic) se incarca automat in vectori datele despre camere, rezervari si angajati
+    IncarcaClientiDinFisier();
+}; //Cand se creaza un obiect de tip Hotel (in main, unic) se incarca automat in vectori datele despre camere, rezervari, angajati si clienti preluate din fisierele text
 
 Hotel::~Hotel() {
     for(auto& angajat : m_angajati)
@@ -98,7 +99,7 @@ void Hotel::MeniuAdministrator() //Meniu administrator - necesita log-in cu date
             std::cout<<"Ce doriti sa faceti?: \n";
             std::cout<<"1. Adaugati camere. \n";
             std::cout<<"2. Gestionati angajati. \n";
-            std::cout<<"3. Vizualizati clienti. - Momentan indisponibil \n";
+            std::cout<<"3. Vizualizati clienti.\n";
             std::cout<<"4. Vizualizati toate rezervarile. \n";
             std::cout<<"5. Inapoi \n";
             std::cout<<"Alegeti:\n";
@@ -112,7 +113,7 @@ void Hotel::MeniuAdministrator() //Meniu administrator - necesita log-in cu date
                 GestionareAngajati();
                 break;
             case 3:
-                VizualizareClienti(); //urmeaza sa fie implementata
+                VizualizareClienti();
                 break;
             case 4:
                 VizualizareToateRezervarile();
@@ -283,6 +284,70 @@ void Hotel::IncarcaRezervariDinFisier()
     }
     fin.close();
 }
+void Hotel::IncarcaClientiDinFisier()
+{
+    std::ifstream fin("Fisiere_txt/clienti.txt");
+    if (!fin.is_open()) {
+        std::cerr << "Eroare la deschiderea fisierului clienti.txt.\n"; //standard error stream used to output the errors
+        return;
+    }
+
+    std::string linie;
+    while(std::getline(fin, linie))
+    {
+        std::istringstream iss(linie);
+        std::string id_str, nume, mail, varsta_str;
+
+        std::getline(iss,id_str,';');
+        std::getline(iss,nume,';');
+        std::getline(iss,mail,';');
+        std::getline(iss,varsta_str,';');
+
+        int id_client=std::stoi(id_str);
+        int varsta=std::stoi(varsta_str);
+
+        Client c(nume,mail,varsta,id_client);
+
+        m_clienti.push_back(c);
+    }
+    fin.close();
+}
+bool Hotel::ExistaClientInFisier(const Client& client) //functie care verifica daca un client este deja inregistrat in fisier
+{
+    std::ifstream fin("Fisiere_txt/clienti.txt");
+    if (!fin.is_open()) {
+        std::cerr << "Eroare la deschiderea fisierului clienti.txt.\n"; //standard error stream used to output the errors
+        return false;
+    }
+    std::string linie;
+    while(std::getline(fin,linie)) {
+        std::istringstream iss(linie);
+        std::string nume,mail,varsta,id_client;
+        std::getline(iss,id_client,';');
+        std::getline(iss,nume,';');
+        std::getline(iss,mail,';');
+        std::getline(iss,varsta,';');
+
+        if(mail==client.GetEmail()) { //verificare la nivel de mail deoarece mail-ul unui client ar trebui sa fie unic
+            fin.close();
+            return true;
+        }
+    }
+    fin.close();
+    return false;
+}
+
+void Hotel::SalveazaClientInFisier(const Client& client)
+{
+    std::ofstream fout("Fisiere_txt/clienti.txt", std::ios::app); //append-mode
+    if (!fout.is_open()) {
+        std::cerr << "Eroare la deschiderea fisierului clienti.txt.\n"; //standard error stream used to output the errors
+        return;
+    }
+    fout<<client.GetIdC()<<";"<<client.GetNume()<<";"<<client.GetEmail()<<";"<<client.GetVarsta()<<"\n";
+    fout.close();
+}
+
 void Hotel::AdaugaRezervare(Camera &camera, std::string& data_check_in, std::string& data_check_out)
 {
     Client client;
@@ -302,6 +367,10 @@ void Hotel::AdaugaRezervare(Camera &camera, std::string& data_check_in, std::str
     std::cout<<"Introduceti varsta: "<<"\n";
     std::cin>>varsta;
     client.SetVarsta(varsta);
+
+    int id_client;
+    id_client=m_clienti.size()+1;
+    client.SetIdC(id_client);
 
     std::string metoda_plata, observatii;
 
@@ -343,8 +412,13 @@ void Hotel::AdaugaRezervare(Camera &camera, std::string& data_check_in, std::str
     }
     
     m_rezervari.push_back(r);
-
     SalvareRezervareFisier(r);
+
+    if(!ExistaClientInFisier(client))
+    {
+        SalveazaClientInFisier(client);
+        m_clienti.push_back(client);
+    }
 
     camera.SetDisponibilitate(false); //Camera rezervata devine ocupata
     ActualizeazaCamereDupaRezervare();
@@ -776,7 +850,20 @@ void Hotel::GestionareAngajati() //meniu cu optiuni pentru gestionarea angajatil
 }
 void Hotel::VizualizareClienti()
 {
-    //in viitor
+    if(m_clienti.empty())
+    {
+        std::cout<<"Momentan nu exista niciun client inregistrat.\n";
+        std::cout<<"\n";
+    }
+    else
+    {   std::cout<<"Lista clientilor inregistrati:\n";
+        std::cout<<"-----------------------------------\n";
+        for(auto& client : m_clienti) {
+            client.AfisareDetalii();
+            std::cout<<"-----------------------------------\n";
+        }
+        std::cout<<"\n";
+    }
 }
 void Hotel::VizualizareToateRezervarile() //afiseaza intreg continutul fisierului cu rezervari
 {

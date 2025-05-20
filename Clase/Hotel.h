@@ -48,11 +48,17 @@ public:
     void ScrieCameraInFisier(const Camera& camera);
     void IncarcaCamereDinFisier();
     void ActualizeazaCamereDupaRezervare();
+
     void IncarcaAngajatiDinFisier();
-    void IncarcaRezervariDinFisier();
-    void ActualizareRezervariDupaAnulare(); 
     void SalveazaAngajatiInFisier(); //folosita la mariri/micsorari salariale sau la concediere
     void AdaugaAngajatInFisier(Angajat* angajat); //folosita cu modul append doar pentru a adauga la finalul fisierului un angajat
+
+    void IncarcaRezervariDinFisier();
+    void ActualizareRezervariDupaAnulare(); 
+
+    bool ExistaClientInFisier(const Client& client);
+    void SalveazaClientInFisier(const Client& client);
+    void IncarcaClientiDinFisier();
 
     void IncarcaIngrijitor(std::string nume, std::string email, int varsta, int id, int salariu, std::string functie, std::string atribut1);
     void IncarcaReceptioner(std::string nume, std::string email, int varsta, int id, int salariu, std::string functie, std::string atribut1, std::string atribut2);
