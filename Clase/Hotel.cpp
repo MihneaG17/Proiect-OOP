@@ -700,15 +700,15 @@ void Hotel::LogareAdmin(bool &ok)
     std::cout<<"Introduceti email-ul: \n";
     std::cin>>email;
     std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n'); //curata buffer-ul
+
     std::cout<<"Introduceti parola: \n";
     std::cin>>parola;
     std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n'); //curata buffer-ul
 
-    std::string email_corect="mihnea298@gmail.com";
-    std::string parola_corecta="mihnea123";
-    Administrator admin(email_corect, parola_corecta); //obiect de tip administrator care are asociate email-ul si parola necesare pentru autentificare in meniu
-
-    if(admin.Autentificare(email,parola))
+    //obiect creat dinamic, tratat ca Autentificabil, dar care va apela metoda suprascrisa din clasa Administrator
+    Autentificabil* utilizator=new Administrator("admin@gmail.com","admin123");
+    
+    if(utilizator->Autentificare(email,parola))
     {
         std::cout<<"V-ati autentificat cu succes!\n";
         ok=true;
@@ -717,6 +717,7 @@ void Hotel::LogareAdmin(bool &ok)
     {
         std::cout<<"Mail-ul sau parola introduse sunt incorecte!\n";
     }
+    delete utilizator;
 }
 
 void Hotel::ScrieCameraInFisier(const Camera& camera)
@@ -898,8 +899,10 @@ void Hotel::MaresteSalariuAdmin()
 {
     int id, pozitie=0;
     bool ok=0;
+
     std::cout<<"Introduceti ID-ul angajatului caruia doriti sa-i mariti salariul:\n";
     std::cin>>id;
+
     for(auto& angajat : m_angajati)
     {
         if(angajat->GetId()==id)
@@ -919,7 +922,7 @@ void Hotel::MaresteSalariuAdmin()
         Angajat* angajat_nou = *(m_angajati[pozitie])+suma; //creez o copie dupa angajatul vechi dar care are salariul modificat
 
         //Actualizez struct-ul cu statistici pentru angajati
-        StatisticiAngajat::EliminaSalariu(m_angajati[pozitie]->GetSalariu());
+        StatisticiAngajat::EliminaSalariu(m_angajati[pozitie]->GetSalariu(),m_angajati);
         StatisticiAngajat::AdaugaSalariu(angajat_nou->GetSalariu());
 
         delete m_angajati[pozitie]; //Eliberez vechiul obiect
@@ -985,9 +988,13 @@ void Hotel::ConcediereAngajat()
         pozitie++;
     }
     if(ok)
-    {
+    {   
+        int salariu=m_angajati[pozitie]->GetSalariu();
         delete m_angajati[pozitie]; //sterg de tot obiectul si eliberez memoria
         m_angajati.erase(m_angajati.begin()+pozitie); //sterg pointerul din vector
+
+        StatisticiAngajat::EliminaSalariu(salariu,m_angajati);
+
         SalveazaAngajatiInFisier();
         std::cout<<"Angajatul cu ID-ul "<<id<<" a fost concediat\n\n";
     }

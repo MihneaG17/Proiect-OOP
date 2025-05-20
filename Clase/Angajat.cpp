@@ -1,5 +1,6 @@
 #include "Angajat.h"
 #include <iostream>
+#include <vector>
 
 //Metodele si variabilele din struct StatisticiAngajati
 int StatisticiAngajat::total_angajati=0;
@@ -16,11 +17,33 @@ void StatisticiAngajat::AdaugaSalariu(int salariu) {
         salariu_maxim=salariu;
 }
 
-void StatisticiAngajat::EliminaSalariu(int salariu) //apelat in destructor
+void StatisticiAngajat::EliminaSalariu(int salariu, const std::vector<Angajat*>& angajati)
 {
     salariu_total-=salariu;
     total_angajati--;
-    //salariu_min/max trebuie recalculate
+    
+    //recalculare minim si maxim in cazul in care salariul angajatului concediat reprezenta una dintre aceste valori
+    if(total_angajati==0)
+    {
+        salariu_minim=INT_MAX;
+        salariu_maxim=INT_MIN;
+        return;
+    }
+
+    salariu_minim=INT_MAX;
+    salariu_maxim=INT_MIN;
+
+    for(const auto& angajat : angajati)
+    {
+        if(angajat)
+        {
+            int sal=angajat->GetSalariu();
+            if(sal<salariu_minim)
+                salariu_minim=sal;
+            else if(sal>salariu_maxim)
+                salariu_maxim=sal;
+        }
+    }
 }
 
 double StatisticiAngajat::SalariuMediu()
@@ -44,10 +67,7 @@ m_id_angajat(id_angajat), m_salariu(salariu), m_functie(functie)
 
 Angajat::Angajat(const Angajat& a):Persoana(a), m_id_angajat(a.m_id_angajat), m_salariu(a.m_salariu), m_functie(a.m_functie){}; //Copy constructor
 
-Angajat::~Angajat() 
-{
-    StatisticiAngajat::EliminaSalariu(m_salariu); //Cand un obiect de tip angajat este sters, datele sale sunt eliminate din Statistici
-} //Destructor
+Angajat::~Angajat() {} //Destructor
 
 //Getteri si setteri specifici pentru clasa Angajat (cei din clasa de baza Persoana fiind mosteniti)
 int Angajat::GetId() const { return m_id_angajat; };

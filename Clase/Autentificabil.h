@@ -4,7 +4,7 @@
 #include <iostream>
 
 //Clasa pur abstracta - Interfata
-//In viitor va fi folosita si pentru autentificarea clientilor, nu doar pentru administrator
+//Folosita pentru autentificarea Administratorului in sistem - NU SE POT INSTANTIA OBIECTE DE ACEST TIP!!
 class Autentificabil
 {
 public:

@@ -3,19 +3,7 @@
 
 #include "Persoana.h"
 #include <iostream>
-
-struct StatisticiAngajat {
-    //Variabile declarate static - apartin struct-ului, nu instantelor
-    static int total_angajati;
-    static int salariu_total;
-    static int salariu_minim;
-    static int salariu_maxim;
-
-    //Metode
-    static void AdaugaSalariu(int salariu);
-    static void EliminaSalariu(int salariu);
-    static double SalariuMediu();
-};
+#include <vector>
 
 class Angajat: public Persoana
 {
@@ -50,4 +38,16 @@ public:
     
 };
 
+struct StatisticiAngajat {
+    //Variabile declarate static - apartin struct-ului, nu instantelor
+    static int total_angajati;
+    static int salariu_total;
+    static int salariu_minim;
+    static int salariu_maxim;
+
+    //Metode
+    static void AdaugaSalariu(int salariu);
+    static void EliminaSalariu(int salariu, const std::vector<Angajat*>& angajati);
+    static double SalariuMediu();
+};
 #endif //ANGAJAT_H

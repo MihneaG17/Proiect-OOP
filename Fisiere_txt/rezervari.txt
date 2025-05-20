@@ -6,26 +6,12 @@ Check-in: 2025-11-17
 Check-out: 2025-11-22
 Nopti: 5
 Pret total: 500
-Discount: 0
+Discount: 0%
 Metoda plata: Card
 Observatii: -
-Rating: 0
-Comentariu: -
-------------------------------
-ID rezervare: 2
-Nume client: Dobrin Mihnea
-Email: mihnea298@gmail.com
-Camera: 2 - Double - 200RON/noapte
-Check-in: 2025-10-12
-Check-out: 2025-10-20
-Nopti: 8
-Pret total: 1600
-Discount: 10
-Metoda plata: Numerar
-Observatii: -
-Rating: 0
-Comentariu: -
-------------------------------
+Rating: 4
+Comentariu: Misto rau de tot
+-------------------------------
 ID rezervare: 3
 Nume client: Lupu Marius
 Email: mariuslupu@gmail.com
@@ -34,9 +20,23 @@ Check-in: 2025-10-10
 Check-out: 2025-10-20
 Nopti: 10
 Pret total: 3000
-Discount: 10
+Discount: 10%
 Metoda plata: Card
 Observatii: Nu
 Rating: 0
 Comentariu: -
-------------------------------
+-------------------------------
+ID rezervare: 4
+Nume client: Manolache Razvan
+Email: razvanmano11@gmail.com
+Camera: 4 - Quadruple - 400RON/noapte
+Check-in: 2025-12-12
+Check-out: 2025-12-23
+Nopti: 11
+Pret total: 4400
+Discount: 15%
+Metoda plata: Card
+Observatii: Nu am
+Rating: 0
+Comentariu: -
+-------------------------------

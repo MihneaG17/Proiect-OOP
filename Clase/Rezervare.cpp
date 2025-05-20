@@ -16,7 +16,7 @@ m_metoda_plata(metoda_plata), m_observatii(observatii), m_discount(discount), m_
 
 //Copy Constructor
 Rezervare::Rezervare(const Rezervare& r): m_id_rezervare(r.m_id_rezervare), m_data_check_in(r.m_data_check_in), m_data_check_out(r.m_data_check_out), m_pret_total(r.m_pret_total),
-m_client(r.m_client), m_camera(r.m_camera), m_discount(r.m_discount), m_numar_nopti(r.m_numar_nopti), m_observatii(r.m_observatii), m_metoda_plata(r.m_metoda_plata) {}; 
+m_client(r.m_client), m_camera(r.m_camera), m_discount(r.m_discount), m_numar_nopti(r.m_numar_nopti), m_observatii(r.m_observatii), m_metoda_plata(r.m_metoda_plata), m_review(r.m_review) {}; 
 
 //Destructor
 Rezervare::~Rezervare() {};
@@ -61,7 +61,8 @@ void Rezervare::AfisareDetalii()
     std::cout<<"Observatii: "<<m_observatii<< "\n";
     std::cout<<"\n";
     std::cout<<"Detaliile clientului: \n";
-    m_client.AfisareDetalii();
+    std::cout<<"Nume: "<<m_client.GetNume()<<"\n";
+    std::cout<<"Email: "<<m_client.GetEmail()<<"\n";
     std::cout<<"Detaliile camerei: \n";
     m_camera.AfisareDetaliiCamera();
     std::cout<<"\n";
