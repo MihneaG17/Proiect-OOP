@@ -1,1 +1,1 @@
-Proiect OOP - Sistem de rezervare pentru hotel - Dobrin Mihnea-Gabriel - Grupa 143
+Proiect OOP - Sistem de management pentru hotel - Dobrin Mihnea-Gabriel - Grupa 143
