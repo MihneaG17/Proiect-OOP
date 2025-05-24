@@ -1,1 +1,4 @@
-Proiect OOP - Sistem de management pentru hotel - Dobrin Mihnea-Gabriel - Grupa 143
+# Proiect OOP - Sistem de management pentru hotel - Dobrin Mihnea-Gabriel - Grupa 143
+Proiect realizat in C++ pentru materia Programare Orientata pe Obiecte. </br>
+Acest proiect presupune proiectarea unui Sistem de management pentru hotel. Cand programul este rulat, utilizatorul are 2 optiuni - deschiderea meniului pentru clienti si deschiderea meniului pentru administrator. Fiecare meniu diferite optiuni, cum ar fi: vizualizarea camerelor disponibile, efectuarea unei rezervari, anularea unei rezervari (pentru clienti), optiuni legate de gestionarea angajatilor, precum si de vizualizare a statisticilor din hotel (numar de angajati, rezervari efectuate, clienti inregistrati etc). Datele sunt stocate in fisiere .txt, iar la rularea programului datele deja existente in aceste fisiere sunt incarcate in vectori pentru a permite operatii asupra lor. </br>
+Proiectul este realizat respectand cerintele si coding guideline-ul primit in cadrul laboratorului de POO.
