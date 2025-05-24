@@ -18,6 +18,8 @@
 #include "Administrator.h"
 #include "utils.h"
 
+namespace HotelManagement {
+
 class Hotel
 {
     std::vector <Client> m_clienti;
@@ -87,5 +89,5 @@ public:
     void AdaugaManager(std::string nume, std::string email,int varsta,int id,int salariu,std::string functie);
 
 };
-
+}
 #endif //HOTEL_H

@@ -2,6 +2,8 @@
 #include <iostream>
 #include <vector>
 
+namespace HotelManagement {
+
 //Metodele si variabilele din struct StatisticiAngajati
 int StatisticiAngajat::total_angajati=0;
 int StatisticiAngajat::salariu_total=0;
@@ -112,4 +114,6 @@ Angajat* Angajat::operator+(int suma) const
     Angajat* copie = new Angajat(*this); //copie dupa obiectul original - se apeleaza copy constructorul
     copie->m_salariu += suma; 
     return copie; //se intoarce copia obiectului, cu salariu modificat
+}
+
 }

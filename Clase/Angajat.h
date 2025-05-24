@@ -5,6 +5,8 @@
 #include <iostream>
 #include <vector>
 
+namespace HotelManagement {
+
 class Angajat: public Persoana
 {
     int m_id_angajat;
@@ -50,4 +52,6 @@ struct StatisticiAngajat {
     static void EliminaSalariu(int salariu, const std::vector<Angajat*>& angajati);
     static double SalariuMediu();
 };
+
+}
 #endif //ANGAJAT_H

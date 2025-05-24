@@ -1,6 +1,8 @@
 #include "Review.h"
 #include <iostream>
 
+namespace HotelManagement {
+
 Review::Review(): m_nota(0.0), m_comentariu("-") {}; //Constructor implicit
 Review::Review(double nota, std::string comentariu): m_nota(nota), m_comentariu(comentariu) {}; // Constructor parametrizat (foloseste referinta constanta pentru eficienta)
 Review::Review(const Review& rw): m_nota(rw.m_nota), m_comentariu(rw.m_comentariu) {}; //Copy constructor
@@ -21,4 +23,5 @@ void Review::AfisareReview()
 {
     std::cout<<"Nota: "<<m_nota<<"\n";
     std::cout<<"Comentariu: "<<m_comentariu<<"\n";
+}
 }

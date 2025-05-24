@@ -1,6 +1,8 @@
 #include "Persoana.h"
 #include <iostream>
 
+namespace HotelManagement {
+
 //Constructori si destructor
 Persoana::Persoana(): m_nume("Necunoscut"), m_email("Necunoscut"), m_varsta(0) {}; //Constructor implicit - initializeaza atributele obiectului dinainte sa fie creat
 
@@ -29,3 +31,4 @@ void Persoana::SetVarsta(int varsta)
 }
 
 //Metoda AfiseazaDetalii() este suprascrisa in clasele derivate
+}

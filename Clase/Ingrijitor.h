@@ -4,6 +4,7 @@
 #include "Angajat.h"
 #include <iostream>
 
+namespace HotelManagement {
 
 class Ingrijitor: public Angajat
 {
@@ -26,5 +27,5 @@ public:
     //Operator overloading +
     Angajat* operator+(int suma) const override;
 };
-
+}
 #endif //INGRIJITOR_H

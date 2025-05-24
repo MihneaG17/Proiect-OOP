@@ -4,6 +4,8 @@
 #include <iostream>
 #include "Client.h"
 
+namespace HotelManagement {
+
 class Review {
     double m_nota;
     std::string m_comentariu;
@@ -26,4 +28,5 @@ public:
     void AfisareReview();
 
 };
-#endif
+}
+#endif //REVIEW_H

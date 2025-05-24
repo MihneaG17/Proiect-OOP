@@ -7,6 +7,8 @@
 #include "utils.h"
 #include <iostream>
 
+namespace HotelManagement {
+
 class Rezervare
 {
     int m_id_rezervare;
@@ -56,4 +58,5 @@ public:
     void CalcularePretTotal();
     bool AreReview();
 };
+}
 #endif //REZERVARE_H

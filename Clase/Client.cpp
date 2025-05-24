@@ -2,6 +2,8 @@
 #include <iostream>
 #include <vector>
 
+namespace HotelManagement {
+
 Client::Client():Persoana(), m_id_client(0) {}; //Constructor implicit
 
 Client::Client(std::string nume, std::string email, int varsta, int id_client):
@@ -25,4 +27,5 @@ void Client::AfisareDetalii() const //Metoda suprascrisa din clasa de baza Perso
     std::cout<<"Email: "<<GetEmail()<<std::endl;
     std::cout<<"Varsta: "<<GetVarsta()<<std::endl;
     std::cout<<"ID Client: "<<GetIdC()<<"\n";
+}
 }

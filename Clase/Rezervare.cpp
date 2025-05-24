@@ -6,6 +6,8 @@
 #include <iostream>
 #include <string>
 
+namespace HotelManagement {
+
 Rezervare::Rezervare(): m_id_rezervare(-1), m_data_check_in("-"), m_data_check_out("-"), m_pret_total(0.0), m_numar_nopti(0), m_discount(0.0), m_metoda_plata("-"), m_observatii("-") {}; //Constructor implicit
 
 //Constructor parametrizat
@@ -65,8 +67,8 @@ void Rezervare::AfisareDetalii()
     std::cout<<"Email: "<<m_client.GetEmail()<<"\n";
     std::cout<<"Detaliile camerei: \n";
     m_camera.AfisareDetaliiCamera();
-    std::cout<<"\n";
     m_review.AfisareReview();
+    std::cout<<"\n";
 };
 
 void Rezervare::CalcularePretTotal() {
@@ -84,4 +86,5 @@ void Rezervare::CalcularePretTotal() {
 bool Rezervare::AreReview()
 {
     return m_review.GetNota()>0 || m_review.GetComentariu()!="-";
+}
 }

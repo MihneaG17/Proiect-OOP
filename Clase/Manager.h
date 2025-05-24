@@ -5,6 +5,8 @@
 #include <iostream>
 #include <vector>
 
+namespace HotelManagement {
+
 class Manager : public Angajat
 {
     std::vector<std::string> m_departamente_coordonate;
@@ -33,5 +35,5 @@ public:
     //Operator overloading +
     Angajat* operator+(int suma) const override;
 };
-
+}
 #endif //MANAGER_H

@@ -4,6 +4,8 @@
 #include "Autentificabil.h"
 #include <iostream>
 
+namespace HotelManagement {
+
 class Administrator: public Autentificabil 
 {
     std::string m_email;
@@ -13,4 +15,5 @@ public:
     bool Autentificare(std::string e, std::string p) override;
 };
 
+}
 #endif //ADMINISTRATOR_H

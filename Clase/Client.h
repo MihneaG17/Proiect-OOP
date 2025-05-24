@@ -5,6 +5,8 @@
 #include <vector>
 #include "Persoana.h"
 
+namespace HotelManagement {
+
 class Client: public Persoana
 {
     int m_id_client;
@@ -25,5 +27,5 @@ public:
     void AdaugaRezervare(int rezervare);
     void AfisareDetalii() const override;
 };
-
+}
 #endif //CLIENT_H

@@ -5,6 +5,8 @@
 #include <iostream>
 #include <vector>
 
+namespace HotelManagement {
+    
 class Receptioner: public Angajat
 {
     std::string m_schimb; //zi sau noapte
@@ -31,5 +33,5 @@ public:
     Angajat* operator+(int suma) const override;
 };
 
-
+}
 #endif //RECEPTIONER_H

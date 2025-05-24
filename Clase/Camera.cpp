@@ -1,6 +1,8 @@
 #include "Camera.h"
 #include <iostream>
 
+namespace HotelManagement {
+
 int Camera::m_total_camere = 0;
 //Constructori si destructor
 Camera::Camera(): m_numar(0), m_status(0), m_pret_noapte(0), m_tip_camera("Nedefinit") { m_total_camere++; }; //Constructor implicit
@@ -42,5 +44,6 @@ std::ostream& operator<<(std::ostream& out, Camera& cam) //Afiseaza detaliile ca
 {
     out<<"Camera "<<cam.m_numar<<" - "<<cam.m_tip_camera<<" - "<<cam.m_pret_noapte<<" RON/noapte";
     return out;
+}
 }
 

@@ -1,6 +1,8 @@
 #include "Ingrijitor.h"
 #include <iostream>
 
+namespace HotelManagement {
+
 Ingrijitor::Ingrijitor(): Angajat(), m_etaj_curatenie(-1) {}; //Constructor implicit - pentru atributele mostenite se apeleaza constructorul mostenit
 
 Ingrijitor::Ingrijitor(std::string nume, std::string email, int varsta, int id_angajat, int salariu, std::string functie, int etaj_curatenie):
@@ -32,4 +34,5 @@ Angajat* Ingrijitor::operator+(int suma) const {
     Ingrijitor* copie = new Ingrijitor(*this); //Copy constructor
     copie->SetSalariu(this->GetSalariu() + suma);
     return copie; //Returneaza o copie a obiectului initial cu salariu actualizat
+}
 }

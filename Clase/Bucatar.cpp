@@ -2,6 +2,8 @@
 #include <iostream>
 #include <vector>
 
+namespace HotelManagement {
+
 Bucatar::Bucatar(): Angajat(), m_specializare("-"), m_certificari() {}; //Constructor implicit
 
 Bucatar::Bucatar(std::string nume, std::string email, int varsta, int id_angajat, int salariu, std::string functie, std::string specializare, std::vector <std::string> certificari): 
@@ -77,4 +79,5 @@ Angajat* Bucatar::operator+(int suma) const {
     Bucatar* copie = new Bucatar(*this); //Copy constructor
     copie->SetSalariu(this->GetSalariu() + suma);
     return copie; //Se returneaza copia obiectului cu salariul modificat
+}
 }

@@ -1,5 +1,7 @@
 #include "utils.h"
 
+namespace HotelManagement {
+
 int NumarZileInLuna(int luna, int an)
 {
     switch(luna)
@@ -43,4 +45,5 @@ int CalculeazaDiferentaZile(const std::string& check_in, const std::string& chec
     }
 
     return zile;
+}
 }

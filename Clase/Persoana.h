@@ -3,6 +3,8 @@
 
 #include <iostream>
 
+namespace HotelManagement {
+
 class Persoana
 {
     std::string m_nume;
@@ -31,6 +33,6 @@ public:
     virtual void AfisareDetalii() const = 0; //metoda pur virtuala - suprascrisa in clasele derivate
     //fiind o clasa pur abstracta, nu se pot crea instante ale acestei clase
 };
-
+}
 
 #endif //PERSOANA_H

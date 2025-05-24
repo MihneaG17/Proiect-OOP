@@ -5,6 +5,8 @@
 #include <sstream>
 #include <limits>
 
+namespace HotelManagement {
+
 Hotel::Hotel() {
     IncarcaCamereDinFisier();
     IncarcaAngajatiDinFisier();
@@ -1361,4 +1363,4 @@ void Hotel::AdaugaAngajatInFisier(Angajat* angajat)
     fout.close();
 }
 
-
+} //namespace

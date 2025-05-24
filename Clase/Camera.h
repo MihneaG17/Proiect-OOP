@@ -3,6 +3,8 @@
 
 #include <iostream>
 
+namespace HotelManagement {
+    
 class Camera
 {
     int m_numar;
@@ -36,5 +38,5 @@ public:
     friend std::ostream& operator<<(std::ostream& out, Camera& cam); //functie friend deoarece accesez atributele private ale clasei (fara a folosi getteri)
 
 };
-
+}
 #endif //CAMERA_H

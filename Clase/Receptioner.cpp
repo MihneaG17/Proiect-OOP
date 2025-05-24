@@ -2,6 +2,8 @@
 #include <iostream>
 #include <vector>
 
+namespace HotelManagement {
+
 Receptioner::Receptioner(): Angajat(), m_schimb("-"), m_limbi_vorbite() {}; //Constructor implicit
 
 Receptioner::Receptioner(std::string nume, std::string email, int varsta, int id_angajat, int salariu, std::string functie, std::string schimb, std::vector <std::string> limbi_vorbite): 
@@ -76,4 +78,5 @@ Angajat* Receptioner::operator+(int suma) const {
     Receptioner* copie = new Receptioner(*this); //Copy constructor
     copie->SetSalariu(this->GetSalariu() + suma);
     return copie; //Returneaza o copie a obiectului initial cu salariu actualizat
+}
 }

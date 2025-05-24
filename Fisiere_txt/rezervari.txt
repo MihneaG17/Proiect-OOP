@@ -12,7 +12,7 @@ Observatii: -
 Rating: 4
 Comentariu: Misto rau de tot
 -------------------------------
-ID rezervare: 3
+ID rezervare: 2
 Nume client: Lupu Marius
 Email: mariuslupu@gmail.com
 Camera: 3 - Triple - 300RON/noapte
@@ -26,7 +26,7 @@ Observatii: Nu
 Rating: 0
 Comentariu: -
 -------------------------------
-ID rezervare: 4
+ID rezervare: 3
 Nume client: Manolache Razvan
 Email: razvanmano11@gmail.com
 Camera: 4 - Quadruple - 400RON/noapte
@@ -37,6 +37,20 @@ Pret total: 4400
 Discount: 15%
 Metoda plata: Card
 Observatii: Nu am
-Rating: 0
-Comentariu: -
+Rating: 5
+Comentariu: Misto
+-------------------------------
+ID rezervare: 4
+Nume client: Dobrin Mihnea
+Email: mihnea298@gmail.com
+Camera: 2 - Double - 200RON/noapte
+Check-in: 2025-06-11
+Check-out: 2025-06-22
+Nopti: 11
+Pret total: 2200
+Discount: 15%
+Metoda plata: Numerar
+Observatii: -
+Rating: 4.2
+Comentariu: A fost bine
 -------------------------------

@@ -5,6 +5,9 @@
 #include <iostream>
 #include <vector>
 
+namespace HotelManagement
+{
+
 class Bucatar: public Angajat
 {
     std::string m_specializare; //tipul "dish-urilor" in care este specializat
@@ -30,6 +33,6 @@ public:
     //Operator overloading +
     Angajat* operator+(int suma) const override;
 };
-
+}
 
 #endif //BUCATAR_H

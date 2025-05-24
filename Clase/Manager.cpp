@@ -2,6 +2,8 @@
 #include <iostream>
 #include <vector>
 
+namespace HotelManagement {
+    
 Manager::Manager() : Angajat(), m_departamente_coordonate(), m_ani_experienta(0) {} //Constructor implicit
 
 Manager::Manager(std::string nume, std::string email, int varsta, int id_angajat, int salariu, std::string functie, std::vector<std::string> departamente_coordonate, int ani_experienta)
@@ -87,4 +89,5 @@ Angajat* Manager::operator+(int suma) const {
     Manager* copie = new Manager(*this); //Copy constructor
     copie->SetSalariu(this->GetSalariu() + suma);
     return copie; //Returneaza o copie a obiectului initial cu salariul actualizat
+}
 }
